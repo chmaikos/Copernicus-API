@@ -1,5 +1,5 @@
 # Set base image (host OS)
-FROM python:alpine3.8
+FROM python:3.8
 
 # Copy the content of the project directory to the working directory
 COPY . /main
