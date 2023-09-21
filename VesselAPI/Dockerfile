@@ -8,7 +8,7 @@ COPY . /main
 WORKDIR /main
 
 # Install any dependencies
-RUN pip install -r requirements.txt
+RUN apt-get update && pip install -r requirements.txt
 
 # Specify the Flask environment port
 ENV PORT 5001
