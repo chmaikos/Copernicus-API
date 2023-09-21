@@ -9,7 +9,7 @@ app = Flask(__name__)
 # mongo_db_url = os.environ.get("MONGO_DB_CONN_STRING")
 # print(mongo_db_url)
 
-client = MongoClient('localhost', 27017)
+client = MongoClient("mongodb://mongodb:27017")
 
 db = client["dock-mongo_mongodb_1"]
 
