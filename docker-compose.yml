@@ -73,10 +73,10 @@ services:
         - producerwave
         - producerwind
 
-  api_vessel:
-    build:
-      context: ./VesselAPI
-    ports:
-      - 5001:5001
-    depends_on:
-      - mongodb
+  # api_vessel:
+  #   build:
+  #     context: ./VesselAPI
+  #   ports:
+  #     - 5001:5001
+  #   depends_on:
+  #     - mongodb
