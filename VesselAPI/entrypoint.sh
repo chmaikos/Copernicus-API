@@ -1,3 +1,3 @@
-#!/usr/bin/env python
+#! /bin/bash
 
 python init.py && python app.py
