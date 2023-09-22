@@ -109,7 +109,7 @@ def get_status():
 
     api_is_up = True
     
-    if database_is_up:
+    if api_is_up:
         response = {'status': 'success'}
     else:
         response = {'status': 'fail'}
