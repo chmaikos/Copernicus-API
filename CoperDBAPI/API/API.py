@@ -54,9 +54,9 @@ def search_data(start_date, end_date,
 
 @app.route('/data', methods=['GET'])
 def get_data():
-    latitude, longitude, radius = map(float, [request.args.get('latitude'),
-                                              request.args.get('longitude'),
-                                              request.args.get('radius')])
+    latitude = float(request.args.get('latitude'))
+    longitude = float(request.args.get('longitude'))
+    radius = float(request.args.get('radius'))
     lat_min, lon_min, lat_max, lon_max = create_square(latitude,
                                                        longitude,
                                                        radius)
