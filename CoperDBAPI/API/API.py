@@ -44,35 +44,35 @@ def search_data(start_date, end_date,
     date_format = "%Y-%m-%d %H:%M:%S"
     most_recent_date = [datetime.strptime(document['time'], date_format)
                         for document in result]
-    logging.info(f'most_recent_date: {most_recent_date}')
-    logging.info(f'end_date: {end_date}')
-    logging.info(f'start_date: {start_date}')
+    # logging.info(f'most_recent_date: {most_recent_date}')
+    # logging.info(f'end_date: {end_date}')
+    # logging.info(f'start_date: {start_date}')
     if min(most_recent_date) > end_date or max(most_recent_date) < start_date:
-        logging.info(f'1o if where we calculate the date')
+        # logging.info(f'1o if where we calculate the date')
         return {database.name: []}
     else:
-        logging.info(f'min_longitude: {min_longitude} max_longitude: {max_longitude}')
-        logging.info(f'min_latitude: {min_latitude} max_latitude: {max_latitude}')
+        # logging.info(f'min_longitude: {min_longitude} max_longitude: {max_longitude}')
+        # logging.info(f'min_latitude: {min_latitude} max_latitude: {max_latitude}')
       
         query = {
             "longitude": {"$gte": min_longitude, "$lte": max_longitude},
             "latitude": {"$gte": min_latitude, "$lte": max_latitude}
         }
         last_data = database.find(query)
-        logging.info(f'database: {database.find(query)}')
-        logging.info(f'last_data: {last_data}')
+        # logging.info(f'database: {database.find(query)}')
+        # logging.info(f'last_data: {last_data}')
       
         if not last_data:
-            logging.info(f'2o if where we calculate the lon and lat')
+            # logging.info(f'2o if where we calculate the lon and lat')
             return {database.name: []}
         else:
             data_list = []
-            logging.info(f'last_data: {last_data}')
+            # logging.info(f'last_data: {last_data}')
             for document in last_data:
-                logging.info(f'data: {document}')
+                # logging.info(f'data: {document}')
                 data_list.append(document)
             # data_list = [doc for doc in last_data]
-            logging.info(f'data_list: {data_list}')
+            # logging.info(f'data_list: {data_list}')
             for data in data_list:
                 data.pop("_id", None)
             return {database.name: data_list}
