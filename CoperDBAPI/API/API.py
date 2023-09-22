@@ -1,5 +1,6 @@
 from datetime import datetime
 from math import cos, radians
+import logging
 
 import pymongo
 from flask import Flask, jsonify, request
@@ -54,7 +55,7 @@ def search_data(start_date, end_date,
 
 @app.route('/data', methods=['GET'])
 def get_data():
-    print("request.args", request.args)
+    logging.info(f"Received request: {request.url}, args: {request.args}")
     latitude, longitude, radius = map(float, [request.args.get('latitude'),
                                               request.args.get('longitude'),
                                               request.args.get('radius')])
