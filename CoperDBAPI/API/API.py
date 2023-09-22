@@ -1,9 +1,18 @@
 from datetime import datetime
 from math import cos, radians
-
+import logging
 import pymongo
 from flask import Flask, jsonify, request
 from pymongo import DESCENDING
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, filename='app.log',
+                    filemode='w', format='%(name)s-%(levelname)s-%(message)s')
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+formatter = logging.Formatter('%(name)s-%(levelname)s-%(message)s')
+console.setFormatter(formatter)
+logging.getLogger('').addHandler(console)
 
 app = Flask(__name__)
 
@@ -35,6 +44,9 @@ def search_data(start_date, end_date,
     date_format = "%Y-%m-%d %H:%M:%S"
     most_recent_date = [datetime.strptime(document['time'], date_format)
                         for document in result]
+    logging.info(f'most_recent_date: {most_recent_date}')
+    logging.info(f'end_date: {end_date}')
+    logging.info(f'start_date: {start_date}')
     if min(most_recent_date) > end_date or max(most_recent_date) < start_date:
         return {database.name: []}
     else:
