@@ -104,7 +104,7 @@ def get_data():
     ]
     return jsonify(info_return)
 
-@app.route('', methods=['GET'])
+@app.route('/status', methods=['GET'])
 def get_status():
 
     api_is_up = True
