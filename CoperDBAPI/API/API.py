@@ -66,10 +66,12 @@ def search_data(start_date, end_date,
             logging.info(f'2o if where we calculate the lon and lat')
             return {database.name: []}
         else:
+            data_list = []
             logging.info(f'last_data: {last_data}')
             for document in last_data:
                 logging.info(f'data: {document}')
-            data_list = [doc for doc in last_data]
+                data_list.append(document)
+            # data_list = [doc for doc in last_data]
             logging.info(f'data_list: {data_list}')
             for data in data_list:
                 data.pop("_id", None)
