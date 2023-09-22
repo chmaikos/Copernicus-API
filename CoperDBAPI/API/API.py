@@ -48,6 +48,7 @@ def search_data(start_date, end_date,
     logging.info(f'end_date: {end_date}')
     logging.info(f'start_date: {start_date}')
     if min(most_recent_date) > end_date or max(most_recent_date) < start_date:
+        logging.info(f'1o if where we calculate the date')
         return {database.name: []}
     else:
         query = {
@@ -55,7 +56,9 @@ def search_data(start_date, end_date,
             "latitude": {"$gte": min_latitude, "$lte": max_latitude}
         }
         last_data = database.find(query)
+        logging.info(f'last_data', last_data)
         if not last_data:
+            logging.info(f'2o if where we calculate the lon and lat')
             return {database.name: []}
         else:
             data_list = [doc for doc in last_data]
