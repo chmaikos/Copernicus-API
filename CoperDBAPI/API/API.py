@@ -64,6 +64,8 @@ def search_data(start_date, end_date,
             return {database.name: []}
         else:
             logging.info(f'last_data: {last_data}')
+            for document in last_data:
+                logging.info(f'data: {document}')
             data_list = [doc for docs in last_data]
             logging.info(f'data_list: {data_list}')
             for data in data_list:
