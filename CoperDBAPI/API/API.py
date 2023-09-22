@@ -104,6 +104,18 @@ def get_data():
     ]
     return jsonify(info_return)
 
+@app.route('/status', methods=['GET'])
+def get_status():
+
+    api_is_up = True
+    
+    if database_is_up:
+        response = {'status': 'success'}
+    else:
+        response = {'status': 'fail'}
+    
+    return jsonify(response)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
