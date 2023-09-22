@@ -1,9 +1,9 @@
 from flask import Flask, Response, request, jsonify
 from pymongo import MongoClient
 from bson.json_util import dumps
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
 app = Flask(__name__)
 # mongo_db_url = os.environ.get("MONGO_DB_CONN_STRING")
@@ -174,7 +174,17 @@ def get_recommended_steps():
     else:
         return "[]"
 
+@app.route('/status', methods=['GET'])
+def get_status():
 
+    api_is_up = True
+    
+    if api_is_up:
+        response = {'status': 'success'}
+    else:
+        response = {'status': 'fail'}
+    
+    return jsonify(response)
 # @app.route("/api/updatesteps/", methods=['PUT'])
 # def update_steps():
 #     alert_id = request.args.get('alert_id')
