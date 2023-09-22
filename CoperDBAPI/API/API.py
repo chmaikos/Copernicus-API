@@ -51,6 +51,9 @@ def search_data(start_date, end_date,
         logging.info(f'1o if where we calculate the date')
         return {database.name: []}
     else:
+        logging.info(f'min_longitude: {min_longitude} max_longitude: {max_longitude}')
+        logging.info(f'min_latitude: {min_latitude} max_latitude: {max_latitude}')
+      
         query = {
             "longitude": {"$gte": min_longitude, "$lte": max_longitude},
             "latitude": {"$gte": min_latitude, "$lte": max_latitude}
