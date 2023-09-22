@@ -62,7 +62,7 @@ services:
       - kafka1
       - mongodb
     volumes:
-      - ./.cdsapirc:.cdsapirc
+      - ./CoperDBAPI/.cdsapirc:/root/.cdsapirc
 
   api:
       build:
