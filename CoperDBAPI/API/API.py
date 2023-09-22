@@ -56,6 +56,7 @@ def search_data(start_date, end_date,
             "latitude": {"$gte": min_latitude, "$lte": max_latitude}
         }
         last_data = database.find(query)
+        logging.info(f'database', database.find(query))
         logging.info(f'last_data', last_data)
         if not last_data:
             logging.info(f'2o if where we calculate the lon and lat')
