@@ -5,7 +5,7 @@
 
 #### Request
 
-`GET http://127.0.0.1:5000/api/alert-types`
+`GET http://127.0.0.1:5001/api/alert-types`
 
 #### Response
 
@@ -30,7 +30,7 @@
 
 #### Request
 
-`GET http://127.0.0.1:5000/api/op-steps/?alert_type_id=2`
+`GET http://127.0.0.1:5001/api/op-steps/?alert_type_id=2`
 
 #### Response
 
@@ -63,7 +63,7 @@
 
 #### Request
 
-`PUT 127.0.0.1:5000/api/update-steps/?alert_type_id=2`
+`PUT 127.0.0.1:5001/api/update-steps/?alert_type_id=2`
 
 #### Response
 
@@ -75,7 +75,7 @@
 
 #### Request
 
-`GET http://127.0.0.1:5000/api/alert-steps/?alert_id=1`
+`GET http://127.0.0.1:5001/api/alert-steps/?alert_id=1`
 
 #### Response
 
@@ -105,7 +105,7 @@
 
 #### Request
 
-`GET http://127.0.0.1:5000/api/rec-steps/?alert_id=1`
+`GET http://127.0.0.1:5001/api/rec-steps/?alert_id=1`
 
 #### Response
 
