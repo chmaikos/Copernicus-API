@@ -77,6 +77,6 @@ services:
     build:
       context: ./VesselAPI
     ports:
-      - 5001:5000
+      - 5000:5001
     depends_on:
       - mongodb
