@@ -31,6 +31,8 @@ COPY . /main
 # Set the working directory in the container
 WORKDIR /main
 
+RUN pip install -r requirements.txt
+
 # Specify the Flask environment port
 ENV PORT 5001
 
