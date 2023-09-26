@@ -47,6 +47,8 @@ def search_data(start_date, end_date,
     # logging.info(f'most_recent_date: {most_recent_date}')
     # logging.info(f'end_date: {end_date}')
     # logging.info(f'start_date: {start_date}')
+    if len(list(most_recent_date)) == 0 :
+        return {database.name: []}
     if min(most_recent_date) > end_date or max(most_recent_date) < start_date:
         # logging.info(f'1o if where we calculate the date')
         return {database.name: []}
