@@ -41,6 +41,7 @@ def search_data(start_date, end_date,
     sort_order = [("time", DESCENDING)]
     limit = 1
     result = database.find(query).sort(sort_order).limit(limit)
+    logging.info(f'result: {result[0]}')
     date_format = "%Y-%m-%d %H:%M:%S"
     most_recent_date = [datetime.strptime(document['time'], date_format)
                         for document in result]
