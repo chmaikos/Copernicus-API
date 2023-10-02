@@ -154,7 +154,7 @@ while True:
                                                    np.meshgrid(times, latitudes, longitudes, indexing='ij')]
 
     df = pd.DataFrame({
-        'time': [t.timestamp() for t in times_grid],
+        'time': [t.isoformat(sep=" ") for t in times_grid],
         'latitude': latitudes_grid,
         'longitude': longitudes_grid,
         'vhm0': vhm0[:].flatten(),
