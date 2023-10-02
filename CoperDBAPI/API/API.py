@@ -201,6 +201,12 @@ def search_data(
     if min(most_recent_date) > end_date or max(most_recent_date) < start_date:
         return {database.name: []}
     else:
+            
+        start_date_str = start_date.strftime("%Y-%m-%d %H:%M:%S")
+        end_date_str = end_date.strftime("%Y-%m-%d %H:%M:%S")
+        logging.info(f'start time: {start_date_str}')
+        logging.info(f'end: {end_date_str}')
+            
         query = {
             "longitude": {"$gte": min_longitude, "$lte": max_longitude},
             "latitude": {"$gte": min_latitude, "$lte": max_latitude},
