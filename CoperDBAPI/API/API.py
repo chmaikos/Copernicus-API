@@ -78,7 +78,7 @@ def search_data(start_date, end_date,
         sample_date = sample_document['time']
         
         # Print the sample date
-        logging.info(f"Sample Date: {type(sample_date)}")
+        logging.info(f"Sample Date: {sample_document[0]}")
 
         last_data = database.find(query)
 
