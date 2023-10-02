@@ -78,8 +78,6 @@ def search_data(start_date, end_date,
         logging.info(f"Sample Date: {sample_date}")
 
         last_data = database.find(query)
-        # logging.info(f'database: {database.find(query)}')
-        logging.info(f'last_data: {last_data.next()}')
 
         if len(list(last_data)) == 0:
             # logging.info(f'2o if where we calculate the lon and lat')
