@@ -59,11 +59,24 @@ def search_data(start_date, end_date,
         # Convert provided date to datetime object
         logging.info(f'start time: {start_date}')
         logging.info(f'end: {end_date}')
+        
         query = {
             "time": {"$gte": start_date, "$lte": end_date},
             "longitude": {"$gte": min_longitude, "$lte": max_longitude},
             "latitude": {"$gte": min_latitude, "$lte": max_latitude}
         }
+      
+        logging.info(f"Query: {query}")
+
+        # Assuming 'mycol_wave' is your collection
+        sample_document = mycol_wave.find_one()
+        
+        # Assuming 'time' is the field where the date is stored
+        sample_date = sample_document['time']
+        
+        # Print the sample date
+        logging.info(f"Sample Date: {sample_date}")
+
         last_data = database.find(query)
         # logging.info(f'database: {database.find(query)}')
         logging.info(f'last_data: {last_data.next()}')
