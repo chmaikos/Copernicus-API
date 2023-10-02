@@ -202,13 +202,15 @@ def search_data(
     #     return {database.name: []}
     # else:
             
-    start_date_str = start_date.strftime("%Y-%m-%d %H:%M:%S")
-    end_date_str = end_date.strftime("%Y-%m-%d %H:%M:%S")
-    logging.info(f'start time: {start_date_str}')
-    logging.info(f'end: {end_date_str}')
+    # start_date_str = start_date.strftime("%Y-%m-%d %H:%M:%S")
+    # end_date_str = end_date.strftime("%Y-%m-%d %H:%M:%S")
+    start_timestamp = start_date.timestamp()
+    end_timestamp = end_date.timestamp()
+    logging.info(f'start time: {start_timestamp}')
+    logging.info(f'end: {end_timestamp}')
             
     query = {
-            "time": {"$gte": datetime.fromisoformat(start_date), "$lte": datetime.fromisoformat(end_date)},
+            "time": {"$gte": start_timestamp, "$lte": end_timestamp},
             "longitude": {"$gte": min_longitude, "$lte": max_longitude},
             "latitude": {"$gte": min_latitude, "$lte": max_latitude},
     }
