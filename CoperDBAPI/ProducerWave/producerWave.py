@@ -162,6 +162,8 @@ while True:
         'vtm10': vtm10[:].flatten(),
     })
 
+    df['time'] = pd.to_datetime(df['time'], format='%Y-%m-%d %H:%M:%S')
+  
     logging.info(df)
 
     # Find null values in 'Feature1'
