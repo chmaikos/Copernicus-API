@@ -31,7 +31,7 @@ def delivery_report(err, msg):
 
 def create_square(latitude, longitude, radius):
   
-    radius_in_degrees = radius / 111
+    radius_in_degrees = radius / 111.00
     min_latitude = latitude - radius_in_degrees
     max_latitude = latitude + radius_in_degrees
     min_longitude = longitude - radius_in_degrees
