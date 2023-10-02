@@ -57,12 +57,10 @@ def search_data(start_date, end_date,
         # logging.info(f'min_longitude: {min_longitude} max_longitude: {max_longitude}')
         # logging.info(f'min_latitude: {min_latitude} max_latitude: {max_latitude}')
         # Convert provided date to datetime object
-        start_date_str = datetime.strptime(start_date, "%d/%b/%Y %H:%M:%S")
-        end_date_str = datetime.strptime(end_date, "%d/%b/%Y %H:%M:%S")
-        logging.info(f'time: {start_date}')
-        logging.info(f'start_date_str: {start_date_str}')
+        logging.info(f'start time: {start_date}')
+        logging.info(f'end: {end_date}')
         query = {
-            "time": {"$gte": start_date_str, "$lte": end_date_str},
+            "time": {"$gte": start_date, "$lte": end_date},
             "longitude": {"$gte": min_longitude, "$lte": max_longitude},
             "latitude": {"$gte": min_latitude, "$lte": max_latitude}
         }
