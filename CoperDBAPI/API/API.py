@@ -208,7 +208,7 @@ def search_data(
     logging.info(f'end: {end_date_str}')
             
     query = {
-            "time": {"$gte": start_date_str, "$lte": end_date_str},
+            "time": {"$gte": datetime.fromisoformat(start_date_str), "$lte": datetime.fromisoformat(end_date_str)},
             "longitude": {"$gte": min_longitude, "$lte": max_longitude},
             "latitude": {"$gte": min_latitude, "$lte": max_latitude},
     }
