@@ -72,7 +72,7 @@ def search_data(start_date, end_date,
         logging.info(f"Query: {query}")
 
         # Assuming 'mycol_wave' is your collection
-        sample_document = mycol_wave.find_one()
+        sample_document = database.find_one()
         
         # Assuming 'time' is the field where the date is stored
         sample_date = sample_document['time']
