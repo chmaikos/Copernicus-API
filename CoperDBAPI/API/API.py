@@ -198,25 +198,25 @@ def search_data(
         datetime.strptime(document["time"], date_format) for document in result
     ]
 
-    if min(most_recent_date) > end_date or max(most_recent_date) < start_date:
-        return {database.name: []}
-    else:
+    # if min(most_recent_date) > end_date or max(most_recent_date) < start_date:
+    #     return {database.name: []}
+    # else:
             
-        start_date_str = start_date.strftime("%Y-%m-%d %H:%M:%S")
-        end_date_str = end_date.strftime("%Y-%m-%d %H:%M:%S")
-        logging.info(f'start time: {start_date_str}')
-        logging.info(f'end: {end_date_str}')
+    start_date_str = start_date.strftime("%Y-%m-%d %H:%M:%S")
+    end_date_str = end_date.strftime("%Y-%m-%d %H:%M:%S")
+    logging.info(f'start time: {start_date_str}')
+    logging.info(f'end: {end_date_str}')
             
-        query = {
+     query = {
             "time": {"$gte": start_date_str, "$lte": end_date_str},
             "longitude": {"$gte": min_longitude, "$lte": max_longitude},
             "latitude": {"$gte": min_latitude, "$lte": max_latitude},
-        }
-        last_data = database.find(query)
+       }
+       last_data = database.find(query)
 
-        if not last_data:
+       if len(list(last_data)) == 0 :
             return {database.name: []}
-        else:
+       else:
             data_list = []
             for document in last_data:
                 data_list.append(document)
