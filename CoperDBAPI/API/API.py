@@ -208,13 +208,15 @@ def search_data(
     logging.info(f'end: {end_date_str}')
             
     query = {
-            # "time": {"$gte": datetime.fromisoformat(start_date_str), "$lte": datetime.fromisoformat(end_date_str)},
+            "time": {"$gte": datetime.fromisoformat(start_date), "$lte": datetime.fromisoformat(end_date)},
             "longitude": {"$gte": min_longitude, "$lte": max_longitude},
             "latitude": {"$gte": min_latitude, "$lte": max_latitude},
     }
+
+    logging.info(f'query: {query}')
     last_data = database.find(query)
 
-    if len(list(last_data)) == 0 :
+    if not last_data:
             return {database.name: []}
     else:
             data_list = []
