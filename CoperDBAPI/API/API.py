@@ -55,12 +55,14 @@ def search_data(start_date, end_date,
     else:
         # logging.info(f'min_longitude: {min_longitude} max_longitude: {max_longitude}')
         # logging.info(f'min_latitude: {min_latitude} max_latitude: {max_latitude}')
-      
+        logging.info(f'time: {start_date}')
+        logging.info(f'type time: {type(start_date)}')
         query = {
             "time": {"$gte": start_date, "$lte": end_date},
             "longitude": {"$gte": min_longitude, "$lte": max_longitude},
             "latitude": {"$gte": min_latitude, "$lte": max_latitude}
         }
+      
         last_data = database.find(query)
         # logging.info(f'database: {database.find(query)}')
         # logging.info(f'last_data: {last_data}')
