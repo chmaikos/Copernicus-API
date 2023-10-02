@@ -190,13 +190,13 @@ def search_data(
     database,
 ):
     query = {}
-    sort_order = [("time", DESCENDING)]
-    limit = 1
-    result = database.find(query).sort(sort_order).limit(limit)
-    date_format = "%Y-%m-%d %H:%M:%S"
-    most_recent_date = [
-        datetime.strptime(document["time"], date_format) for document in result
-    ]
+    # sort_order = [("time", DESCENDING)]
+    # limit = 1
+    # result = database.find(query).sort(sort_order).limit(limit)
+    # date_format = "%Y-%m-%d %H:%M:%S"
+    # most_recent_date = [
+    #     datetime.strptime(document["time"], date_format) for document in result
+    # ]
 
     # if min(most_recent_date) > end_date or max(most_recent_date) < start_date:
     #     return {database.name: []}
@@ -204,8 +204,8 @@ def search_data(
             
     # start_date_str = start_date.strftime("%Y-%m-%d %H:%M:%S")
     # end_date_str = end_date.strftime("%Y-%m-%d %H:%M:%S")
-    start_timestamp = start_date.timestamp()
-    end_timestamp = end_date.timestamp()
+    # start_timestamp = start_date.timestamp()
+    # end_timestamp = end_date.timestamp()
     logging.info(f'start time: {start_timestamp}')
     logging.info(f'end: {end_timestamp}')
             
@@ -219,6 +219,7 @@ def search_data(
     last_data = database.find(query)
 
     if not last_data:
+            logging.info(f'last_data: {list(last_data)}')
             return {database.name: []}
     else:
             data_list = []
