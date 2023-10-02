@@ -170,13 +170,13 @@ mycol_wind = db["windData"]
 
 
 def create_square(latitude, longitude, radius):
-    earth_radius = 6371.0
-    lat_rad = radians(latitude)
-    radius_deg = radius / earth_radius
-    min_latitude = latitude - radius_deg
-    max_latitude = latitude + radius_deg
-    min_longitude = longitude - (radius_deg / cos(lat_rad))
-    max_longitude = longitude + (radius_deg / cos(lat_rad))
+  
+    radius_in_degrees = radius / 111
+    min_latitude = latitude - radius_in_degrees
+    max_latitude = latitude + radius_in_degrees
+    min_longitude = longitude - radius_in_degrees
+    max_longitude = longitude + radius_in_degrees
+
     return min_latitude, min_longitude, max_latitude, max_longitude
 
 
