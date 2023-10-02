@@ -64,7 +64,7 @@ def search_data(start_date, end_date,
         logging.info(f'end: {end_date_str}')
         
         query = {
-            "time": {"$gte": start_date_str, "$lte": end_date_str},
+            # "time": {"$gte": start_date_str, "$lte": end_date_str},
             "longitude": {"$gte": min_longitude, "$lte": max_longitude},
             "latitude": {"$gte": min_latitude, "$lte": max_latitude}
         }
