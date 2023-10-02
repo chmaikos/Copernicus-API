@@ -207,16 +207,16 @@ def search_data(
     logging.info(f'start time: {start_date_str}')
     logging.info(f'end: {end_date_str}')
             
-     query = {
+    query = {
             "time": {"$gte": start_date_str, "$lte": end_date_str},
             "longitude": {"$gte": min_longitude, "$lte": max_longitude},
             "latitude": {"$gte": min_latitude, "$lte": max_latitude},
-       }
-       last_data = database.find(query)
+    }
+    last_data = database.find(query)
 
-       if len(list(last_data)) == 0 :
+    if len(list(last_data)) == 0 :
             return {database.name: []}
-       else:
+    else:
             data_list = []
             for document in last_data:
                 data_list.append(document)
