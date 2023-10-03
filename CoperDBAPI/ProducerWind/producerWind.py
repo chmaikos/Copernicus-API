@@ -7,6 +7,7 @@ import cdsapi
 import configparser
 from datetime import datetime, timedelta
 import time
+import math
 from math import pi, radians, cos
 from confluent_kafka import Producer
 import json
