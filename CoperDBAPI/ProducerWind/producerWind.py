@@ -29,15 +29,63 @@ def delivery_report(err, msg):
         logging.info('Message delivered to topic: %s', msg.topic())
 
 
-def create_square(latitude, longitude, radius):
+# def create_square(latitude, longitude, radius):
   
-    radius_in_degrees = radius / 111.00
-    min_latitude = latitude - radius_in_degrees
-    max_latitude = latitude + radius_in_degrees
-    min_longitude = longitude - radius_in_degrees
-    max_longitude = longitude + radius_in_degrees
+#     radius_in_degrees = radius / 111.00
+#     min_latitude = latitude - radius_in_degrees
+#     max_latitude = latitude + radius_in_degrees
+#     min_longitude = longitude - radius_in_degrees
+#     max_longitude = longitude + radius_in_degrees
 
-    return min_latitude, min_longitude, max_latitude, max_longitude
+#     return min_latitude, min_longitude, max_latitude, max_longitude
+
+def create_square(lat1, lon1, distance_km):
+    R = 6371.0  # Radius of the Earth in kilometers
+
+    # Convert latitude and longitude from degrees to radians
+    lat1 = math.radians(lat1)
+    lon1 = math.radians(lon1)
+
+    bearing_list_lat = [0, 180]
+    bearing_list_lon = [90, 270] #τα διαφορετικα
+
+    # Convert bearing from degrees to radians
+    bearing_90 = math.radians(bearing_list_lon[0])
+    bearing_270 = math.radians(bearing_list_lon[1])
+    bearing_0 = math.radians(bearing_list_lat[0])
+    bearing_180 = math.radians(bearing_list_lat[1])
+
+    # Calculate new latitude
+    lat2_0 = math.asin(math.sin(lat1) * math.cos(distance_km / R) +
+                     math.cos(lat1) * math.sin(distance_km / R) * math.cos(bearing_0))
+    
+    # Calculate new latitude
+    lat2_180 = math.asin(math.sin(lat1) * math.cos(distance_km / R) +
+                     math.cos(lat1) * math.sin(distance_km / R) * math.cos(bearing_180))
+    
+     # Calculate new latitude
+    lat2_90 = math.asin(math.sin(lat1) * math.cos(distance_km / R) +
+                     math.cos(lat1) * math.sin(distance_km / R) * math.cos(bearing_90))
+    
+    # Calculate new latitude
+    lat2_270 = math.asin(math.sin(lat1) * math.cos(distance_km / R) +
+                     math.cos(lat1) * math.sin(distance_km / R) * math.cos(bearing_270))
+
+    # Calculate new longitude
+    lon2_90 = lon1 + math.atan2(math.sin(bearing_90) * math.sin(distance_km / R) * math.cos(lat1),
+                             math.cos(distance_km / R) - math.sin(lat1) * math.sin(lat2_90))
+    
+    # Calculate new longitude
+    lon2_270 = lon1 + math.atan2(math.sin(bearing_270) * math.sin(distance_km / R) * math.cos(lat1),
+                             math.cos(distance_km / R) - math.sin(lat1) * math.sin(lat2_270))
+
+    # Convert latitude and longitude back to degrees
+    lat2_0 = math.degrees(lat2_0)
+    lat2_180 = math.degrees(lat2_180)
+    lon2_90 = math.degrees(lon2_90)
+    lon2_270 = math.degrees(lon2_270)
+
+    return lat2_180, lon2_90, lat2_0, lon2_270
 
 
 producer = Producer({'bootstrap.servers': 'kafka1:29092'})
