@@ -206,8 +206,8 @@ def search_data(
     # end_date_str = end_date.strftime("%Y-%m-%d %H:%M:%S")
     # start_timestamp = start_date.timestamp()
     # end_timestamp = end_date.timestamp()
-    logging.info(f'start time: {start_timestamp}')
-    logging.info(f'end: {end_timestamp}')
+    logging.info(f'start time: {start_date}')
+    logging.info(f'end: {end_date}')
             
     query = {
             "time": {"$gte": start_date, "$lte": end_date},
