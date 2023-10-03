@@ -186,6 +186,9 @@ while True:
     mycol.insert_many(data)
     myclient.close()
 
+    # Convert it back to string format
+    df['time'] = df['time'].dt.strftime('%Y-%m-%d %H:%M:%S')
+
     for index, row in df.iterrows():
         data_topic = row.to_dict()
         value = json.dumps(data_topic).encode('utf-8')
