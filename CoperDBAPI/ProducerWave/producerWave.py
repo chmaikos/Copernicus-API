@@ -79,7 +79,7 @@ def create_square(lat1, lon1, distance_km):
     lon2_90 = math.degrees(lon2_90)
     lon2_270 = math.degrees(lon2_270)
 
-    return lat2_180, lon2_90, lat2_0, lon2_270
+    return lat2_180, lon2_270, lat2_0, lon2_90
 
 class MotuOptions:
     def __init__(self, attrs: dict):
