@@ -112,12 +112,16 @@ while True:
                                'speed': wind_speed.flatten(),
                                'direction': wind_dir.flatten()})
 
+            df['time'] = pd.to_datetime(df['time'], format='%Y-%m-%d %H:%M:%S')
+
             logging.info(df)
             df.dropna(subset=['u10'], inplace=True)
             logging.info(df)
             data = df.to_dict(orient='records')
             mycol.insert_many(data)
 
+        # Convert it back to string format
+        df['time'] = df['time'].dt.strftime('%Y-%m-%d %H:%M:%S')
         for index, row in df.iterrows():
             value = json.dumps(row.to_dict()).encode('utf-8')
             producer.produce(topic=topic,
