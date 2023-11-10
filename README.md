@@ -3,17 +3,12 @@
 ![CoperDBAPI](https://github.com/ArtemisStefanidou/CoperDBAPI/blob/main/photos/Screenshot%202023-07-24%20at%203.33.34%20PM.png)
 
 - [CoperDBAPI](#coperdbapi)
-  - [What is the CoperDBAPI?](#what-is-the-coperdbapi)
     - [Example Usage](#example-usage)
     - [ProducerWave](#producerwave)
     - [ProducerWind](#producerwind)
     - [API](#api)
       - [Request](#request)
       - [Response](#response)
-
-## What is the CoperDBAPI?
-
-Lorem impsum dolor sit amet, consectet
 
 ---
 
