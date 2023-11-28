@@ -179,7 +179,7 @@ def add_data():
         mycol_living.insert_one(data)  # Εισαγωγή δεδομένων στη συλλογή MongoDB
         return jsonify({'message': 'Data added successfully'})
     except Exception as e:
-        logging.info('try:')
+        logging.info(f'error: {str(e)}')
         return jsonify({'error': str(e)})
 
 
