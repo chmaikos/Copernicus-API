@@ -181,13 +181,15 @@ def add_data():
 
 @app.route('/living_lab', methods=['GET'])
 def get_living_lab_data():
-    date_min = request.args.get('date_min')
-    date_max = request.args.get('date_max')
+    date_format = "%Y/%m/%d %H:%M:%S"
+    date_min = datetime.strptime(
+        request.args.get("dateMin").replace("T", " "), date_format
+    )
+    date_max = datetime.strptime(
+        request.args.get("dateMax").replace("T", " "), date_format
+    )
 
     try:
-        date_min = datetime.strptime(date_min, '%Y-%m-%d')
-        date_max = datetime.strptime(date_max, '%Y-%m-%d')
-
         results = mycol_living.find({
             'your_date_field': {
                 '$gte': date_min,
