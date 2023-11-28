@@ -199,7 +199,7 @@ def get_living_lab_data():
         data_list = []
         for document in results:
                 data_list.append(document)
-        return jsonify({living_lab: data_list})
+        return jsonify({'living_lab': data_list})
     except Exception as e:
         return jsonify({'error': str(e)})
 # def create_square(latitude, longitude, radius):
