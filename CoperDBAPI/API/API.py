@@ -173,6 +173,7 @@ mycol_living = db['living_lab']  # Όνομα της συλλογής
 def add_data():
     try:
         data = request.json  # Παίρνει τα δεδομένα από το POST request σε μορφή JSON
+        logging.info(f'data: {data}')
         mycol_living.insert_one(data)  # Εισαγωγή δεδομένων στη συλλογή MongoDB
         return jsonify({'message': 'Data added successfully'})
     except Exception as e:
