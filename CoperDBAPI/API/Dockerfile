@@ -8,7 +8,7 @@ COPY . /main
 WORKDIR /main
 
 # Install any dependencies
-RUN pip install -r requirements.txt
+RUN pip install Flask==2.2.2 Flask-PyMongo==2.3.0
 
 # Specify the Flask environment port
 ENV PORT 5000
