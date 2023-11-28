@@ -179,6 +179,25 @@ def add_data():
         return jsonify({'error': str(e)})
 
 
+@app.route('/living_lab', methods=['GET'])
+def get_living_lab_data():
+    date_min = request.args.get('date_min')
+    date_max = request.args.get('date_max')
+
+    try:
+        date_min = datetime.strptime(date_min, '%Y-%m-%d')
+        date_max = datetime.strptime(date_max, '%Y-%m-%d')
+
+        results = mycol_living.find({
+            'your_date_field': {
+                '$gte': date_min,
+                '$lte': date_max
+            }
+        })
+
+        return jsonify(results)
+    except Exception as e:
+        return jsonify({'error': str(e)})
 # def create_square(latitude, longitude, radius):
   
 #     radius_in_degrees = radius / 111.00
