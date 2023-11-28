@@ -167,6 +167,16 @@ myclient = pymongo.MongoClient("mongodb://mongodb:27017")
 db = myclient["kafka_db"]
 mycol_wave = db["waveData"]
 mycol_wind = db["windData"]
+mycol_living = db['living_lab']  # Όνομα της συλλογής
+
+@app.route('/lab', methods=['POST'])
+def add_data():
+    try:
+        data = request.json  # Παίρνει τα δεδομένα από το POST request σε μορφή JSON
+        mycol_living.insert_one(data)  # Εισαγωγή δεδομένων στη συλλογή MongoDB
+        return jsonify({'message': 'Data added successfully'})
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 
 # def create_square(latitude, longitude, radius):
