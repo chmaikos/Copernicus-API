@@ -196,8 +196,10 @@ def get_living_lab_data():
                 '$lte': date_max
             }
         })
-
-        return jsonify(results)
+        data_list = []
+        for document in results:
+                data_list.append(document)
+        return jsonify({living_lab: data_list})
     except Exception as e:
         return jsonify({'error': str(e)})
 # def create_square(latitude, longitude, radius):
