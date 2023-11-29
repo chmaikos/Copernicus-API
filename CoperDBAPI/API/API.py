@@ -174,6 +174,7 @@ mycol_living = db['living_lab']  # Όνομα της συλλογής
 def add_data():
     
     try:
+        logging.info(f'data: {request.data}')
         decoded_data = request.data.decode('utf-8')
         params = json.loads(decoded_data)
         # data = request.json  # Παίρνει τα δεδομένα από το POST request σε μορφή JSON
