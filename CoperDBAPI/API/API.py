@@ -174,7 +174,9 @@ mycol_living = db['living_lab']  # Όνομα της συλλογής
 def add_data():
     
     try:
-        logging.info(f'data: {request.data}')
+        json_data = request.data
+        data_list = json.loads(json_data)
+        logging.info(f'data_list: {data_list}')
         data = request.json  # Παίρνει τα δεδομένα από το POST request σε μορφή JSON
         logging.info(f'data: {data}')
         mycol_living.insert_one(data)  # Εισαγωγή δεδομένων στη συλλογή MongoDB
