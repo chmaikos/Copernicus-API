@@ -148,6 +148,7 @@ import pymongo
 from flask import Flask, jsonify, request
 from pymongo import DESCENDING
 import json
+from bson import json_util
 
 # Configure logging
 logging.basicConfig(
@@ -187,29 +188,13 @@ def add_data():
 
 @app.route('/living_lab', methods=['GET'])
 def get_living_lab_data():
-    # date_format = "%Y/%m/%d %H:%M:%S"
-    # date_min = datetime.strptime(
-    #     request.args.get("dateMin").replace("T", " "), date_format
-    # )
-    # date_max = datetime.strptime(
-    #     request.args.get("dateMax").replace("T", " "), date_format
-    # )
-
     try:
-        # results = mycol_living.find({
-        #     'your_date_field': {
-        #         '$gte': date_min,
-        #         '$lte': date_max
-        #     }
-        # })
         results = mycol_living.find({})
-        return jsonify(list(results))
-        # data_list = []
-        # for document in results:
-        #         data_list.append(document)
-        # return jsonify({'living_lab': data_list})
+        json_results = json_util.dumps(results)
+        return jsonify(json_results)
     except Exception as e:
         return jsonify({'error': str(e)})
+
 # def create_square(latitude, longitude, radius):
   
 #     radius_in_degrees = radius / 111.00
