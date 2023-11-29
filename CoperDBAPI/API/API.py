@@ -184,17 +184,27 @@ def add_data():
     except Exception as e:
         logging.info(f'error: {str(e)}')
         return jsonify({'error': str(e)})
-
+            
 
 @app.route('/living_lab', methods=['GET'])
 def get_living_lab_data():
     try:
-        results = mycol_living.find({})
+        date_min = datetime.strptime(request.args.get("dateMin"), "%Y-%m-%dT%H:%M:%S")
+        date_max = datetime.strptime(request.args.get("dateMax"), "%Y-%m-%dT%H:%M:%S")
+
+        results = mycol_living.find({
+            'formattedDate': {
+                '$gte': date_min.strftime("%d/%m/%Y %H:%M:%S"),
+                '$lte': date_max.strftime("%d/%m/%Y %H:%M:%S")
+            }
+        })
+
         data_list = list(results)
         json_data = json.loads(json_util.dumps(data_list))
         return jsonify(json_data)
     except Exception as e:
         return jsonify({'error': str(e)})
+
 
 # def create_square(latitude, longitude, radius):
   
