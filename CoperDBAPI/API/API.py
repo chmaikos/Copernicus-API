@@ -190,8 +190,9 @@ def add_data():
 def get_living_lab_data():
     try:
         results = mycol_living.find({})
-        json_results = json_util.dumps(results)
-        return jsonify(json_results)
+        data_list = list(results)
+        json_data = json.loads(json_util.dumps(data_list))
+        return jsonify(json_data)
     except Exception as e:
         return jsonify({'error': str(e)})
 
