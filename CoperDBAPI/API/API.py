@@ -179,7 +179,7 @@ def add_data():
         logging.info(f'data_list: {data_list}')
         data = request.json  # Παίρνει τα δεδομένα από το POST request σε μορφή JSON
         logging.info(f'data: {data}')
-        mycol_living.insert_one(data)  # Εισαγωγή δεδομένων στη συλλογή MongoDB
+        mycol_living.insert_many(data)  # Εισαγωγή δεδομένων στη συλλογή MongoDB
         return jsonify({'message': 'Data added successfully'})
     except Exception as e:
         logging.info(f'error: {str(e)}')
