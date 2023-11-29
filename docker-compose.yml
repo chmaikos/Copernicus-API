@@ -48,10 +48,6 @@ mongodb:
   ports:
     - 27017:27017
 
-volumes:
-  mongodb_data:
-    driver: local
-
 
   producerwave:
       build:
@@ -85,3 +81,7 @@ volumes:
       - 5001:5000
     depends_on:
       - mongodb
+
+volumes:
+  mongodb_data:
+    driver: local
