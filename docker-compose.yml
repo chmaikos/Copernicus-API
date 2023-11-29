@@ -39,14 +39,14 @@ services:
     depends_on:
       - zoo1
 
-mongodb:
-  image: mongo:latest
-  restart: always
-  command: mongod --bind_ip_all
-  volumes:
-    - mongodb_data:/data/db
-  ports:
-    - 27017:27017
+  mongodb:
+    image: mongo:latest
+    restart: always
+    command: mongod --bind_ip_all
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - 27017:27017
 
 
   producerwave:
