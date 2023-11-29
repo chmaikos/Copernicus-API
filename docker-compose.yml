@@ -39,15 +39,18 @@ services:
     depends_on:
       - zoo1
 
-  mongodb:
-      image: mongo:latest
-      restart: always
-      command: mongod --bind_ip_all
-#      environment:
-#        MONGO_INITDB_ROOT_USERNAME: root
-#        MONGO_INITDB_ROOT_PASSWORD: example
-      ports:
-        - 27017:27017
+mongodb:
+  image: mongo:latest
+  restart: always
+  command: mongod --bind_ip_all
+  volumes:
+    - mongodb_data:/data/db
+  ports:
+    - 27017:27017
+
+volumes:
+  mongodb_data: data_db
+
 
   producerwave:
       build:
