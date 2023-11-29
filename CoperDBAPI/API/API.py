@@ -176,8 +176,9 @@ mycol_living = db['living_lab']  # Όνομα της συλλογής
 def add_data():
     try:
         json_data = request.data
+        data_str = json_data.decode('utf-8')
         pattern = r'"id":(\w+)'
-        data_with_quotes = re.sub(pattern, lambda x: f'"id":"{x.group(1)}"', json_data)
+        data_with_quotes = re.sub(pattern, lambda x: f'"id":"{x.group(1)}"', data_str)
         # data_with_quotes = json_data.replace(b'ID', b'"ID"')
         data_list = json.loads(data_with_quotes)
         logging.info(f'data_list: {data_list}')
