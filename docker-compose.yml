@@ -44,7 +44,7 @@ services:
     restart: always
     command: mongod --bind_ip_all
     volumes:
-      - mongodb_data_volumes:/data/db
+      - data_volumes:/data/db
     ports:
       - 27017:27017
 
@@ -83,5 +83,5 @@ services:
       - mongodb
 
 volumes:
-  mongodb_data_volumes:
+  data_volumes:
     driver: local
