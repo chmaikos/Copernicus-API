@@ -157,7 +157,8 @@ while True:
 
     # Get the current time
     curr_time = datetime.now()
-    delta_3h = curr_time - timedelta(hours=3)
+    rounded_time = curr_time.replace(minute=0, second=0, microsecond=0)
+    delta_3h = rounded_time - timedelta(hours=3)
     delta_3h = delta_3h + timedelta(seconds=1)
     USERNAME = 'mmini1'
     PASSWORD = 'Artemis2000'
