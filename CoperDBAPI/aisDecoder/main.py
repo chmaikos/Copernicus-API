@@ -28,6 +28,7 @@ try:
 except Exception as e:
     logging.exception(f'An error occurred: {e}')
 
+logging.info(f'decoder: {data}')
 
 # Check if data is available before logging
 if data is not None:
