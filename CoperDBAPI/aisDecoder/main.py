@@ -17,12 +17,14 @@ logging.getLogger("").addHandler(console)
 host = "0.0.0.0"
 port = 9094
 
-# Continue with the rest of your code...
-for msg in UDPStream(host, port):
-    try:
+try:
+    # Continue with the rest of your code...
+    for msg in UDPStream(host, port):
+    
         message = msg.decode()
         logging.info(f'message: {message}')
-    except Exception as e:
-        logging.error(f'message cannot be decoded: {e}')
+except Exception as e:
+    logging.error(f'UDP stream failure: {e}')
+    continue
     
 
