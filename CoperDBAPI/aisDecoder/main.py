@@ -25,6 +25,5 @@ try:
         logging.info(f'message: {message}')
 except Exception as e:
     logging.error(f'UDP stream failure: {e}')
-    continue
     
 
