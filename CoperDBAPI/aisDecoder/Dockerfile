@@ -13,11 +13,6 @@ RUN apt-get update
 # Install any dependencies
 RUN pip install -r requirements.txt
 
-# By default, listen on port 9094
-ENV PORT 9094
-
-EXPOSE 9094
-
 # Set the directive to specify the executable that will run when the container is initiated
 ENTRYPOINT [ "python" ]
 
