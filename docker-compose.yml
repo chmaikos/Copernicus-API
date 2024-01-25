@@ -82,6 +82,12 @@ services:
     depends_on:
       - mongodb
 
+  ais_decoder:
+    build:
+      context: ./aisDecoder
+    depends_on:
+      - mongodb
+
 volumes:
   data_volumes:
     driver: local
