@@ -1,2 +1,2 @@
 pyais==1.2.0
-sockets==1.1.0
+sockets==1.0.0
