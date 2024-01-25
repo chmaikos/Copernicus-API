@@ -17,4 +17,4 @@ RUN pip install -r requirements.txt
 ENTRYPOINT [ "python" ]
 
 # Specify the command to run on container start
-CMD [ "aisDecoder.py" ]
+CMD [ "main.py" ]
