@@ -14,7 +14,7 @@ formatter = logging.Formatter("%(name)s-%(levelname)s-%(message)s")
 console.setFormatter(formatter)
 logging.getLogger("").addHandler(console)
 
-host = "127.0.0.1"
+host = "host.docker.internal"
 port = 9094
 
 logging.info(f'decoder:')
