@@ -84,7 +84,7 @@ services:
 
   ais_decoder:
     build:
-      context: ./aisDecoder
+      context: ./CoperDBAPI/aisDecoder
     depends_on:
       - mongodb
 
