@@ -17,14 +17,14 @@ logging.getLogger("").addHandler(console)
 host = "127.0.0.1"
 port = 9094
 
+logging.info(f'decoder:')
+
 # Print each item in the list
 try:
     data = len(list(UDPStream(host, port).read()))
 except Exception as e:
     logging.info(f'message: {e}')
 
-
-logging.info(f'decoder:')
 logging.info(f'decoder: {data}')
 logging.info(f'decoder: {list(UDPStream(host, port).read())}')
 
