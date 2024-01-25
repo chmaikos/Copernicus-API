@@ -17,8 +17,10 @@ logging.getLogger("").addHandler(console)
 host = "127.0.0.1"
 port = 9094
 
+data = len(list(UDPStream(host, port).read()))
+
 logging.info(f'decoder:')
-logging.info(f'decoder: {len(list(UDPStream(host, port).read()))}')
+logging.info(f'decoder: {data}')
 logging.info(f'decoder: {list(UDPStream(host, port).read())}')
 
 for msg in UDPStream(host, port):
