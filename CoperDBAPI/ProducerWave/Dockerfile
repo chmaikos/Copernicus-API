@@ -1,5 +1,5 @@
 # Set base image (host OS)
-FROM python:3.10.12
+FROM python:3.9
 
 # Copy the content of the project directory to the working directory
 COPY . /main
