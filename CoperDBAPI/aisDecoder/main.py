@@ -26,7 +26,8 @@ data = None
 try:
     data = len(list(UDPStream(host, port).read()))
 except Exception as e:
-    logging.info(f'message: {e}')
+    logging.exception(f'An error occurred: {e}')
+
 
 # Check if data is available before logging
 if data is not None:
