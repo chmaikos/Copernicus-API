@@ -19,6 +19,10 @@ port = 9094
 
 # Continue with the rest of your code...
 for msg in UDPStream(host, port):
-    message = msg.decode()
-    logging.info(f'message: {message}')
+    try:
+        message = msg.decode()
+        logging.info(f'message: {message}')
+    except Exception as e:
+        logging.error(f'message cannot be decoded: {e}')
+    
 
