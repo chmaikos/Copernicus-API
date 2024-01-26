@@ -27,6 +27,8 @@ while True:
             
                 message = message.to_json()
 
+                message = json.loads(message_json)
+
                 tmp = message['decoded']['type']
                 
                 logging.info(f'message: {tmp}')
