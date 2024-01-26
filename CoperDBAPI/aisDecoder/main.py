@@ -22,20 +22,22 @@ while True:
     try:
         for msg in UDPStream(host, port):
             message = msg.decode()
+
+            if message is not None:
             
-            ais_dict = message.__dict__
-            
-            ais_json = json.dumps(ais_dict, indent=2)
-            
-            logging.info(f'message: {type(message)}')
-            
-            # Έλεγχος του τύπου του μηνύματος
-            if 'type' in message and message['type'] in [1, 2, 3]:
-                # Αποθήκευση στη συλλογή δυναμικών δεδομένων
-                logging.info(f'123')
-            else:
-                # Αποθήκευση στη συλλογή στατικών δεδομένων
-                logging.info(f'4')
+                ais_dict = message.__dict__
+                
+                ais_json = json.dumps(ais_dict, indent=2)
+                
+                logging.info(f'message: {type(message)}')
+                
+                # Έλεγχος του τύπου του μηνύματος
+                if 'type' in message and message['type'] in [1, 2, 3]:
+                    # Αποθήκευση στη συλλογή δυναμικών δεδομένων
+                    logging.info(f'123')
+                else:
+                    # Αποθήκευση στη συλλογή στατικών δεδομένων
+                    logging.info(f'4')
     
     except Exception as e:
         logging.error(f'UDP stream failure: {e}')
