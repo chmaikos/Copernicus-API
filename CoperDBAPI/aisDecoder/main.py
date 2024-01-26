@@ -27,7 +27,7 @@ while True:
             
                 message = message.to_json()
 
-                message = json.loads(message_json)
+                message = json.loads(message)
 
                 tmp = message['decoded']['type']
                 
