@@ -21,6 +21,11 @@ while True:
     try:
         for msg in UDPStream(host, port):
             message = msg.decode()
+            
+            ais_dict = ais_message.__dict__
+            
+            ais_json = json.dumps(ais_dict, indent=2)
+            
             logging.info(f'message: {type(message)}')
             
             # Έλεγχος του τύπου του μηνύματος
