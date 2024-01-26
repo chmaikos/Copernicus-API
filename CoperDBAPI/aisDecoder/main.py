@@ -26,8 +26,10 @@ while True:
             if message is not None:
             
                 message = message.to_json()
+
+                tmp = message['decoded']['type']
                 
-                logging.info(f'message: {message['decoded']['type']}')
+                logging.info(f'message: {tmp}')
                 
                 # Έλεγχος του τύπου του μηνύματος
                 if 'type' in message and message['type'] in [1, 2, 3]:
