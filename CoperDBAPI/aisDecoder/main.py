@@ -25,9 +25,7 @@ while True:
 
             if message is not None:
             
-                ais_dict = message.__dict__
-                
-                ais_json = json.dumps(ais_dict, indent=2)
+                message = message.to_json()
                 
                 logging.info(f'message: {type(message)}')
                 
