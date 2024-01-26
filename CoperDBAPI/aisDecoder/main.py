@@ -22,7 +22,7 @@ while True:
         for msg in UDPStream(host, port):
             message = msg.decode()
             
-            ais_dict = ais_message.__dict__
+            ais_dict = message.__dict__
             
             ais_json = json.dumps(ais_dict, indent=2)
             
