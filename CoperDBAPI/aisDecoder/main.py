@@ -21,7 +21,7 @@ while True:
     try:
         for msg in UDPStream(host, port):
             message = msg.decode()
-            logging.info(f'message: {message}')
+            logging.info(f'message: {type(message)}')
             
             # Έλεγχος του τύπου του μηνύματος
             if 'type' in message and message['type'] in [1, 2, 3]:
