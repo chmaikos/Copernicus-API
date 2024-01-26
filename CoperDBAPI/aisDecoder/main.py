@@ -27,7 +27,7 @@ while True:
             
                 message = message.to_json()
                 
-                logging.info(f'message: {message}')
+                logging.info(f'message: {message['decoded']['type']}')
                 
                 # Έλεγχος του τύπου του μηνύματος
                 if 'type' in message and message['type'] in [1, 2, 3]:
