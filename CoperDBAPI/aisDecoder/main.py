@@ -18,18 +18,18 @@ host = "0.0.0.0"
 port = 9094
 
 while True:
-    for msg in UDPStream(host, port):
     try:
-        message = msg.decode()
-        logging.info(f'message: {message}')
-        
-        # Έλεγχος του τύπου του μηνύματος
-        if 'type' in message and message['type'] in [1, 2, 3]:
-            # Αποθήκευση στη συλλογή δυναμικών δεδομένων
-            logging.info(f'123')
-        else:
-            # Αποθήκευση στη συλλογή στατικών δεδομένων
-            logging.info(f'4')
+        for msg in UDPStream(host, port):
+            message = msg.decode()
+            logging.info(f'message: {message}')
+            
+            # Έλεγχος του τύπου του μηνύματος
+            if 'type' in message and message['type'] in [1, 2, 3]:
+                # Αποθήκευση στη συλλογή δυναμικών δεδομένων
+                logging.info(f'123')
+            else:
+                # Αποθήκευση στη συλλογή στατικών δεδομένων
+                logging.info(f'4')
     
     except Exception as e:
         logging.error(f'UDP stream failure: {e}')
