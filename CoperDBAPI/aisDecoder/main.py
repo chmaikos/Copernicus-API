@@ -1,5 +1,6 @@
 from pyais.stream import UDPStream
 import logging
+import json
 
 # Configure logging
 logging.basicConfig(
