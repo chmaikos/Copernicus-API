@@ -23,8 +23,8 @@ mycol_dynamic = db["ais_cyprus_dynamic"]
 mycol_static = db["ais_cyprus_static"]
 mycol_other = db["ais_cyprus_other"]
 
-mycol_static.drop()
-mycol_dynamic.drop()
+# mycol_static.drop()
+# mycol_dynamic.drop()
 
 kafka_client = KafkaClient(hosts='kafka1:29092')
 kafka_producer_dynamic = kafka_client.topics[b'ais_cyprus_dynamic'].get_producer()
@@ -47,25 +47,23 @@ while True:
                 message_decoded = message_data['decoded']
                 logging.info(f'message: {message_decoded}')
 
-                # Έλεγχος του τύπου του μηνύματος
                 if message_type in [1, 2, 3, 18, 9]:
 
                     message_decoded["sog"] = message_decoded.pop("speed", None)
                     message_decoded["cog"] = message_decoded.pop("course", None)
     
-                    # Αποθήκευση στη συλλογή δυναμικών δεδομένων
                     db.ais_cyprus_dynamic.insert_one(message_decoded)
-                    # Παραγωγή μηνύματος στο Kafka topic
+                    
                     kafka_producer_dynamic.produce(message_decoded)
 
                 elif message_type in [4, 5, 24]:
-                    # Αποθήκευση στη συλλογή στατικών δεδομένων
+                    
                     db.ais_cyprus_static.insert_one(message_decoded)
-                    # Παραγωγή μηνύματος στο Kafka topic
+                    
                     kafka_producer_static.produce(message_decoded)
 
                 else:
-                    # Αποθήκευση στη συλλογή other (χωρίς Kafka)
+                    
                     db.other.insert_one(message_decoded)
 
     except Exception as e:
