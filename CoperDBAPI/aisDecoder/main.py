@@ -49,6 +49,10 @@ while True:
 
                 # Έλεγχος του τύπου του μηνύματος
                 if message_type in [1, 2, 3, 18, 9]:
+
+                    message_decoded["sog"] = message_decoded.pop("speed", None)
+                    message_decoded["cog"] = message_decoded.pop("course", None)
+    
                     # Αποθήκευση στη συλλογή δυναμικών δεδομένων
                     db.ais_cyprus_dynamic.insert_one(message_decoded)
                     # Παραγωγή μηνύματος στο Kafka topic
