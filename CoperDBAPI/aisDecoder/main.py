@@ -24,25 +24,31 @@ while True:
             message = msg.decode()
 
             if message is not None:
-            
-                message = message.to_json()
+                message_json = message.to_json()
+                logging.info(f'message: {message_json}')
 
-                logging.info(f'message: {message}')
+                message_data = json.loads(message_json)
+                message_type = message_data['decoded']['type']
 
-                message = json.loads(message)
+                logging.info(f'message type: {message_type}')
 
-                tmp = message['decoded']['type']
-                
-                logging.info(f'message: {tmp}')
-                
                 # Έλεγχος του τύπου του μηνύματος
-                if 'type' in message and message['type'] in [1, 2, 3]:
+                if message_type in [1, 2, 3, 18, 9]:
                     # Αποθήκευση στη συλλογή δυναμικών δεδομένων
-                    logging.info(f'123')
-                else:
+                    db.ais_cyprus_dynamic.insert_one(message_data)
+                    # Παραγωγή μηνύματος στο Kafka topic
+                    kafka_producer.produce(json.dumps(message_data).encode('utf-8'))
+
+                elif message_type in [4, 5, 24]:
                     # Αποθήκευση στη συλλογή στατικών δεδομένων
-                    logging.info(f'4')
-    
+                    db.ais_cyprus_static.insert_one(message_data)
+                    # Παραγωγή μηνύματος στο Kafka topic
+                    kafka_producer.produce(json.dumps(message_data).encode('utf-8'))
+
+                else:
+                    # Αποθήκευση στη συλλογή other (χωρίς Kafka)
+                    db.other.insert_one(message_data)
+
     except Exception as e:
         logging.error(f'UDP stream failure: {e}')
 
