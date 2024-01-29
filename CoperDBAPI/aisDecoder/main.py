@@ -15,6 +15,11 @@ formatter = logging.Formatter("%(name)s-%(levelname)s-%(message)s")
 console.setFormatter(formatter)
 logging.getLogger("").addHandler(console)
 
+myclient = pymongo.MongoClient("mongodb://mongodb:27017")
+db = myclient["kafka_db"]
+mycol_dynamic = db["ais_cyprus_dynamic"]
+mycol_static = db["ais_cyprus_static"]
+
 host = "0.0.0.0"
 port = 9094
 
