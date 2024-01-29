@@ -23,6 +23,9 @@ mycol_dynamic = db["ais_cyprus_dynamic"]
 mycol_static = db["ais_cyprus_static"]
 mycol_other = db["ais_cyprus_other"]
 
+mycol_static.drop()
+mycol_dynamic.drop()
+
 kafka_client = KafkaClient(hosts='kafka1:29092')
 kafka_producer_dynamic = kafka_client.topics[b'ais_cyprus_dynamic'].get_producer()
 kafka_producer_static = kafka_client.topics[b'ais_cyprus_static'].get_producer()
