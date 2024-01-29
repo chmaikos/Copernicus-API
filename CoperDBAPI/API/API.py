@@ -29,6 +29,9 @@ db = myclient["kafka_db"]
 mycol_wave = db["waveData"]
 mycol_wind = db["windData"]
 mycol_living = db['living_lab']  # Όνομα της συλλογής
+mycol_dynamic = db["ais_cyprus_dynamic"]
+mycol_static = db["ais_cyprus_static"]
+mycol_other = db["ais_cyprus_other"]
 
 @app.route('/lab', methods=['POST'])
 def add_data():
@@ -216,6 +219,36 @@ def get_status():
         response = {"status": "fail"}
 
     return jsonify(response)
+
+@app.route("/ais_cyprus_dynamic", methods=["GET"])
+def get_ais_cyprus_dynamic():
+    try:
+        results = mycol_dynamic.find()
+        data_list = list(results)
+        json_data = json.loads(json_util.dumps(data_list))
+        return jsonify(json_data)
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+@app.route("/ais_cyprus_static", methods=["GET"])
+def get_ais_cyprus_static():
+    try:
+        results = mycol_static.find()
+        data_list = list(results)
+        json_data = json.loads(json_util.dumps(data_list))
+        return jsonify(json_data)
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+@app.route("/ais_cyprus_other", methods=["GET"])
+def get_ais_cyprus_other():
+    try:
+        results = mycol_other.find()
+        data_list = list(results)
+        json_data = json.loads(json_util.dumps(data_list))
+        return jsonify(json_data)
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 
 if __name__ == "__main__":
