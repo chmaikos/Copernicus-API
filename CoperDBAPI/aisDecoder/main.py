@@ -2,6 +2,7 @@ from pyais.stream import UDPStream
 import logging
 import json
 import pymongo
+from pykafka import KafkaClient
 
 # Configure logging
 logging.basicConfig(
