@@ -52,13 +52,13 @@ while True:
                     # Αποθήκευση στη συλλογή δυναμικών δεδομένων
                     db.ais_cyprus_dynamic.insert_one(message_data['decoded'])
                     # Παραγωγή μηνύματος στο Kafka topic
-                    kafka_producer_dynamic.produce(json.dumps(message_data['decoded']).encode('utf-8'))
+                    #kafka_producer_dynamic.produce(json.dumps(message_data['decoded']).encode('utf-8'))
 
                 elif message_type in [4, 5, 24]:
                     # Αποθήκευση στη συλλογή στατικών δεδομένων
                     db.ais_cyprus_static.insert_one(message_data['decoded'])
                     # Παραγωγή μηνύματος στο Kafka topic
-                    kafka_producer_static.produce(json.dumps(message_data['decoded']).encode('utf-8'))
+                    #kafka_producer_static.produce(json.dumps(message_data['decoded']).encode('utf-8'))
 
                 else:
                     # Αποθήκευση στη συλλογή other (χωρίς Kafka)
