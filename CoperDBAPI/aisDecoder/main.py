@@ -37,12 +37,11 @@ while True:
 
             if message is not None:
                 message_json = message.to_json()
-                logging.info(f'message: {message_json}')
 
                 message_data = json.loads(message_json)
                 message_type = message_data['decoded']['type']
 
-                logging.info(f'message: {message_data}')
+                logging.info(f'message: {message_data['decoded']}')
 
                 # Έλεγχος του τύπου του μηνύματος
                 if message_type in [1, 2, 3, 18, 9]:
