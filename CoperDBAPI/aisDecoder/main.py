@@ -1,6 +1,7 @@
 from pyais.stream import UDPStream
 import logging
 import json
+import pymongo
 
 # Configure logging
 logging.basicConfig(
@@ -19,6 +20,11 @@ myclient = pymongo.MongoClient("mongodb://mongodb:27017")
 db = myclient["kafka_db"]
 mycol_dynamic = db["ais_cyprus_dynamic"]
 mycol_static = db["ais_cyprus_static"]
+mycol_other = db["ais_cyprus_other"]
+
+kafka_client = KafkaClient(hosts='kafka1:29092')
+kafka_producer_dynamic = kafka_client.topics[b'ais_cyprus_dynamic'].get_producer()
+kafka_producer_static = kafka_client.topics[b'ais_cyprus_static'].get_producer()
 
 host = "0.0.0.0"
 port = 9094
@@ -42,13 +48,13 @@ while True:
                     # Αποθήκευση στη συλλογή δυναμικών δεδομένων
                     db.ais_cyprus_dynamic.insert_one(message_data)
                     # Παραγωγή μηνύματος στο Kafka topic
-                    kafka_producer.produce(json.dumps(message_data).encode('utf-8'))
+                    kafka_producer_dynamic.produce(json.dumps(message_data).encode('utf-8'))
 
                 elif message_type in [4, 5, 24]:
                     # Αποθήκευση στη συλλογή στατικών δεδομένων
                     db.ais_cyprus_static.insert_one(message_data)
                     # Παραγωγή μηνύματος στο Kafka topic
-                    kafka_producer.produce(json.dumps(message_data).encode('utf-8'))
+                    kafka_producer_static.produce(json.dumps(message_data).encode('utf-8'))
 
                 else:
                     # Αποθήκευση στη συλλογή other (χωρίς Kafka)
