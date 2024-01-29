@@ -44,7 +44,8 @@ while True:
 
                 logging.info(f'message type: {message_type}')
 
-                logging.info(f'type of message_data: {type(message_data['decoded'])}')
+                dec = message_data['decoded']
+                logging.info(f'type of message_data: {type(dec)}')
 
                 # Έλεγχος του τύπου του μηνύματος
                 if message_type in [1, 2, 3, 18, 9]:
