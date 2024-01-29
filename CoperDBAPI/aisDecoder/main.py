@@ -42,10 +42,7 @@ while True:
                 message_data = json.loads(message_json)
                 message_type = message_data['decoded']['type']
 
-                logging.info(f'message type: {message_type}')
-
-                dec = message_data['decoded']
-                logging.info(f'type of message_data: {type(dec)}')
+                logging.info(f'message: {message_data}')
 
                 # Έλεγχος του τύπου του μηνύματος
                 if message_type in [1, 2, 3, 18, 9]:
