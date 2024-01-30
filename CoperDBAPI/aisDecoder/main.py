@@ -53,7 +53,6 @@ while True:
                 if message_type in [1, 2, 3]:
                     
                     new_data["timestamp"] = message_decoded.get("second")
-                    new_data["id"] = message_decoded.get("old_field2")
                     new_data["navStatus"] = message_decoded.get("old_field1")
                     new_data["lon"] = message_decoded.get("lon")
                     new_data["lat"] = message_decoded.get("lat")
