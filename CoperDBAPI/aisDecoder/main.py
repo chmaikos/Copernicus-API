@@ -34,9 +34,6 @@ kafka_producer_static = kafka_client.topics[b'ais_cyprus_static'].get_producer()
 host = "0.0.0.0"
 port = 9094
 
-previous_message_type = None
-previous_message_data = None
-
 while True:
     try:
         
@@ -54,47 +51,76 @@ while True:
                 new_data = {}
                 if message_type in [1, 2, 3]:
                     
-                #     new_data["timestamp"] = message_decoded.get("old_field1")
-                #     new_data["id"] = message_decoded.get("old_field2")
-                #     new_data["navStatus"] = message_decoded.get("old_field1")
-                #     new_data["lon"] = message_decoded.get("old_field2")
-                #     new_data["lat"] = message_decoded.get("old_field1")
-                #     new_data["heading"] = message_decoded.get("old_field2")
-                #     new_data["sog"] = message_decoded.get("old_field1")
-                #     new_data["cog"] = message_decoded.get("old_field2")
-                
-                # elif message_type is [9, 18]:
+                    new_data["timestamp"] = message_decoded.get("second")
+                    new_data["id"] = message_decoded.get("old_field2")
+                    new_data["navStatus"] = message_decoded.get("old_field1")
+                    new_data["lon"] = message_decoded.get("lon")
+                    new_data["lat"] = message_decoded.get("lat")
+                    new_data["heading"] = message_decoded.get("heading")
+                    new_data["sog"] = message_decoded.get("speed")
+                    new_data["cog"] = message_decoded.get("course")
+
+                    db.ais_cyprus_dynamic.insert_one(new_data)
+                    kafka_producer_dynamic.produce(new_data)
+                    
+                elif message_type is [9, 18]:
             
-
-                    message_decoded["sog"] = message_decoded.pop("speed", None)
-                    message_decoded["cog"] = message_decoded.pop("course", None)
+                    new_data["timestamp"] = message_decoded.get("second")
+                    new_data["navStatus"] = -1
+                    new_data["lon"] = message_decoded.get("lon")
+                    new_data["lat"] = message_decoded.get("lat")
+                    new_data["heading"] = message_decoded.get("heading")
+                    new_data["sog"] = message_decoded.get("speed")
+                    new_data["cog"] = message_decoded.get("course")
     
-                    db.ais_cyprus_dynamic.insert_one(message_decoded)
-                    
-                    kafka_producer_dynamic.produce(message_decoded)
+                    db.ais_cyprus_dynamic.insert_one(new_data)
+                    kafka_producer_dynamic.produce(new_data)
 
-                elif message_type in [5, 24]:
-                    
-                    db.ais_cyprus_static.insert_one(message_decoded)
-                    
-                    kafka_producer_static.produce(message_decoded)
+                elif message_type is 5:
 
-                else:
+                    day = message_decoded.get("day")
+                    second = message_decoded.get("hour")
+                    minute = message_decoded.get("minute")
+                    month = message_decoded.get("month")
+                    new_data["timestamp"] = 
+                    new_data["imo"] = message_decoded.get("imo")
+                    new_data["shipname"] = message_decoded.get("shipname")
+                    new_data["callsign"] = message_decoded.get("callsign")
+                    new_data["shipType"] = message_decoded.get("shiptype")
+                    new_data["draught"] = message_decoded.get("draught")
+                    new_data["bow"] = message_decoded.get("to_bow")
+                    new_data["stern"] = message_decoded.get("course")
+                    new_data["port"] = message_decoded.get("to_port")
+                    new_data["starboard"] = message_decoded.get("to_starboard")
+                    new_data["destination"] = message_decoded.get("destination")
+
+                    db.ais_cyprus_static.insert_one(new_data)
+                    kafka_producer_static.produce(new_data)
+
+                elif message_type is 24:
+
+                    logging.info(f'message: {message_data}')
+
+                    # day = message_decoded.get("day")
+                    # second = message_decoded.get("hour")
+                    # minute = message_decoded.get("minute")
+                    # month = message_decoded.get("month")
+                    # new_data["timestamp"] = 
+                    # new_data["imo"] = message_decoded.get("imo")
+                    # new_data["shipname"] = message_decoded.get("shipname")
+                    # new_data["callsign"] = message_decoded.get("callsign")
+                    # new_data["shipType"] = message_decoded.get("shiptype")
+                    # new_data["draught"] = message_decoded.get("draught")
+                    # new_data["bow"] = message_decoded.get("to_bow")
+                    # new_data["stern"] = message_decoded.get("course")
+                    # new_data["port"] = message_decoded.get("to_port")
+                    # new_data["starboard"] = message_decoded.get("to_starboard")
+                    # new_data["destination"] = message_decoded.get("destination")
                     
-                    db.other.insert_one(message_decoded)
+                    db.ais_cyprus_static.insert_one(new_data)
+                    kafka_producer_static.produce(new_data)
                     
-                if message_type == 24:
-                    # Εάν το τρέχον μήνυμα είναι τύπου 24, ελέγξτε το προηγούμενο μήνυμα
-                    if previous_message_type == 24:
-                        doc = 'here is a crop message'
-                        logging.info(f'double: {doc}')
-                        
-                        previous_message_type = None
-                        previous_message_data = None
-                    else:
-                        # Αποθήκευση του τρέχοντος μηνύματος για μελλοντική συγχώνευση
-                        previous_message_type = message_type
-                        previous_message_data = message_decoded
+               
                     
 
     except Exception as e:
