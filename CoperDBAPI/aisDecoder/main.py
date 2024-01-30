@@ -56,7 +56,7 @@ while True:
                     
                     kafka_producer_dynamic.produce(message_decoded)
 
-                elif message_type in [4, 5, 24]:
+                elif message_type in [5, 24]:
                     
                     db.ais_cyprus_static.insert_one(message_decoded)
                     
