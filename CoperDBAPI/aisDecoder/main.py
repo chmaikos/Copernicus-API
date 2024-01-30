@@ -34,8 +34,12 @@ kafka_producer_static = kafka_client.topics[b'ais_cyprus_static'].get_producer()
 host = "0.0.0.0"
 port = 9094
 
+previous_message_type = None
+previous_message_data = None
+
 while True:
     try:
+        
         for msg in UDPStream(host, port):
             message = msg.decode()
 
@@ -78,6 +82,20 @@ while True:
                 else:
                     
                     db.other.insert_one(message_decoded)
+                    
+                if message_type == 24:
+                    # Εάν το τρέχον μήνυμα είναι τύπου 24, ελέγξτε το προηγούμενο μήνυμα
+                    if previous_message_type == 24:
+                        doc = 'here is a crop message'
+                        logging.info(f'double: {doc}')
+                        
+                        previous_message_type = None
+                        previous_message_data = None
+                    else:
+                        # Αποθήκευση του τρέχοντος μηνύματος για μελλοντική συγχώνευση
+                        previous_message_type = message_type
+                        previous_message_data = message_decoded
+                    
 
     except Exception as e:
         logging.error(f'UDP stream failure: {e}')
