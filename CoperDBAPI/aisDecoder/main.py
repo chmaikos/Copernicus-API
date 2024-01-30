@@ -76,7 +76,7 @@ while True:
                     db.ais_cyprus_dynamic.insert_one(new_data)
                     kafka_producer_dynamic.produce(new_data)
 
-                elif message_type is 5:
+                elif message_type == 5:
 
                     day = message_decoded.get("day")
                     hour = message_decoded.get("hour")
@@ -101,7 +101,7 @@ while True:
                     db.ais_cyprus_static.insert_one(new_data)
                     kafka_producer_static.produce(new_data)
 
-                elif message_type is 24 and message_decoded.get("to_port") is not None:
+                elif message_type == 24 and message_decoded.get("to_port") is not None:
 
                     logging.info(f'message: {message_data}')
 
