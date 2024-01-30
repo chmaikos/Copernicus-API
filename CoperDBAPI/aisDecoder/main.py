@@ -50,7 +50,7 @@ while True:
                 message_type = message_data['decoded']['type']
 
                 message_decoded = message_data['decoded']
-                logging.info(f'message: {message_type}')
+                logging.info(f'message: {message_decoded}')
                 new_data = {}
                 if message_type in [1, 2, 3]:
                     
