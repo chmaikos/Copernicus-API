@@ -3,6 +3,7 @@ import logging
 import json
 import pymongo
 from pykafka import KafkaClient
+from datetime import datetime
 
 # Configure logging
 logging.basicConfig(
@@ -82,7 +83,11 @@ while True:
                     second = message_decoded.get("hour")
                     minute = message_decoded.get("minute")
                     month = message_decoded.get("month")
-                    new_data["timestamp"] = 
+
+                    timestamp = datetime(month=month, day=day, hour=hour, minute=minute)
+                    timestamp = timestamp.timestamp()
+                    
+                    new_data["timestamp"] = timestamp
                     new_data["imo"] = message_decoded.get("imo")
                     new_data["shipname"] = message_decoded.get("shipname")
                     new_data["callsign"] = message_decoded.get("callsign")
