@@ -48,7 +48,7 @@ while True:
                 message_type = message_data['decoded']['type']
 
                 message_decoded = message_data['decoded']
-                logging.info(f'message: {message_decoded}')
+                # logging.info(f'message: {message_decoded}')
                 new_data = {}
                 if message_type in [1, 2, 3]:
                     
@@ -93,7 +93,7 @@ while True:
                     new_data["shipType"] = message_decoded.get("shiptype")
                     new_data["draught"] = message_decoded.get("draught")
                     new_data["bow"] = message_decoded.get("to_bow")
-                    new_data["stern"] = message_decoded.get("course")
+                    new_data["stern"] = message_decoded.get("to_stern")
                     new_data["port"] = message_decoded.get("to_port")
                     new_data["starboard"] = message_decoded.get("to_starboard")
                     new_data["destination"] = message_decoded.get("destination")
@@ -109,17 +109,17 @@ while True:
                     # second = message_decoded.get("hour")
                     # minute = message_decoded.get("minute")
                     # month = message_decoded.get("month")
-                    # new_data["timestamp"] = 
-                    # new_data["imo"] = message_decoded.get("imo")
-                    # new_data["shipname"] = message_decoded.get("shipname")
-                    # new_data["callsign"] = message_decoded.get("callsign")
-                    # new_data["shipType"] = message_decoded.get("shiptype")
-                    # new_data["draught"] = message_decoded.get("draught")
-                    # new_data["bow"] = message_decoded.get("to_bow")
-                    # new_data["stern"] = message_decoded.get("course")
-                    # new_data["port"] = message_decoded.get("to_port")
-                    # new_data["starboard"] = message_decoded.get("to_starboard")
-                    # new_data["destination"] = message_decoded.get("destination")
+                    new_data["timestamp"] = -1
+                    new_data["imo"] = -1
+                    new_data["shipname"] = ''
+                    new_data["callsign"] = message_decoded.get("callsign")
+                    new_data["shipType"] = message_decoded.get("shiptype")
+                    new_data["draught"] = -1
+                    new_data["bow"] = message_decoded.get("to_bow")
+                    new_data["stern"] = message_decoded.get("to_stern")
+                    new_data["port"] = message_decoded.get("to_port")
+                    new_data["starboard"] = message_decoded.get("to_starboard")
+                    new_data["destination"] = ''
                     
                     db.ais_cyprus_static.insert_one(new_data)
                     kafka_producer_static.produce(new_data)
