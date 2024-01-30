@@ -23,8 +23,9 @@ mycol_dynamic = db["ais_cyprus_dynamic"]
 mycol_static = db["ais_cyprus_static"]
 mycol_other = db["ais_cyprus_other"]
 
-# mycol_static.drop()
-# mycol_dynamic.drop()
+mycol_static.drop()
+mycol_dynamic.drop()
+mycol_other.drop()
 
 kafka_client = KafkaClient(hosts='kafka1:29092')
 kafka_producer_dynamic = kafka_client.topics[b'ais_cyprus_dynamic'].get_producer()
@@ -45,9 +46,21 @@ while True:
                 message_type = message_data['decoded']['type']
 
                 message_decoded = message_data['decoded']
-                logging.info(f'message: {message_decoded}')
-
-                if message_type in [1, 2, 3, 18, 9]:
+                # logging.info(f'message: {message_decoded}')
+                new_data = {}
+                if message_type in [1, 2, 3]:
+                    
+                #     new_data["timestamp"] = message_decoded.get("old_field1")
+                #     new_data["id"] = message_decoded.get("old_field2")
+                #     new_data["navStatus"] = message_decoded.get("old_field1")
+                #     new_data["lon"] = message_decoded.get("old_field2")
+                #     new_data["lat"] = message_decoded.get("old_field1")
+                #     new_data["heading"] = message_decoded.get("old_field2")
+                #     new_data["sog"] = message_decoded.get("old_field1")
+                #     new_data["cog"] = message_decoded.get("old_field2")
+                
+                # elif message_type is [9, 18]:
+            
 
                     message_decoded["sog"] = message_decoded.pop("speed", None)
                     message_decoded["cog"] = message_decoded.pop("course", None)
