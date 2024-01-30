@@ -63,7 +63,7 @@ while True:
                     db.ais_cyprus_dynamic.insert_one(new_data)
                     kafka_producer_dynamic.produce(new_data)
                     
-                elif message_type is [9, 18]:
+                elif message_type in [9, 18]:
             
                     new_data["timestamp"] = message_decoded.get("second")
                     new_data["navStatus"] = -1
