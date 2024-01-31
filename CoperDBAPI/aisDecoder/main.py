@@ -49,21 +49,21 @@ while True:
                 formatted_time = current_utc_time.strftime("%d/%m/%Y %H:%M:%S")
 
                 new_data = {}
-                new_data["time"] = formatted_time
+                new_data["timestamp"] = formatted_time
                 
                 if message_type in [1, 2, 3]:
 
                     message_decoded = message_data['decoded']
                     logging.info(f'message: {message_decoded}')
 
-                    new_data["shipId"] = message_decoded.get("mmsi")
-                    new_data["navStatus"] = None
-                    new_data["lon"] = message_decoded.get("lon")
-                    new_data["lat"] = message_decoded.get("lat")
+                    new_data["mmsi"] = message_decoded.get("mmsi")
+                    new_data["nav_status"] = None
+                    new_data["longitude"] = message_decoded.get("lon")
+                    new_data["latitude"] = message_decoded.get("lat")
                     new_data["heading"] = message_decoded.get("heading")
                     new_data["sog"] = message_decoded.get("speed")
                     new_data["cog"] = message_decoded.get("course")
-                    new_data["type"] = message_decoded.get("type")
+                    new_data["ais_type"] = message_decoded.get("type")
 
                     db.ais_cyprus_dynamic.insert_one(new_data)
 
@@ -74,14 +74,14 @@ while True:
                     
                 elif message_type in [9, 18]:
 
-                    new_data["shipId"] = message_decoded.get("mmsi")
-                    new_data["navStatus"] = None
-                    new_data["lon"] = message_decoded.get("lon")
-                    new_data["lat"] = message_decoded.get("lat")
+                    new_data["mmsi"] = message_decoded.get("mmsi")
+                    new_data["nav_status"] = None
+                    new_data["longitude"] = message_decoded.get("lon")
+                    new_data["latitude"] = message_decoded.get("lat")
                     new_data["heading"] = message_decoded.get("heading")
                     new_data["sog"] = message_decoded.get("speed")
                     new_data["cog"] = message_decoded.get("course")
-                    new_data["type"] = message_decoded.get("type")
+                    new_data["ais_type"] = message_decoded.get("type")
     
                     db.ais_cyprus_dynamic.insert_one(new_data)
 
@@ -91,18 +91,18 @@ while True:
 
                 elif message_type == 5:
 
-                    new_data["shipId"] = message_decoded.get("mmsi")
+                    new_data["mmsi"] = message_decoded.get("mmsi")
                     new_data["imo"] = message_decoded.get("imo")
-                    new_data["shipname"] = message_decoded.get("shipname")
-                    new_data["callsign"] = message_decoded.get("callsign")
-                    new_data["shipType"] = message_decoded.get("shiptype")
+                    new_data["ship_name"] = message_decoded.get("shipname")
+                    new_data["call_sign"] = message_decoded.get("callsign")
+                    new_data["ship_type"] = message_decoded.get("shiptype")
                     new_data["draught"] = message_decoded.get("draught")
                     new_data["bow"] = message_decoded.get("to_bow")
                     new_data["stern"] = message_decoded.get("to_stern")
                     new_data["port"] = message_decoded.get("to_port")
                     new_data["starboard"] = message_decoded.get("to_starboard")
                     new_data["destination"] = message_decoded.get("destination")
-                    new_data["type"] = message_decoded.get("type")
+                    new_data["ais_type"] = message_decoded.get("type")
 
                     db.ais_cyprus_static.insert_one(new_data)
 
@@ -114,18 +114,18 @@ while True:
 
                     logging.info(f'message: {message_data}')
 
-                    new_data["shipId"] = message_decoded.get("mmsi")
+                    new_data["mmsi"] = message_decoded.get("mmsi")
                     new_data["imo"] = None
-                    new_data["shipname"] = None
-                    new_data["callsign"] = message_decoded.get("callsign")
-                    new_data["shipType"] = message_decoded.get("shiptype")
+                    new_data["ship_name"] = None
+                    new_data["call_sign"] = message_decoded.get("callsign")
+                    new_data["ship_type"] = message_decoded.get("shiptype")
                     new_data["draught"] = None
                     new_data["bow"] = message_decoded.get("to_bow")
                     new_data["stern"] = message_decoded.get("to_stern")
                     new_data["port"] = message_decoded.get("to_port")
                     new_data["starboard"] = message_decoded.get("to_starboard")
                     new_data["destination"] = None
-                    new_data["type"] = message_decoded.get("type")
+                    new_data["ais_type"] = message_decoded.get("type")
                     
                     db.ais_cyprus_static.insert_one(new_data)
 
