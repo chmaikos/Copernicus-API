@@ -258,19 +258,20 @@ def get_ais_cyprus_dynamic_test():
 @app.route("/ais_cyprus_static", methods=["GET"])
 def get_ais_cyprus_static():
     try:
-        date_format_db = "%a, %d %b %Y %H:%M:%S"
-        date_min = datetime.strptime(request.args.get("dateMin"), date_format_db)
-        date_max = datetime.strptime(request.args.get("dateMax"), date_format_db)
+        date_min = datetime.strptime(request.args.get("dateMin"), "%Y-%m-%dT%H:%M:%S")
+        date_max = datetime.strptime(request.args.get("dateMax"), "%Y-%m-%dT%H:%M:%S")
 
+        logging.info(f'date_max: {date_max}')
+        
         if date_max - date_min > timedelta(hours=2):
             date_min = date_max - timedelta(hours=2)
 
         results = mycol_static.find({
-            'timestamp': {
-                '$gte': date_min,
-                '$lte': date_max
-            }
-        })
+                    'time': {
+                        '$gte': date_min.strftime("%d/%m/%Y %H:%M:%S"),
+                        '$lte': date_max.strftime("%d/%m/%Y %H:%M:%S")
+                    }
+                })
 
         data_list = list(results)
         json_data = json.loads(json_util.dumps(data_list))
