@@ -226,6 +226,8 @@ def get_ais_cyprus_dynamic():
         date_min = datetime.strptime(request.args.get("dateMin"), "%Y-%m-%dT%H:%M:%S")
         date_max = datetime.strptime(request.args.get("dateMax"), "%Y-%m-%dT%H:%M:%S")
 
+        logging.info(f'date_max: {date_max}')
+        
         if date_max - date_min > timedelta(hours=2):
             
             date_min = date_max - timedelta(hours=2)
@@ -237,6 +239,17 @@ def get_ais_cyprus_dynamic():
             }
         })
 
+        data_list = list(results)
+        json_data = json.loads(json_util.dumps(data_list))
+        return jsonify(json_data)
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+@app.route("/ais_cyprus_dynamic_test", methods=["GET"])
+def get_ais_cyprus_dynamic():
+    try:
+        results = mycol_dynamic.find()
         data_list = list(results)
         json_data = json.loads(json_util.dumps(data_list))
         return jsonify(json_data)
