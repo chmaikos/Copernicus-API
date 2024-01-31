@@ -67,6 +67,7 @@ while True:
                     new_data["heading"] = message_decoded.get("heading")
                     new_data["sog"] = message_decoded.get("speed")
                     new_data["cog"] = message_decoded.get("course")
+                    new_data["type"] = message_decoded.get("type")
 
                     db.ais_cyprus_dynamic.insert_one(new_data)
                     kafka_producer_dynamic.produce(new_data)
@@ -79,6 +80,7 @@ while True:
                     new_data["heading"] = message_decoded.get("heading")
                     new_data["sog"] = message_decoded.get("speed")
                     new_data["cog"] = message_decoded.get("course")
+                    new_data["type"] = message_decoded.get("type")
     
                     db.ais_cyprus_dynamic.insert_one(new_data)
                     kafka_producer_dynamic.produce(new_data)
@@ -95,6 +97,7 @@ while True:
                     new_data["port"] = message_decoded.get("to_port")
                     new_data["starboard"] = message_decoded.get("to_starboard")
                     new_data["destination"] = message_decoded.get("destination")
+                    new_data["type"] = message_decoded.get("type")
 
                     db.ais_cyprus_static.insert_one(new_data)
                     kafka_producer_static.produce(new_data)
@@ -113,6 +116,7 @@ while True:
                     new_data["port"] = message_decoded.get("to_port")
                     new_data["starboard"] = message_decoded.get("to_starboard")
                     new_data["destination"] = None
+                    new_data["type"] = message_decoded.get("type")
                     
                     db.ais_cyprus_static.insert_one(new_data)
                     kafka_producer_static.produce(new_data)
