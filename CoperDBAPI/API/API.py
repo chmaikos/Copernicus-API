@@ -247,7 +247,7 @@ def get_ais_cyprus_dynamic():
 
 
 @app.route("/ais_cyprus_dynamic_test", methods=["GET"])
-def get_ais_cyprus_dynamic():
+def get_ais_cyprus_dynamic_test():
     try:
         results = mycol_dynamic.find()
         data_list = list(results)
