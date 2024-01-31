@@ -23,6 +23,9 @@ db = myclient["kafka_db"]
 mycol_dynamic = db["ais_cyprus_dynamic"]
 mycol_static = db["ais_cyprus_static"]
 
+mycol_dynamic.drop()
+mycol_static.drop()
+
 kafka_client = KafkaClient(hosts='kafka1:29092')
 kafka_producer_dynamic = kafka_client.topics[b'ais_cyprus_dynamic'].get_producer()
 kafka_producer_static = kafka_client.topics[b'ais_cyprus_static'].get_producer()
@@ -46,17 +49,16 @@ while True:
                 # logging.info(f'message: {message_decoded}')
                 
                 current_datetime = datetime.now()
-                timestamp_unix = current_datetime.timestamp()
 
                 new_data = {}
-                new_data["timestamp"] = timestamp_unix
+                new_data["timestamp"] = current_datetime
                 
                 if message_type in [1, 2, 3]:
 
                     message_decoded = message_data['decoded']
                     logging.info(f'message: {message_decoded}')
 
-                    new_data["mmsi"] = message_decoded.get("mmsi")
+                    new_data["shipId"] = message_decoded.get("mmsi")
                     new_data["navStatus"] = None
                     new_data["lon"] = message_decoded.get("lon")
                     new_data["lat"] = message_decoded.get("lat")
@@ -74,7 +76,7 @@ while True:
                     
                 elif message_type in [9, 18]:
 
-                    new_data["mmsi"] = message_decoded.get("mmsi")
+                    new_data["shipId"] = message_decoded.get("mmsi")
                     new_data["navStatus"] = None
                     new_data["lon"] = message_decoded.get("lon")
                     new_data["lat"] = message_decoded.get("lat")
@@ -91,7 +93,7 @@ while True:
 
                 elif message_type == 5:
 
-                    new_data["mmsi"] = message_decoded.get("mmsi")
+                    new_data["shipId"] = message_decoded.get("mmsi")
                     new_data["imo"] = message_decoded.get("imo")
                     new_data["shipname"] = message_decoded.get("shipname")
                     new_data["callsign"] = message_decoded.get("callsign")
@@ -114,7 +116,7 @@ while True:
 
                     logging.info(f'message: {message_data}')
 
-                    new_data["mmsi"] = message_decoded.get("mmsi")
+                    new_data["shipId"] = message_decoded.get("mmsi")
                     new_data["imo"] = None
                     new_data["shipname"] = None
                     new_data["callsign"] = message_decoded.get("callsign")
