@@ -49,11 +49,19 @@ while True:
 
                 message_decoded = message_data['decoded']
                 # logging.info(f'message: {message_decoded}')
+                
+                current_datetime = datetime.now()
+                timestamp_unix = current_datetime.timestamp()
+
                 new_data = {}
+                new_data["timestamp"] = timestamp_unix
+                
                 if message_type in [1, 2, 3]:
-                    
-                    new_data["timestamp"] = message_decoded.get("second")
-                    new_data["navStatus"] = message_decoded.get("old_field1")
+
+                    message_decoded = message_data['decoded']
+                    logging.info(f'message: {message_decoded}')
+                
+                    new_data["navStatus"] = None
                     new_data["lon"] = message_decoded.get("lon")
                     new_data["lat"] = message_decoded.get("lat")
                     new_data["heading"] = message_decoded.get("heading")
@@ -65,8 +73,7 @@ while True:
                     
                 elif message_type in [9, 18]:
             
-                    new_data["timestamp"] = message_decoded.get("second")
-                    new_data["navStatus"] = -1
+                    new_data["navStatus"] = None
                     new_data["lon"] = message_decoded.get("lon")
                     new_data["lat"] = message_decoded.get("lat")
                     new_data["heading"] = message_decoded.get("heading")
@@ -78,15 +85,6 @@ while True:
 
                 elif message_type == 5:
 
-                    day = message_decoded.get("day")
-                    hour = message_decoded.get("hour")
-                    minute = message_decoded.get("minute")
-                    month = message_decoded.get("month")
-
-                    timestamp = datetime(month=month, day=day, hour=hour, minute=minute)
-                    timestamp = timestamp.timestamp()
-                    
-                    new_data["timestamp"] = timestamp
                     new_data["imo"] = message_decoded.get("imo")
                     new_data["shipname"] = message_decoded.get("shipname")
                     new_data["callsign"] = message_decoded.get("callsign")
@@ -105,21 +103,16 @@ while True:
 
                     logging.info(f'message: {message_data}')
 
-                    # day = message_decoded.get("day")
-                    # second = message_decoded.get("hour")
-                    # minute = message_decoded.get("minute")
-                    # month = message_decoded.get("month")
-                    new_data["timestamp"] = -1
-                    new_data["imo"] = -1
-                    new_data["shipname"] = ''
+                    new_data["imo"] = None
+                    new_data["shipname"] = None
                     new_data["callsign"] = message_decoded.get("callsign")
                     new_data["shipType"] = message_decoded.get("shiptype")
-                    new_data["draught"] = -1
+                    new_data["draught"] = None
                     new_data["bow"] = message_decoded.get("to_bow")
                     new_data["stern"] = message_decoded.get("to_stern")
                     new_data["port"] = message_decoded.get("to_port")
                     new_data["starboard"] = message_decoded.get("to_starboard")
-                    new_data["destination"] = ''
+                    new_data["destination"] = None
                     
                     db.ais_cyprus_static.insert_one(new_data)
                     kafka_producer_static.produce(new_data)
