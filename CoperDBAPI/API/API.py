@@ -232,7 +232,7 @@ def get_ais_cyprus_dynamic():
             date_min = date_max - timedelta(hours=2)
 
         results = mycol_dynamic.find({
-                    'time': {
+                    'timestamp': {
                         '$gte': date_min.strftime("%d/%m/%Y %H:%M:%S"),
                         '$lte': date_max.strftime("%d/%m/%Y %H:%M:%S")
                     }
@@ -244,16 +244,6 @@ def get_ais_cyprus_dynamic():
     except Exception as e:
         return jsonify({'error': str(e)})
 
-
-@app.route("/ais_cyprus_dynamic_test", methods=["GET"])
-def get_ais_cyprus_dynamic_test():
-    try:
-        results = mycol_dynamic.find()
-        data_list = list(results)
-        json_data = json.loads(json_util.dumps(data_list))
-        return jsonify(json_data)
-    except Exception as e:
-        return jsonify({'error': str(e)})
 
 @app.route("/ais_cyprus_static", methods=["GET"])
 def get_ais_cyprus_static():
@@ -267,7 +257,7 @@ def get_ais_cyprus_static():
             date_min = date_max - timedelta(hours=2)
 
         results = mycol_static.find({
-                    'time': {
+                    'timestamp': {
                         '$gte': date_min.strftime("%d/%m/%Y %H:%M:%S"),
                         '$lte': date_max.strftime("%d/%m/%Y %H:%M:%S")
                     }
