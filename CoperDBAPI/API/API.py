@@ -223,7 +223,20 @@ def get_status():
 @app.route("/ais_cyprus_dynamic", methods=["GET"])
 def get_ais_cyprus_dynamic():
     try:
-        results = mycol_dynamic.find()
+        date_min = datetime.strptime(request.args.get("dateMin"), "%Y-%m-%dT%H:%M:%S")
+        date_max = datetime.strptime(request.args.get("dateMax"), "%Y-%m-%dT%H:%M:%S")
+
+        if date_max - date_min > timedelta(hours=2):
+            
+            date_min = date_max - timedelta(hours=2)
+
+        results = mycol_dynamic.find({
+            'formattedDate': {
+                '$gte': date_min.strftime("%d/%m/%Y %H:%M:%S"),
+                '$lte': date_max.strftime("%d/%m/%Y %H:%M:%S")
+            }
+        })
+
         data_list = list(results)
         json_data = json.loads(json_util.dumps(data_list))
         return jsonify(json_data)
@@ -233,7 +246,21 @@ def get_ais_cyprus_dynamic():
 @app.route("/ais_cyprus_static", methods=["GET"])
 def get_ais_cyprus_static():
     try:
-        results = mycol_static.find()
+        date_min = datetime.strptime(request.args.get("dateMin"), "%Y-%m-%dT%H:%M:%S")
+        date_max = datetime.strptime(request.args.get("dateMax"), "%Y-%m-%dT%H:%M:%S")
+
+        
+        if date_max - date_min > timedelta(hours=2):
+            
+            date_min = date_max - timedelta(hours=2)
+
+        results = mycol_static.find({
+            'formattedDate': {
+                '$gte': date_min.strftime("%d/%m/%Y %H:%M:%S"),
+                '$lte': date_max.strftime("%d/%m/%Y %H:%M:%S")
+            }
+        })
+
         data_list = list(results)
         json_data = json.loads(json_util.dumps(data_list))
         return jsonify(json_data)
