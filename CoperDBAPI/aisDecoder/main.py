@@ -71,7 +71,11 @@ while True:
                     new_data["type"] = message_decoded.get("type")
 
                     db.ais_cyprus_dynamic.insert_one(new_data)
-                    kafka_producer_dynamic.produce(new_data)
+
+                    
+                    message_json = json.dumps(message_decoded)
+                    message_bytes = message_json.encode('utf-8')
+                    kafka_producer_dynamic.produce(message_bytes)
                     
                 elif message_type in [9, 18]:
 
@@ -85,7 +89,10 @@ while True:
                     new_data["type"] = message_decoded.get("type")
     
                     db.ais_cyprus_dynamic.insert_one(new_data)
-                    kafka_producer_dynamic.produce(new_data)
+
+                    message_json = json.dumps(message_decoded)
+                    message_bytes = message_json.encode('utf-8')
+                    kafka_producer_dynamic.produce(message_bytes)
 
                 elif message_type == 5:
 
@@ -103,7 +110,10 @@ while True:
                     new_data["type"] = message_decoded.get("type")
 
                     db.ais_cyprus_static.insert_one(new_data)
-                    kafka_producer_static.produce(new_data)
+
+                    message_json = json.dumps(message_decoded)
+                    message_bytes = message_json.encode('utf-8')
+                    kafka_producer_static.produce(message_bytes)
 
                 elif message_type == 24 and message_decoded.get("to_port") is not None:
 
@@ -123,7 +133,10 @@ while True:
                     new_data["type"] = message_decoded.get("type")
                     
                     db.ais_cyprus_static.insert_one(new_data)
-                    kafka_producer_static.produce(new_data)
+
+                    message_json = json.dumps(message_decoded)
+                    message_bytes = message_json.encode('utf-8')
+                    kafka_producer_static.produce(message_bytes)
                     
                
                     
