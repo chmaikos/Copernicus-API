@@ -22,11 +22,6 @@ myclient = pymongo.MongoClient("mongodb://mongodb:27017")
 db = myclient["kafka_db"]
 mycol_dynamic = db["ais_cyprus_dynamic"]
 mycol_static = db["ais_cyprus_static"]
-mycol_other = db["ais_cyprus_other"]
-
-mycol_static.drop()
-mycol_dynamic.drop()
-mycol_other.drop()
 
 kafka_client = KafkaClient(hosts='kafka1:29092')
 kafka_producer_dynamic = kafka_client.topics[b'ais_cyprus_dynamic'].get_producer()
