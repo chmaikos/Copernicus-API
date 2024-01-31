@@ -47,11 +47,12 @@ while True:
 
                 message_decoded = message_data['decoded']
                 # logging.info(f'message: {message_decoded}')
-                
-                current_datetime = datetime.now()
+
+                current_utc_time = datetime.utcnow()
+                formatted_time = current_utc_time.strftime("%a, %d %b %Y %H:%M:%S GMT")
 
                 new_data = {}
-                new_data["timestamp"] = current_datetime
+                new_data["timestamp"] = formatted_time
                 
                 if message_type in [1, 2, 3]:
 
