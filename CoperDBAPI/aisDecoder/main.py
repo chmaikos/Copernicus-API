@@ -60,7 +60,8 @@ while True:
 
                     message_decoded = message_data['decoded']
                     logging.info(f'message: {message_decoded}')
-                
+
+                    new_data["mmsi"] = message_decoded.get("mmsi")
                     new_data["navStatus"] = None
                     new_data["lon"] = message_decoded.get("lon")
                     new_data["lat"] = message_decoded.get("lat")
@@ -73,7 +74,8 @@ while True:
                     kafka_producer_dynamic.produce(new_data)
                     
                 elif message_type in [9, 18]:
-            
+
+                    new_data["mmsi"] = message_decoded.get("mmsi")
                     new_data["navStatus"] = None
                     new_data["lon"] = message_decoded.get("lon")
                     new_data["lat"] = message_decoded.get("lat")
@@ -87,6 +89,7 @@ while True:
 
                 elif message_type == 5:
 
+                    new_data["mmsi"] = message_decoded.get("mmsi")
                     new_data["imo"] = message_decoded.get("imo")
                     new_data["shipname"] = message_decoded.get("shipname")
                     new_data["callsign"] = message_decoded.get("callsign")
@@ -106,6 +109,7 @@ while True:
 
                     logging.info(f'message: {message_data}')
 
+                    new_data["mmsi"] = message_decoded.get("mmsi")
                     new_data["imo"] = None
                     new_data["shipname"] = None
                     new_data["callsign"] = message_decoded.get("callsign")
