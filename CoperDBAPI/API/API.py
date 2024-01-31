@@ -231,7 +231,7 @@ def get_ais_cyprus_dynamic():
         if date_max - date_min > timedelta(hours=2):
             date_min = date_max - timedelta(hours=2)
 
-        results = mycol_living.find({
+        results = mycol_dynamic.find({
                     'time': {
                         '$gte': date_min.strftime("%d/%m/%Y %H:%M:%S"),
                         '$lte': date_max.strftime("%d/%m/%Y %H:%M:%S")
