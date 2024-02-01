@@ -129,7 +129,7 @@ while True:
                                      # 'surface_solar_radiation_downwards',
                                      # 'cloud_cover'
                                     ],
-                        'year': '2023',
+                        'year': '2024',
                         'month': item['month'],
                         'day': item['day'],
                         'time': [f'{i:02d}:00' for i in range(24)],
