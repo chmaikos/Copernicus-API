@@ -140,7 +140,8 @@ while True:
                        item['fileLocation'])
 
         with Dataset('data/ERA5_Wind3H.nc', 'r+') as windData_BL:
-            logging.info("variable", dataList[0]["month"])
+            data = windData_BL.variables.get
+            logging.info(f'data_list: {data}')
             u10, v10 = map(windData_BL.variables.get, ['u10', 'v10'])
             wind_speed = np.sqrt(u10[:]**2 + v10[:]**2)
             wind_dir = (270 - np.arctan2(v10[:], u10[:]) * 180 / pi) % 360
