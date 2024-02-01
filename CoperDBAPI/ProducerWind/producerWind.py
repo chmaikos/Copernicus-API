@@ -136,7 +136,7 @@ while True:
                         'format': 'netcdf'},
                        item['fileLocation'])
           
-        logging.info('dataaaaaaaa')
+        logging.info('dataaaaaa')
 
         with Dataset('data/ERA5_Wind3H.nc', 'r+') as windData_BL:
             data = windData_BL.variables.get
