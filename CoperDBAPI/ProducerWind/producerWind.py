@@ -123,7 +123,11 @@ while True:
             c.retrieve('reanalysis-era5-single-levels',
                        {'product_type': 'reanalysis',
                         'variable': ['10m_u_component_of_wind',
-                                     '10m_v_component_of_wind'],
+                                     '10m_v_component_of_wind',
+                                     'total_precipitation',
+                                     '2m_temperature',
+                                     'surface_solar_radiation_downwards',
+                                     'cloud_cover'],
                         'year': '2023',
                         'month': item['month'],
                         'day': item['day'],
@@ -136,6 +140,7 @@ while True:
                        item['fileLocation'])
 
         with Dataset('data/ERA5_Wind3H.nc', 'r+') as windData_BL:
+            logging.info("variable", dataList[0]["month"])
             u10, v10 = map(windData_BL.variables.get, ['u10', 'v10'])
             wind_speed = np.sqrt(u10[:]**2 + v10[:]**2)
             wind_dir = (270 - np.arctan2(v10[:], u10[:]) * 180 / pi) % 360
