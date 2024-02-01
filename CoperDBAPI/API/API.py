@@ -28,10 +28,9 @@ myclient = pymongo.MongoClient("mongodb://mongodb:27017")
 db = myclient["kafka_db"]
 mycol_wave = db["waveData"]
 mycol_wind = db["windData"]
-mycol_living = db['living_lab']  # Όνομα της συλλογής
+mycol_living = db['living_lab']
 mycol_dynamic = db["ais_cyprus_dynamic"]
 mycol_static = db["ais_cyprus_static"]
-mycol_other = db["ais_cyprus_other"]
 
 @app.route('/lab', methods=['POST'])
 def add_data():
