@@ -123,11 +123,12 @@ while True:
             c.retrieve('reanalysis-era5-single-levels',
                        {'product_type': 'reanalysis',
                         'variable': ['10m_u_component_of_wind',
-                                     '10m_v_component_of_wind',
-                                     'total_precipitation',
-                                     '2m_temperature',
-                                     'surface_solar_radiation_downwards',
-                                     'cloud_cover'],
+                                     '10m_v_component_of_wind'
+                                     # 'total_precipitation',
+                                     # '2m_temperature',
+                                     # 'surface_solar_radiation_downwards',
+                                     # 'cloud_cover'
+                                    ],
                         'year': '2023',
                         'month': item['month'],
                         'day': item['day'],
