@@ -109,7 +109,7 @@ while True:
                              config.get('Default', 'radius')]
                             )
         lat_min, lon_min, lat_max, lon_max = create_square(lat, lon, rad)
-        curr_time = datetime.now() - timedelta(days=7)
+        curr_time = datetime.now() - timedelta(days=6)
         mon_curr, day_curr = curr_time.strftime("%m"), curr_time.strftime("%d")
         c = cdsapi.Client()
         windData = 'data/ERA5_Wind3H.nc'
