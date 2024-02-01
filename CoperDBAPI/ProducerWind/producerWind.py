@@ -109,7 +109,7 @@ while True:
                              config.get('Default', 'radius')]
                             )
         lat_min, lon_min, lat_max, lon_max = create_square(lat, lon, rad)
-        curr_time = datetime.now() - timedelta(days=6)
+        curr_time = datetime.now() - timedelta(days=7)
         mon_curr, day_curr = curr_time.strftime("%m"), curr_time.strftime("%d")
         c = cdsapi.Client()
         windData = 'data/ERA5_Wind3H.nc'
@@ -124,10 +124,6 @@ while True:
                        {'product_type': 'reanalysis',
                         'variable': ['10m_u_component_of_wind',
                                      '10m_v_component_of_wind'
-                                     # 'total_precipitation',
-                                     # '2m_temperature',
-                                     # 'surface_solar_radiation_downwards',
-                                     # 'cloud_cover'
                                     ],
                         'year': '2024',
                         'month': item['month'],
