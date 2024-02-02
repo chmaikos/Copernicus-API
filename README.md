@@ -38,7 +38,7 @@ We obtain the information as a .nc file from Copernicus, refactor it into JSON, 
 
 ```json
 {
-  "time": "2023-07-24 12:00:00",
+  "time": "Fri, 26 Jan 2024 01:00:00 GMT",
   "latitude": 35,
   "longitude": 18.916666666666657,
   "vhm0": 0.25999999046325684,
@@ -74,13 +74,11 @@ The first time it will pull data from Copernicus is when the docker compose is f
 ]
 ```
 
-Duplicates do not exist.
-
 We obtain the information as a .nc file from Copernicus, refactor it into JSON, and push it into the Kafka topic `wind_topic` and into MongoDB in a collection named `wind_data` with the following format:
 
 ```json
 {
-  "time": "2023-07-18 00:00:00",
+  "time": "Fri, 26 Jan 2024 01:00:00 GMT",
   "latitude": 50.150001525878906,
   "longitude": -27.1200008392334,
   "u10": -4.6063704822533245,
@@ -89,14 +87,35 @@ We obtain the information as a .nc file from Copernicus, refactor it into JSON, 
   "direction": 83.43748990096958
 }
 ```
+We add some extra features at the .nc file from Copernicus, refactor it into JSON, and push it into the Kafka topic `weather_topic` and into MongoDB in a collection named `weather_data` with the following format:
 
+```json
+    {
+        "latitude": 43.24399948120117,
+        "longitude": 27.92099952697754,
+        "time": "Fri, 26 Jan 2024 01:00:00 GMT",
+        "wind_speed": 298.8728315051067,
+        "temperature": 10,
+        "humidity": 40,
+        "sea_temp": 12,
+        "clouds": 20,
+        "rain": 0,
+        "snow": 0
+    }
+```
 The information is analyzed below:
 
-| Variable | Description                             | Unit  |
-|----------|-----------------------------------------|-------|
-| u10      | East Wind Component                     | m/s   |
-| v10      | North Wind Component                    | m/s   |
-| speed    | Combination of the above two components | m/s   |
+| Variable           | Description                                                                                                         |  Unit  |
+|--------------------|---------------------------------------------------------------------------------------------------------------------|--------|
+| u10                | East Wind Component                                                                                                 |  m/s   |
+| v10                | North Wind Component                                                                                                |  m/s   |
+| speed / wind_speed | Combination of the above two components                                                                             |  m/s   |
+| temperature        | The temperature of air at 2m above the surface of land, sea or in-land waters                                       |  °C    |
+| humidity           | A Combination of temperature, dewpoint temperature and pressure                                                     |   %    |
+| sea_temp           | This parameter is the temperature of sea water near the surface                                                     |  °C    |
+| clouds             | This parameter is the proportion of a grid box covered by cloud                                                     |   %    |
+| rain               | Water in droplets of raindrop size in a column extending from the surface of the Earth to the top of the atmosphere | kg/m^2 |
+| snow               | Snow in a column extending from the surface of the Earth to the top of the atmosphere                               | kg/m^2 |
 
 Speed information:
 
@@ -129,7 +148,7 @@ When a valid date is provided, we check if data exists for the specified latitud
   {
     "waveData": [
       {
-        "time": "2023-07-19 06:00:00",
+        "time": "Fri, 26 Jan 2024 01:00:00 GMT",
         "latitude": 35,
         "longitude": 18.916666666666657,
         "vhm0": 0.25999999046325684,
@@ -142,7 +161,7 @@ When a valid date is provided, we check if data exists for the specified latitud
   {
     "windData": [
       {
-        "time": "2023-07-19 06:00:00",
+        "time": "Fri, 26 Jan 2024 01:00:00 GMT",
         "latitude": 35,
         "longitude": 18.916666666666657,
         "vhm0": 0.25999999046325684,
