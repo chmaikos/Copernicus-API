@@ -120,6 +120,8 @@ while True:
         logging.info("month %s", dataList[0]["month"])
         logging.info("day %s", dataList[0]["day"])
 
+        os.remove(windData)
+
         for item in dataList:
             c.retrieve('reanalysis-era5-single-levels',
                        {'product_type': 'reanalysis',
