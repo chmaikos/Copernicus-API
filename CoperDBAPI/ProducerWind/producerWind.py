@@ -161,7 +161,7 @@ while True:
             logging.info(f'dewpoint_temp: {dewpoint_temp}')
             logging.info(f'sea_temp: {sea_temp}')
             logging.info(f'total_cloud_cover: {total_cloud_cover}')
-            logging.info(f'snowfall: {pressure}')
+            logging.info(f'pressure: {pressure}')
             logging.info(f'total_rain_water: {total_rain_water}')
             logging.info(f'total_snow_water: {total_snow_water}')
           
