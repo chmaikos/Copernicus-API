@@ -125,6 +125,13 @@ while True:
                        {'product_type': 'reanalysis',
                         'variable': ['10m_u_component_of_wind',
                                      '10m_v_component_of_wind', 
+                                     '2m_temperature', 
+                                     '2m_dewpoint_temperature',
+                                     'sea_surface_temperature',
+                                     'pressure',
+                                     'total_cloud_cover', 
+                                     'total_column_rain_water',
+                                     'total_column_snow_water'
                                     ],
                         'year': '2024',
                         'month': item['month'],
