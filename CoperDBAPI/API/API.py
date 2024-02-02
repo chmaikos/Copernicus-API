@@ -31,6 +31,7 @@ mycol_wind = db["windData"]
 mycol_living = db['living_lab']
 mycol_dynamic = db["ais_cyprus_dynamic"]
 mycol_static = db["ais_cyprus_static"]
+mycolweather = db["weather_data"]
 
 @app.route('/lab', methods=['POST'])
 def add_data():
@@ -268,10 +269,10 @@ def get_ais_cyprus_static():
     except Exception as e:
         return jsonify({'error': str(e)})
 
-@app.route("/ais_cyprus_other", methods=["GET"])
-def get_ais_cyprus_other():
+@app.route("/weather", methods=["GET"])
+def get_weather_data():
     try:
-        results = mycol_other.find()
+        results = mycolweather.find()
         data_list = list(results)
         json_data = json.loads(json_util.dumps(data_list))
         return jsonify(json_data)
