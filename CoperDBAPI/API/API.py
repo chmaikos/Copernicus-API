@@ -31,7 +31,7 @@ mycol_wind = db["windData"]
 mycol_living = db['living_lab']
 mycol_dynamic = db["ais_cyprus_dynamic"]
 mycol_static = db["ais_cyprus_static"]
-mycolweather = db["weather_data"]
+mycolweather = db["weatherData"]
 
 @app.route('/lab', methods=['POST'])
 def add_data():
