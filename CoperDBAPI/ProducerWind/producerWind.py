@@ -124,9 +124,13 @@ while True:
                        {'product_type': 'reanalysis',
                         'variable': ['10m_u_component_of_wind',
                                      '10m_v_component_of_wind', 
-                                     '2m_temperature',
-                                     'surface_solar_radiation_downwards', 
-                                     'total_cloud_cover', 'total_precipitation',
+                                     '2m_temperature', 
+                                     '2m_dewpoint_temperature',
+                                     'total_cloud_cover', 
+                                     'snowfall'
+                                     'total_precipitation',
+                                     'total_column_rain_water',
+                                     'total_column_snow_water'
                                     ],
                         'year': '2024',
                         'month': item['month'],
@@ -150,7 +154,18 @@ while True:
                 logging.info(f'Units: {variable.units if "units" in variable.ncattrs() else "N/A"}')
                 logging.info(f'Description: {variable.long_name if "long_name" in variable.ncattrs() else "N/A"}')
                 logging.info('\n')
-            u10, v10 = map(windData_BL.variables.get, ['u10', 'v10'])
+            u10, v10, tem, dewpoint_temp, total_cloud_cover, snowfall, total_precipitation, total_rain_water, total_snow_water = map(windData_BL.variables.get, ['u10', 'v10', '2t', '2d', 'tcc', 'sf', 'tp', 'tcrw', 'tcsw'])
+          
+            logging.info(f'u10: {u10}')
+            logging.info(f'v10: {v10}')
+            logging.info(f'tem: {tem}')
+            logging.info(f'dewpoint_temp: {dewpoint_temp}')
+            logging.info(f'total_cloud_cover: {total_cloud_cover}')
+            logging.info(f'snowfall: {snowfall}')
+            logging.info(f'total_precipitation: {total_precipitation}')
+            logging.info(f'total_rain_water: {total_rain_water}')
+            logging.info(f'total_snow_water: {total_snow_water}')
+          
             wind_speed = np.sqrt(u10[:]**2 + v10[:]**2)
             wind_dir = (270 - np.arctan2(v10[:], u10[:]) * 180 / pi) % 360
             time_dim, lat_dim, lon_dim = u10.get_dims()
