@@ -189,18 +189,18 @@ while True:
                                'speed': wind_speed.flatten(),
                                'direction': wind_dir.flatten()})
 
-          df_weather = pd.DataFrame({'time': [t.isoformat(sep=" ") for t in times_grid],
-                               'latitude': latitudes_grid,
-                               'longitude': longitudes_grid,
-                               'speed': wind_speed.flatten(),
-                               'direction': wind_dir.flatten(),
-                               'temperature': tem[:].flatten(),
-                               'dewpoint_temp': dewpoint_temp[:].flatten(),
-                               'sea_temp': sea_temp[:].flatten(),
-                               'total_cloud_cover': total_cloud_cover[:].flatten(),
-                               'pressure': pressure[:].flatten(),
-                               'total_rain_water': total_rain_water[:].flatten(),
-                               'total_snow_water': total_snow_water[:].flatten()})
+            df_weather = pd.DataFrame({'time': [t.isoformat(sep=" ") for t in times_grid],
+                                     'latitude': latitudes_grid,
+                                     'longitude': longitudes_grid,
+                                     'speed': wind_speed.flatten(),
+                                     'direction': wind_dir.flatten(),
+                                     'temperature': tem[:].flatten(),
+                                     'dewpoint_temp': dewpoint_temp[:].flatten(),
+                                     'sea_temp': sea_temp[:].flatten(),
+                                     'total_cloud_cover': total_cloud_cover[:].flatten(),
+                                     'pressure': pressure[:].flatten(),
+                                     'total_rain_water': total_rain_water[:].flatten(),
+                                     'total_snow_water': total_snow_water[:].flatten()})
 
           
 
