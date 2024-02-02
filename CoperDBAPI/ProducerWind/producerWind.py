@@ -113,7 +113,7 @@ while True:
         curr_time = datetime.now() - timedelta(days=6)
         mon_curr, day_curr = curr_time.strftime("%m"), curr_time.strftime("%d")
         c = cdsapi.Client()
-        windData = 'data/ERA5_Wind3H.nc'
+        windData = 'data/ERA5_Weather3H.nc'
         dataList = [{'fileLocation': windData,
                      'month': mon_curr,
                      'day': day_curr}]
@@ -144,7 +144,7 @@ while True:
                         'format': 'netcdf'},
                        item['fileLocation'])
 
-        with Dataset('data/ERA5_Wind3H.nc', 'r+') as windData_BL:
+        with Dataset('data/ERA5_Weather3H.nc', 'r+') as windData_BL:
             for var_name in windData_BL.variables.keys():
                 variable = windData_BL.variables[var_name]
                 logging.info(f'Variable Name: {var_name}')
