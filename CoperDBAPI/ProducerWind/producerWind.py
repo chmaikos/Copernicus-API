@@ -189,8 +189,7 @@ while True:
                                'speed': wind_speed.flatten(),
                                'direction': wind_dir.flatten()})
 
-          df_weather = pd.DataFrame({'time': [t.isoformat(sep=" ")
-                                        for t in times_grid],
+          df_weather = pd.DataFrame({'time': [t.isoformat(sep=" ") for t in times_grid],
                                'latitude': latitudes_grid,
                                'longitude': longitudes_grid,
                                'speed': wind_speed.flatten(),
