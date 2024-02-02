@@ -153,7 +153,7 @@ while True:
                 logging.info(f'Units: {variable.units if "units" in variable.ncattrs() else "N/A"}')
                 logging.info(f'Description: {variable.long_name if "long_name" in variable.ncattrs() else "N/A"}')
                 logging.info('\n')
-            u10, v10, tem, dewpoint_temp, sea_temp, total_cloud_cover, total_rain_water, total_snow_water = map(windData_BL.variables.get, ['u10', 'v10', 't2m', 'd2m', 'sst', 'tcc', 'tcrw', 'tcsw'])
+            u10, v10, tem, dewpoint_temp, sea_temp, pressure, total_cloud_cover, total_rain_water, total_snow_water = map(windData_BL.variables.get, ['u10', 'v10', 't2m', 'd2m', 'pres', 'sst', 'tcc', 'tcrw', 'tcsw'])
           
             logging.info(f'u10: {u10}')
             logging.info(f'v10: {v10}')
@@ -161,7 +161,7 @@ while True:
             logging.info(f'dewpoint_temp: {dewpoint_temp}')
             logging.info(f'sea_temp: {sea_temp}')
             logging.info(f'total_cloud_cover: {total_cloud_cover}')
-            # logging.info(f'pressure: {pressure}')
+            logging.info(f'pressure: {pressure}')
             logging.info(f'total_rain_water: {total_rain_water}')
             logging.info(f'total_snow_water: {total_snow_water}')
           
@@ -212,7 +212,7 @@ while True:
         df['dewpoint_temp'] = dewpoint_temp[:].flatten()
         df['sea_temp'] = sea_temp[:].flatten()
         df['total_cloud_cover'] = total_cloud_cover[:].flatten()
-        # df['pressure'] = pressure[:].flatten()
+        df['pressure'] = pressure[:].flatten()
         df['total_rain_water'] = total_rain_water[:].flatten()
         df['total_snow_water'] = total_snow_water[:].flatten()
         data = df.to_dict(orient='records')
