@@ -1,6 +1,6 @@
 # CoperDBAPI
 
-![CoperDBAPI](https://github.com/ArtemisStefanidou/CoperDBAPI/blob/main/photos/Screenshot%202023-07-24%20at%203.33.34%20PM.png)
+![CoperDBAPI](https://github.com/ArtemisStefanidou/APIs/blob/main/photos/Screenshot%202023-07-24%20at%203.33.34%20PM.png)
 
 - [CoperDBAPI](#coperdbapi)
     - [Example Usage](#example-usage)
@@ -26,7 +26,7 @@ To ensure there are no orphan containers, you can use
 docker-compose up --build --remove-orphans
 ```
 
-![Sublime's custom image](https://github.com/ArtemisStefanidou/CoperDBAPI/blob/main/photos/Screenshot%202023-07-24%20at%205.32.18%20PM.png)
+![Sublime's custom image](https://github.com/ArtemisStefanidou/APIs/blob/main/photos/Screenshot%202023-07-24%20at%205.32.18%20PM.png)
 
 ### ProducerWave
 
@@ -55,7 +55,7 @@ The information is analyzed below:
 | vmdr     | Wave Direction               |      |
 | vtm10    | Wave Period Mean Value       |      |
 
-![CoperDBAPI](https://github.com/ArtemisStefanidou/CoperDBAPI/blob/main/photos/Screenshot%202023-07-25%20at%208.24.36%20AM.png)
+![CoperDBAPI](https://github.com/ArtemisStefanidou/APIs/blob/main/photos/Screenshot%202023-07-25%20at%208.24.36%20AM.png)
 
 The horizontal resolution is: `0.083° x 0.083°`
 
@@ -119,9 +119,9 @@ The information is analyzed below:
 
 Speed information:
 
-![CoperDBAPI](https://github.com/ArtemisStefanidou/CoperDBAPI/blob/main/photos/Screenshot%202023-07-25%20at%208.25.32%20AM.png)
+![CoperDBAPI](https://github.com/ArtemisStefanidou/APIs/blob/main/photos/Screenshot%202023-07-25%20at%208.25.32%20AM.png)
 
-![CoperDBAPI](https://github.com/ArtemisStefanidou/CoperDBAPI/blob/main/photos/Screenshot%202023-07-25%20at%208.25.44%20AM.png)
+![CoperDBAPI](https://github.com/ArtemisStefanidou/APIs/blob/main/photos/Screenshot%202023-07-25%20at%208.25.44%20AM.png)
 
 The horizontal resolution is: `0.25° x 0.25°`
 
@@ -135,7 +135,7 @@ The horizontal resolution is: `0.25° x 0.25°`
 
 Users must provide 5 variables: `dateMin`, `dateMax`, `latitude`, `longitude`, `radius`.
 
-![CoperDBAPI](https://github.com/ArtemisStefanidou/CoperDBAPI/blob/main/photos/Screenshot%202023-07-25%20at%2011.53.06%20AM.png)
+![CoperDBAPI](https://github.com/ArtemisStefanidou/APIs/blob/main/photos/Screenshot%202023-07-25%20at%2011.53.06%20AM.png)
 
 #### Response
 
