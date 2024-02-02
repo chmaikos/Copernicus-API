@@ -153,7 +153,7 @@ while True:
                 logging.info(f'Units: {variable.units if "units" in variable.ncattrs() else "N/A"}')
                 logging.info(f'Description: {variable.long_name if "long_name" in variable.ncattrs() else "N/A"}')
                 logging.info('\n')
-            u10, v10, tem, dewpoint_temp, sea_temp, pressure, total_cloud_cover, total_rain_water, total_snow_water = map(windData_BL.variables.get, ['u10', 'v10', '2tm', '2dm', 'sst', 'pres', 'tcc', 'tcrw', 'tcsw'])
+            u10, v10, tem, dewpoint_temp, sea_temp, pressure, total_cloud_cover, total_rain_water, total_snow_water = map(windData_BL.variables.get, ['u10', 'v10', 't2m', 'd2m', 'sst', 'pres', 'tcc', 'tcrw', 'tcsw'])
           
             logging.info(f'u10: {u10}')
             logging.info(f'v10: {v10}')
