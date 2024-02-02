@@ -98,6 +98,7 @@ topic = 'wind_topic'
 myclient = pymongo.MongoClient("mongodb://mongodb:27017")
 db = myclient["kafka_db"]
 mycol = db["windData"]
+mycolweather = db["weatherData"]
 
 while True:
     try:
@@ -188,6 +189,8 @@ while True:
                                'speed': wind_speed.flatten(),
                                'direction': wind_dir.flatten()})
 
+          
+
             df['time'] = pd.to_datetime(df['time'], format='%Y-%m-%d %H:%M:%S')
 
             logging.info(df)
@@ -204,6 +207,16 @@ while True:
                              value=value,
                              callback=delivery_report)
             producer.flush()
+
+        df['temperature'] = tem[:].flatten()
+        df['dewpoint_temp'] = dewpoint_temp[:].flatten()
+        df['sea_temp'] = sea_temp[:].flatten()
+        df['total_cloud_cover'] = total_cloud_cover[:].flatten()
+        df['pressure'] = pressure[:].flatten()
+        df['total_rain_water'] = total_rain_water[:].flatten()
+        df['total_snow_water'] = total_snow_water[:].flatten()
+        data = df.to_dict(orient='records')
+        mycolweather.insert_many(data)
 
         os.remove(windData)
         logging.info("File deleted successfully.")
