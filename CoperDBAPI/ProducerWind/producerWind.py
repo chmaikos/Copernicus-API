@@ -189,15 +189,35 @@ while True:
                                'speed': wind_speed.flatten(),
                                'direction': wind_dir.flatten()})
 
+          df_weather = pd.DataFrame({'time': [t.isoformat(sep=" ")
+                                        for t in times_grid],
+                               'latitude': latitudes_grid,
+                               'longitude': longitudes_grid,
+                               'speed': wind_speed.flatten(),
+                               'direction': wind_dir.flatten(),
+                               'temperature': tem[:].flatten(),
+                               'dewpoint_temp': dewpoint_temp[:].flatten(),
+                               'sea_temp': sea_temp[:].flatten(),
+                               'total_cloud_cover': total_cloud_cover[:].flatten(),
+                               'pressure': pressure[:].flatten(),
+                               'total_rain_water': total_rain_water[:].flatten(),
+                               'total_snow_water': total_snow_water[:].flatten()})
+
           
 
             df['time'] = pd.to_datetime(df['time'], format='%Y-%m-%d %H:%M:%S')
+            df_weather['time'] = pd.to_datetime(df_weather['time'], format='%Y-%m-%d %H:%M:%S')
 
             logging.info(df)
+            logging.info(df_weather)
             df.dropna(subset=['u10'], inplace=True)
+            df_weather.dropna(subset=['u10'], inplace=True)
             logging.info(df)
+            logging.info(df_weather)
             data = df.to_dict(orient='records')
             mycol.insert_many(data)
+            data_weather = df_weather.to_dict(orient='records')
+            mycolweather.insert_many(data_weather)
 
         # Convert it back to string format
         df['time'] = df['time'].dt.strftime('%Y-%m-%d %H:%M:%S')
