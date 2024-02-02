@@ -128,10 +128,10 @@ while True:
                                      '2m_temperature', 
                                      '2m_dewpoint_temperature',
                                      'sea_surface_temperature',
-                                     'pressure',
                                      'total_cloud_cover', 
                                      'total_column_rain_water',
-                                     'total_column_snow_water'
+                                     'total_column_snow_water',
+                                     'pressure'
                                     ],
                         'year': '2024',
                         'month': item['month'],
