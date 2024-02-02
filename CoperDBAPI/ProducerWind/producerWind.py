@@ -126,6 +126,7 @@ while True:
                                      '10m_v_component_of_wind', 
                                      '2m_temperature', 
                                      '2m_dewpoint_temperature',
+                                     'sea_surface_temperature',
                                      'pressure',
                                      'total_cloud_cover', 
                                      'total_column_rain_water',
@@ -151,12 +152,13 @@ while True:
                 logging.info(f'Units: {variable.units if "units" in variable.ncattrs() else "N/A"}')
                 logging.info(f'Description: {variable.long_name if "long_name" in variable.ncattrs() else "N/A"}')
                 logging.info('\n')
-            u10, v10, tem, dewpoint_temp, pressure, total_cloud_cover, total_rain_water, total_snow_water = map(windData_BL.variables.get, ['u10', 'v10', '2t', '2d', 'pres', 'tcc', 'tcrw', 'tcsw'])
+            u10, v10, tem, dewpoint_temp, sea_temp, pressure, total_cloud_cover, total_rain_water, total_snow_water = map(windData_BL.variables.get, ['u10', 'v10', '2t', '2d', 'sst', 'pres', 'tcc', 'tcrw', 'tcsw'])
           
             logging.info(f'u10: {u10}')
             logging.info(f'v10: {v10}')
             logging.info(f'tem: {tem}')
             logging.info(f'dewpoint_temp: {dewpoint_temp}')
+            logging.info(f'sea_temp: {sea_temp}')
             logging.info(f'total_cloud_cover: {total_cloud_cover}')
             logging.info(f'snowfall: {pressure}')
             logging.info(f'total_rain_water: {total_rain_water}')
