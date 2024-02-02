@@ -161,7 +161,7 @@ while True:
             logging.info(f'dewpoint_temp: {dewpoint_temp}')
             logging.info(f'sea_temp: {sea_temp}')
             logging.info(f'total_cloud_cover: {total_cloud_cover}')
-            logging.info(f'pressure: {pressure}')
+            # logging.info(f'pressure: {pressure}')
             logging.info(f'total_rain_water: {total_rain_water}')
             logging.info(f'total_snow_water: {total_snow_water}')
           
@@ -212,7 +212,7 @@ while True:
         df['dewpoint_temp'] = dewpoint_temp[:].flatten()
         df['sea_temp'] = sea_temp[:].flatten()
         df['total_cloud_cover'] = total_cloud_cover[:].flatten()
-        df['pressure'] = pressure[:].flatten()
+        # df['pressure'] = pressure[:].flatten()
         df['total_rain_water'] = total_rain_water[:].flatten()
         df['total_snow_water'] = total_snow_water[:].flatten()
         data = df.to_dict(orient='records')
