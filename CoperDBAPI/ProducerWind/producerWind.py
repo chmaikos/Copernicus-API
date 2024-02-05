@@ -99,8 +99,8 @@ myclient = pymongo.MongoClient("mongodb://mongodb:27017")
 db = myclient["kafka_db"]
 mycol = db["windData"]
 
-mycolweather.drop()
 mycolweather = db["weatherData"]
+mycolweather.drop()
 
 
 
