@@ -192,8 +192,8 @@ while True:
             df_weather = pd.DataFrame({'time': [t.isoformat(sep=" ") for t in times_grid],
                                      'latitude': latitudes_grid,
                                      'longitude': longitudes_grid,
-                                     'speed': wind_speed.flatten(),
-                                     'direction': wind_dir.flatten(),
+                                     'wind_speed': wind_speed.flatten(),
+                                     'wind_direction': wind_dir.flatten(),
                                      'temperature': tem[:].flatten(),
                                      'dewpoint_temp': dewpoint_temp[:].flatten(),
                                      'sea_temp': sea_temp[:].flatten(),
@@ -210,7 +210,7 @@ while True:
             logging.info(df)
             logging.info(df_weather)
             df.dropna(subset=['u10'], inplace=True)
-            df_weather.dropna(subset=['u10'], inplace=True)
+            # df_weather.dropna(subset=['u10'], inplace=True)
             logging.info(df)
             logging.info(df_weather)
             data = df.to_dict(orient='records')
