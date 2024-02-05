@@ -98,7 +98,11 @@ topic = 'wind_topic'
 myclient = pymongo.MongoClient("mongodb://mongodb:27017")
 db = myclient["kafka_db"]
 mycol = db["windData"]
+
+mycolweather.drop()
 mycolweather = db["weatherData"]
+
+
 
 while True:
     try:
@@ -210,7 +214,7 @@ while True:
             logging.info(df)
             logging.info(df_weather)
             df.dropna(subset=['u10'], inplace=True)
-            # df_weather.dropna(subset=['u10'], inplace=True)
+            df_weather.dropna(subset=['sea_temp'], inplace=True)
             logging.info(df)
             logging.info(df_weather)
             data = df.to_dict(orient='records')
@@ -227,15 +231,15 @@ while True:
                              callback=delivery_report)
             producer.flush()
 
-        df['temperature'] = tem[:].flatten()
-        df['dewpoint_temp'] = dewpoint_temp[:].flatten()
-        df['sea_temp'] = sea_temp[:].flatten()
-        df['total_cloud_cover'] = total_cloud_cover[:].flatten()
-        df['pressure'] = pressure[:].flatten()
-        df['total_rain_water'] = total_rain_water[:].flatten()
-        df['total_snow_water'] = total_snow_water[:].flatten()
-        data = df.to_dict(orient='records')
-        mycolweather.insert_many(data)
+        # df['temperature'] = tem[:].flatten()
+        # df['dewpoint_temp'] = dewpoint_temp[:].flatten()
+        # df['sea_temp'] = sea_temp[:].flatten()
+        # df['total_cloud_cover'] = total_cloud_cover[:].flatten()
+        # df['pressure'] = pressure[:].flatten()
+        # df['total_rain_water'] = total_rain_water[:].flatten()
+        # df['total_snow_water'] = total_snow_water[:].flatten()
+        # data = df.to_dict(orient='records')
+        # mycolweather.insert_many(data)
 
         os.remove(windData)
         logging.info("File deleted successfully.")
