@@ -31,7 +31,7 @@ mycol_wind = db["windData"]
 mycol_living = db['living_lab']
 mycol_dynamic = db["ais_cyprus_dynamic"]
 mycol_static = db["ais_cyprus_static"]
-mycolweather = db["weatherData"]
+mycol_weather = db["weatherData"]
 
 @app.route('/lab', methods=['POST'])
 def add_data():
@@ -205,6 +205,8 @@ def get_data():
                     lon_max, lat_min, lat_max, mycol_wave),
         search_data(date_min, date_max, lon_min,
                     lon_max, lat_min, lat_max, mycol_wind),
+        search_data(date_min, date_max, lon_min,
+                    lon_max, lat_min, lat_max, mycol_weather)
     ]
     return jsonify(info_return)
 
