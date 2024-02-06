@@ -200,7 +200,7 @@ while True:
                                      'wind_speed': wind_speed.flatten(),
                                      'wind_direction': wind_dir.flatten(),
                                      'temperature': tem[:].flatten(),
-                                     'humidity': relative_humidity * 100,
+                                     'humidity': relative_humidity.magnitude * 100,
                                      'sea_temp': sea_temp[:].flatten(),
                                      'total_cloud_cover': total_cloud_cover[:].flatten() * 100,
                                      'pressure': pressure[:].flatten(),
