@@ -177,6 +177,10 @@ while True:
                                                                indexing='ij')]
 
             if tem[:].flatten() is not None and dewpoint_temp[:].flatten() is not None:
+              temp = tem[:].flatten()
+              dew = dewpoint_temp[:].flatten()
+              logging.info(f'tem: {temp}')
+              logging.info(f'dew: {dew}')
               relative_humidity = mpcalc.relative_humidity_from_dewpoint(tem[:].flatten() * units.degC, dewpoint_temp[:].flatten() * units.degC)
             else:
               relative_humidity = 0
