@@ -12,6 +12,8 @@ from math import pi, radians, cos
 from confluent_kafka import Producer
 import json
 import pymongo
+import metpy.calc as mpcalc
+from metpy.units import units
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, filename='app.log',
@@ -29,16 +31,6 @@ def delivery_report(err, msg):
     else:
         logging.info('Message delivered to topic: %s', msg.topic())
 
-
-# def create_square(latitude, longitude, radius):
-  
-#     radius_in_degrees = radius / 111.00
-#     min_latitude = latitude - radius_in_degrees
-#     max_latitude = latitude + radius_in_degrees
-#     min_longitude = longitude - radius_in_degrees
-#     max_longitude = longitude + radius_in_degrees
-
-#     return min_latitude, min_longitude, max_latitude, max_longitude
 
 def create_square(lat1, lon1, distance_km):
     R = 6371.0  # Radius of the Earth in kilometers
@@ -184,6 +176,8 @@ while True:
                                                                longitudes,
                                                                indexing='ij')]
 
+            relative_humidity = mpcalc.relative_humidity_from_dewpoint(tem[:].flatten() * units.degC, dewpoint_temp[:].flatten() * units.degC)
+
             df = pd.DataFrame({'time': [t.isoformat(sep=" ")
                                         for t in times_grid],
                                'latitude': latitudes_grid,
@@ -199,9 +193,9 @@ while True:
                                      'wind_speed': wind_speed.flatten(),
                                      'wind_direction': wind_dir.flatten(),
                                      'temperature': tem[:].flatten(),
-                                     'dewpoint_temp': dewpoint_temp[:].flatten(),
+                                     'humidity': relative_humidity * 100,
                                      'sea_temp': sea_temp[:].flatten(),
-                                     'total_cloud_cover': total_cloud_cover[:].flatten(),
+                                     'total_cloud_cover': total_cloud_cover[:].flatten() * 100,
                                      'pressure': pressure[:].flatten(),
                                      'total_rain_water': total_rain_water[:].flatten(),
                                      'total_snow_water': total_snow_water[:].flatten()})
@@ -220,7 +214,7 @@ while True:
             data = df.to_dict(orient='records')
             mycol.insert_many(data)
             data_weather = df_weather.to_dict(orient='records')
-            mycolweather.insert_many(data_weather)
+            # mycolweather.insert_many(data_weather)
 
         # Convert it back to string format
         df['time'] = df['time'].dt.strftime('%Y-%m-%d %H:%M:%S')
@@ -230,16 +224,6 @@ while True:
                              value=value,
                              callback=delivery_report)
             producer.flush()
-
-        # df['temperature'] = tem[:].flatten()
-        # df['dewpoint_temp'] = dewpoint_temp[:].flatten()
-        # df['sea_temp'] = sea_temp[:].flatten()
-        # df['total_cloud_cover'] = total_cloud_cover[:].flatten()
-        # df['pressure'] = pressure[:].flatten()
-        # df['total_rain_water'] = total_rain_water[:].flatten()
-        # df['total_snow_water'] = total_snow_water[:].flatten()
-        # data = df.to_dict(orient='records')
-        # mycolweather.insert_many(data)
 
         os.remove(windData)
         logging.info("File deleted successfully.")
