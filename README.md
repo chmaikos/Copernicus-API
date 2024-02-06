@@ -110,9 +110,9 @@ The information is analyzed below:
 | u10                | East Wind Component                                                                                                 |  m/s   |
 | v10                | North Wind Component                                                                                                |  m/s   |
 | speed / wind_speed | Combination of the above two components                                                                             |  m/s   |
-| temperature        | The temperature of air at 2m above the surface of land, sea or in-land waters                                       |  °C    |
+| temperature        | The temperature of air at 2m above the surface of land, sea or in-land waters                                       |   K    |
 | humidity           | A Combination of temperature, dewpoint temperature and pressure                                                     |   %    |
-| sea_temp           | This parameter is the temperature of sea water near the surface                                                     |  °C    |
+| sea_temp           | This parameter is the temperature of sea water near the surface                                                     |   K    |
 | clouds             | This parameter is the proportion of a grid box covered by cloud                                                     |   %    |
 | rain               | Water in droplets of raindrop size in a column extending from the surface of the Earth to the top of the atmosphere | kg/m^2 |
 | snow               | Snow in a column extending from the surface of the Earth to the top of the atmosphere                               | kg/m^2 |
