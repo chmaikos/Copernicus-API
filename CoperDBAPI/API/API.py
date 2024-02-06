@@ -274,7 +274,7 @@ def get_ais_cyprus_static():
 @app.route("/weather", methods=["GET"])
 def get_weather_data():
     try:
-        results = mycolweather.find()
+        results = mycol_weather.find()
         data_list = list(results)
         json_data = json.loads(json_util.dumps(data_list))
         return jsonify(json_data)
