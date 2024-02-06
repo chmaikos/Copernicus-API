@@ -211,7 +211,7 @@ while True:
 
             df['time'] = pd.to_datetime(df['time'], format='%Y-%m-%d %H:%M:%S')
             df_weather['time'] = pd.to_datetime(df_weather['time'], format='%Y-%m-%d %H:%M:%S')
-            df_weather['time'] = df_weather['time'].strftime("%Y-%m-%d %H:%M:%S")
+            df_weather['time'] = df_weather['time'].dt.strftime("%Y-%m-%d %H:%M:%S")
 
             logging.info(df)
             logging.info(df_weather)
