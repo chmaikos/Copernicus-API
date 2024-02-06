@@ -177,11 +177,11 @@ while True:
                                                                indexing='ij')]
 
             if tem[:].flatten() is not None and dewpoint_temp[:].flatten() is not None:
-              temp = tem[:].flatten()
-              dew = dewpoint_temp[:].flatten()
+              temp = tem[:].flatten()[0]
+              dew = dewpoint_temp[:].flatten()[0]
               logging.info(f'tem: {temp}')
               logging.info(f'dew: {dew}')
-              relative_humidity = mpcalc.relative_humidity_from_dewpoint(tem[:].flatten() * units.degC, dewpoint_temp[:].flatten() * units.degC)
+              relative_humidity = mpcalc.relative_humidity_from_dewpoint(tem[:].flatten()[0] * units.degC, dewpoint_temp[:].flatten()[0] * units.degC)
             else:
               relative_humidity = 0
 
@@ -221,7 +221,7 @@ while True:
             data = df.to_dict(orient='records')
             mycol.insert_many(data)
             data_weather = df_weather.to_dict(orient='records')
-            # mycolweather.insert_many(data_weather)
+            mycolweather.insert_many(data_weather)
 
         # Convert it back to string format
         df['time'] = df['time'].dt.strftime('%Y-%m-%d %H:%M:%S')
