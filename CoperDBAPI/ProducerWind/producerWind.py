@@ -230,7 +230,8 @@ while True:
                              value=value,
                              callback=delivery_report)
             producer.flush()
-          
+
+        df_weather['time'] = df_weather['time'].dt.strftime('%Y-%m-%d %H:%M:%S')
         for index, row in df_weather.iterrows():
             value = json.dumps(row.to_dict()).encode('utf-8')
             producer.produce(topic=topic_weather,
