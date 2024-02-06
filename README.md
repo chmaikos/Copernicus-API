@@ -74,7 +74,7 @@ The first time it will pull data from Copernicus is when the docker compose is f
 ]
 ```
 
-We obtain the information as a .nc file from Copernicus, refactor it into JSON, and push it into the Kafka topic `wind_topic` and into MongoDB in a collection named `wind_data` with the following format:
+We obtain the information as a .nc file from Copernicus, refactor it into JSON, and push it into the Kafka topic `wind_topic` and into MongoDB in a collection named `windData` with the following format:
 
 ```json
 {
@@ -87,20 +87,22 @@ We obtain the information as a .nc file from Copernicus, refactor it into JSON, 
   "direction": 83.43748990096958
 }
 ```
-We add some extra features at the .nc file from Copernicus, refactor it into JSON, and push it into the Kafka topic `weather_topic` and into MongoDB in a collection named `weather_data` with the following format:
+We add some extra features at the .nc file from Copernicus, refactor it into JSON, and push it into the Kafka topic `weather_topic` and into MongoDB in a collection named `weatherData` with the following format:
 
 ```json
     {
-        "latitude": 43.24399948120117,
-        "longitude": 27.92099952697754,
-        "time": "Fri, 26 Jan 2024 01:00:00 GMT",
-        "wind_speed": 298.8728315051067,
-        "temperature": 10,
-        "humidity": 40,
-        "sea_temp": 12,
-        "clouds": 20,
-        "rain": 0,
-        "snow": 0
+                "humidity": 96.38448804707079,
+                "latitude": 43.24399948120117,
+                "longitude": 27.92099952697754,
+                "pressure": 102227.77759296843,
+                "sea_temp": 279.388671875,
+                "temperature": 273.9269860137408,
+                "time": "Wed, 31 Jan 2024 00:00:00 GMT",
+                "total_cloud_cover": 59.96673923146837,
+                "total_rain_water": -1.3552527156068805e-20,
+                "total_snow_water": 0.0008333513378112866,
+                "wind_direction": 359.40557106573124,
+                "wind_speed": 5.3438242696397555
     }
 ```
 The information is analyzed below:
@@ -109,13 +111,16 @@ The information is analyzed below:
 |--------------------|---------------------------------------------------------------------------------------------------------------------|--------|
 | u10                | East Wind Component                                                                                                 |  m/s   |
 | v10                | North Wind Component                                                                                                |  m/s   |
+| direction / wind_direction | The Direction Of The Wind                                                                                   |   ˚    |
 | speed / wind_speed | Combination of the above two components                                                                             |  m/s   |
 | temperature        | The temperature of air at 2m above the surface of land, sea or in-land waters                                       |   K    |
+| sea_temp           | The temperature of the sea                                                                                          |   K    |
 | humidity           | A Combination of temperature, dewpoint temperature and pressure                                                     |   %    |
 | sea_temp           | This parameter is the temperature of sea water near the surface                                                     |   K    |
-| clouds             | This parameter is the proportion of a grid box covered by cloud                                                     |   %    |
-| rain               | Water in droplets of raindrop size in a column extending from the surface of the Earth to the top of the atmosphere | kg/m^2 |
-| snow               | Snow in a column extending from the surface of the Earth to the top of the atmosphere                               | kg/m^2 |
+| pressure           | Pressure                                                                                                            |   Pa   |
+| total_cloud_cover  | This parameter is the proportion of a grid box covered by cloud                                                     |   %    |
+| total_rain_water   | Water in droplets of raindrop size in a column extending from the surface of the Earth to the top of the atmosphere | kg/m^2 |
+| total_snow_water   | Snow in a column extending from the surface of the Earth to the top of the atmosphere                               | kg/m^2 |
 
 Speed information:
 
