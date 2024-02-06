@@ -176,7 +176,10 @@ while True:
                                                                longitudes,
                                                                indexing='ij')]
 
-            relative_humidity = mpcalc.relative_humidity_from_dewpoint(tem[:].flatten() * units.degC, dewpoint_temp[:].flatten() * units.degC)
+            if tem[:].flatten() is not None and dewpoint_temp[:].flatten() is not None:
+              relative_humidity = mpcalc.relative_humidity_from_dewpoint(tem[:].flatten() * units.degC, dewpoint_temp[:].flatten() * units.degC)
+            else:
+              relative_humidity = 0
 
             df = pd.DataFrame({'time': [t.isoformat(sep=" ")
                                         for t in times_grid],
