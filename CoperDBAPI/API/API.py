@@ -168,7 +168,7 @@ def search_data(
     last_data = database.find(query)
 
     if not last_data:
-            logging.info(f'times: {'1'}')
+            logging.info(f'times: 1')
             #logging.info(f'last_data: {list(last_data)}')
             return {database.name: []}
     else:
