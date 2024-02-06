@@ -87,14 +87,12 @@ topic_list = topic_metadata.topics
 for topic in topic_list:
     logging.info("----------------------------------------------- %s", topic)
 topic = 'wind_topic'
+topic_weather = 'weather_topic'
 myclient = pymongo.MongoClient("mongodb://mongodb:27017")
 db = myclient["kafka_db"]
 mycol = db["windData"]
 
 mycolweather = db["weatherData"]
-mycolweather.drop()
-
-
 
 while True:
     try:
@@ -211,7 +209,7 @@ while True:
 
             df['time'] = pd.to_datetime(df['time'], format='%Y-%m-%d %H:%M:%S')
             df_weather['time'] = pd.to_datetime(df_weather['time'], format='%Y-%m-%d %H:%M:%S')
-            df_weather['time'] = df_weather['time'].dt.strftime("%Y-%m-%d %H:%M:%S")
+            df_weather['time'] = df_weather['time'].dt.strftime("%a, %d %b %Y %H:%M:%S %Z")
 
             logging.info(df)
             logging.info(df_weather)
@@ -229,6 +227,13 @@ while True:
         for index, row in df.iterrows():
             value = json.dumps(row.to_dict()).encode('utf-8')
             producer.produce(topic=topic,
+                             value=value,
+                             callback=delivery_report)
+            producer.flush()
+          
+        for index, row in df_weather.iterrows():
+            value = json.dumps(row.to_dict()).encode('utf-8')
+            producer.produce(topic=topic_weather,
                              value=value,
                              callback=delivery_report)
             producer.flush()
