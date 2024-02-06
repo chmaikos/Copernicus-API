@@ -176,7 +176,170 @@ When a valid date is provided, we check if data exists for the specified latitud
       {...}
     ]
   }
+  {
+    "windData": [
+      {
+                "humidity": 96.38448804707079,
+                "latitude": 43.24399948120117,
+                "longitude": 27.92099952697754,
+                "pressure": 102227.77759296843,
+                "sea_temp": 279.388671875,
+                "temperature": 273.9269860137408,
+                "time": "Wed, 31 Jan 2024 00:00:00 GMT",
+                "total_cloud_cover": 59.96673923146837,
+                "total_rain_water": -1.3552527156068805e-20,
+                "total_snow_water": 0.0008333513378112866,
+                "wind_direction": 359.40557106573124,
+                "wind_speed": 5.3438242696397555
+      },
+      {...}
+    ]
+   }
 ]
 ```
 
 If not, an empty list is returned.
+
+#### Requests
+
+The AIS data we receive is divided into two categories: static, which includes messages of type 24 and 5, and dynamic, which includes types 1, 2, 3, and 18. These data are stored in the respective Kafka topics and collections in our database: ais_cyprus_dynamic for dynamic data and ais_cyprus_static for static data.
+
+`GET /ais_cyprus_static?dateMin=2024-01-31T00:00:00&dateMax=2024-01-31T14:00:00`
+
+`GET /ais_cyprus_dynamic?dateMin=2024-01-31T00:00:00&dateMax=2024-01-31T14:00:00`
+
+Users must provide 2 variables: `dateMin`, `dateMax`.
+
+
+#### Response
+
+The two most recent hours will be displayed.
+
+```json
+For static
+[
+    {
+        "_id": {
+            "$oid": "65ba3aad5ee1c64a559eb045"
+        },
+        "ais_type": 24,
+        "bow": 18,
+        "call_sign": "T8A3886",
+        "destination": null,
+        "draught": null,
+        "imo": null,
+        "mmsi": 511100697,
+        "port": 4,
+        "ship_name": null,
+        "ship_type": 37,
+        "starboard": 3,
+        "stern": 10,
+        "timestamp": "31/01/2024 12:18:53"
+    },
+    {
+        "_id": {
+            "$oid": "65ba3ab15ee1c64a559eb054"
+        },
+        "ais_type": 24,
+        "bow": 9,
+        "call_sign": "MNDX2",
+        "destination": null,
+        "draught": null,
+        "imo": null,
+        "mmsi": 232046175,
+        "port": 5,
+        "ship_name": null,
+        "ship_type": 36,
+        "starboard": 4,
+        "stern": 8,
+        "timestamp": "31/01/2024 12:18:57"
+    },
+    {
+        "_id": {
+            "$oid": "65ba3ab85ee1c64a559eb070"
+        },
+        "ais_type": 5,
+        "bow": 151,
+        "call_sign": "A8PW3",
+        "destination": "FOR ORDERS",
+        "draught": 7.0,
+        "imo": 9396335,
+        "mmsi": 636013848,
+        "port": 16,
+        "ship_name": "HISTRIA TIGER",
+        "ship_type": 80,
+        "starboard": 16,
+        "stern": 29,
+        "timestamp": "31/01/2024 12:19:04"
+    },
+    {
+        "_id": {
+            "$oid": "65ba3ab85ee1c64a559eb071"
+        },
+        "ais_type": 24,
+        "bow": 20,
+        "call_sign": "21VD5",
+        "destination": null,
+        "draught": null,
+        "imo": null,
+        "mmsi": 235113056,
+        "port": 3,
+        "ship_name": null,
+        "ship_type": 37,
+        "starboard": 2,
+        "stern": 3,
+        "timestamp": "31/01/2024 12:19:04"
+    }
+]
+```
+
+
+```json
+For dynamic
+[
+    {
+        "_id": {
+            "$oid": "65ba3aad5ee1c64a559eb046"
+        },
+        "ais_type": 18,
+        "cog": 162.4,
+        "heading": 511,
+        "latitude": 34.64899166666667,
+        "longitude": 32.694395,
+        "mmsi": 0,
+        "nav_status": null,
+        "sog": 0.1,
+        "timestamp": "31/01/2024 12:18:53"
+    },
+    {
+        "_id": {
+            "$oid": "65ba3aad5ee1c64a559eb047"
+        },
+        "ais_type": 18,
+        "cog": 41.300000000000004,
+        "heading": 511,
+        "latitude": 35.052238333333335,
+        "longitude": 33.98875666666667,
+        "mmsi": 0,
+        "nav_status": null,
+        "sog": 0.2,
+        "timestamp": "31/01/2024 12:18:53"
+    },
+    {
+        "_id": {
+            "$oid": "65ba3aae5ee1c64a559eb048"
+        },
+        "ais_type": 18,
+        "cog": 162.4,
+        "heading": 511,
+        "latitude": 34.64899,
+        "longitude": 32.694395,
+        "mmsi": 0,
+        "nav_status": null,
+        "sog": 0.2,
+        "timestamp": "31/01/2024 12:18:54"
+    }
+]
+```
+
+
