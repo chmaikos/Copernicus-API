@@ -189,9 +189,7 @@ When a valid date is provided, we check if data exists for the specified latitud
                 "time": "Wed, 31 Jan 2024 00:00:00 GMT",
                 "total_cloud_cover": 59.96673923146837,
                 "total_rain_water": -1.3552527156068805e-20,
-                "total_snow_water": 0.0008333513378112866,
-                "wind_direction": 359.40557106573124,
-                "wind_speed": 5.3438242696397555
+                "total_snow_water": 0.0008333513378112866
       },
       {...}
     ]
