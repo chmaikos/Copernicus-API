@@ -196,8 +196,6 @@ while True:
             df_weather = pd.DataFrame({'time': [t.isoformat(sep=" ") for t in times_grid],
                                      'latitude': latitudes_grid,
                                      'longitude': longitudes_grid,
-                                     'wind_speed': wind_speed.flatten(),
-                                     'wind_direction': wind_dir.flatten(),
                                      'temperature': tem[:].flatten(),
                                      'humidity': relative_humidity.magnitude * 100,
                                      'sea_temp': sea_temp[:].flatten(),
