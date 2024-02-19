@@ -167,7 +167,6 @@ def search_data(
 
     logging.info(f'query: {query}')
     last_data = database.find(query)
-    logging.info(f'datalist : {last_data}')
 
     if not last_data:
             logging.info('times: 1 ----------------------------------------------')
@@ -179,6 +178,7 @@ def search_data(
                 data_list.append(document)
             for data in data_list:
                 data.pop("_id", None)
+                logging.info(f'datalist : {data['time']}')
             if database == mycol_weather:
                 logging.info(f'times: 1 ---------------------------------------------- : {data_list}')
             return {database.name: data_list}
