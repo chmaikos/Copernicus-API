@@ -153,7 +153,7 @@ When a valid date is provided, we check if data exists for the specified latitud
   {
     "waveData": [
       {
-                "time": "Fri, 26 Jan 2024 01:00:00 GMT",
+                "time": "26/01/2024 01:00:00",
                 "latitude": 35,
                 "longitude": 18.916666666666657,
                 "vhm0": 0.25999999046325684,
@@ -170,7 +170,7 @@ When a valid date is provided, we check if data exists for the specified latitud
                 "latitude": 43.24399948120117,
                 "longitude": 27.92099952697754,
                 "speed": 0.09072748381317144,
-                "time": "Wed, 31 Jan 2024 20:00:00 GMT",
+                "time": "31/01/2024 20:00:00",
                 "u10": -0.0902998980297362,
                 "v10": -0.008797996072318348
       },
@@ -186,7 +186,7 @@ When a valid date is provided, we check if data exists for the specified latitud
                 "pressure": 102227.77759296843,
                 "sea_temp": 279.388671875,
                 "temperature": 273.9269860137408,
-                "time": "Wed, 31 Jan 2024 00:00:00 GMT",
+                "time": "31/01/2024 00:00:00",
                 "total_cloud_cover": 59.96673923146837,
                 "total_rain_water": -1.3552527156068805e-20,
                 "total_snow_water": 0.0008333513378112866
