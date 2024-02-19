@@ -65,6 +65,7 @@ def get_living_lab_data():
         })
 
         data_list = list(results)
+        logging.info(f'data_list: {data_list}')
         json_data = json.loads(json_util.dumps(data_list))
         return jsonify(json_data)
     except Exception as e:
