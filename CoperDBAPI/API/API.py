@@ -166,6 +166,7 @@ def search_data(
 
     logging.info(f'query: {query}')
     last_data = database.find(query)
+    logging.info(f'datalist : {last_data}')
 
     if not last_data:
             logging.info('times: 1 ----------------------------------------------')
