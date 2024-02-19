@@ -23,7 +23,7 @@ db = client["dock-mongo_mongodb_1"]
 
 @app.route("/api/threats/", methods=['GET'])
 def get_cops():
-    cops = db["COPs"].find({},{"id": 1, "threat name": 1})
+    cops = db["COPs"].find({},{"id": 1, "threat_name": 1})
     response = Response(response=dumps(cops), status=200,  mimetype="application/json")
     return response
 
@@ -49,7 +49,7 @@ def update_steps():
     return resp
 
 # =========================== DSS ===========================
-# msg_id refers to specific alerts while id of COPS refers to the id of the threat types
+# msg_id refers to specific alerts while id of COPS refers to the id of the threat types.
 
 @app.route("/api/rops/", methods=['GET'])
 def get_rops():
@@ -72,6 +72,7 @@ def get_rops():
     response = Response(response=dumps(data), status=200,  mimetype="application/json")
     return response
 
+# updates status and recommended steps
 @app.route("/api/update-cops-steps/", methods=['PUT'])
 def update_rops():
     msg_id = request.args.get('msg_id')
