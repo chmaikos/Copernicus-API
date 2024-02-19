@@ -8,10 +8,10 @@ db = client["dock-mongo_mongodb_1"]
 def init_COPs():
     COPS = [
 		{
-			"msg ID": "1",
-			"message type": "COP",
-			"threat name": "Sudden change in SOG",
-			"threat description": "Sudden change in SOG",
+			"id": "1",
+			"message_type": "COP",
+			"threat_name": "Sudden change in SoG",
+			"threat_description": "Sudden change in SoG",
 			"steps": [
 				{
 					"no": 1,
@@ -20,10 +20,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "2",
-			"message type": "COP",
-			"threat name": "Abrupt change in COG",
-			"threat description": "Abrupt change in COG",
+			"id": "2",
+			"message_type": "COP",
+			"threat_name": "Abrupt change in CoG",
+			"threat_description": "Abrupt change in CoG",
 			"steps": [
 				{
 					"no": 1,
@@ -32,10 +32,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "3",
-			"message type": "COP",
-			"threat name": "Suspicious anchoring",
-			"threat description": "Suspicious anchoring",
+			"id": "3",
+			"message_type": "COP",
+			"threat_name": "Suspicious anchoring",
+			"threat_description": "Suspicious anchoring",
 			"steps": [
 				{
 					"no": 1,
@@ -44,10 +44,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "4",
-			"message type": "COP",
-			"threat name": "Dark vessel detected in a predefined area of interest",
-			"threat description": "Dark vessel detected in a predefined area of interest",
+			"id": "4",
+			"message_type": "COP",
+			"threat_name": "Dark vessel detected",
+			"threat_description": "Dark vessel detected",
 			"steps": [
 				{
 					"no": 1,
@@ -56,10 +56,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "5",
-			"message type": "COP",
-			"threat name": "Detected a vessel that shut down its AIS transmission",
-			"threat description": "Detected a vessel that shut down its AIS transmission",
+			"id": "5",
+			"message_type": "COP",
+			"threat_name": "Vessels rendezvous",
+			"threat_description": "Detect a rendezvous of two or more vessels",
 			"steps": [
 				{
 					"no": 1,
@@ -68,10 +68,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "6",
-			"message type": "COP",
-			"threat name": "Detect a rendezvous of two or more vessels",
-			"threat description": "Detect a rendezvous of two or more vessels",
+			"id": "6",
+			"message_type": "COP",
+			"threat_name": "Vessel approaching shoreline",
+			"threat_description": "Detected a vessel approaching the shoreline",
 			"steps": [
 				{
 					"no": 1,
@@ -80,10 +80,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "7",
-			"message type": "COP",
-			"threat name": "Identify suspicious anomalies in different weather, tidal and seasonal conditions",
-			"threat description": "Identify suspicious anomalies in different weather, tidal and seasonal conditions",
+			"id": "7",
+			"message_type": "COP",
+			"threat_name": "Vessel at shore",
+			"threat_description": "Detected a vessel at shore",
 			"steps": [
 				{
 					"no": 1,
@@ -92,10 +92,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "8",
-			"message type": "COP",
-			"threat name": "Detected a vessel approaching the shoreline",
-			"threat description": "Detected a vessel approaching the shoreline",
+			"id": "8",
+			"message_type": "COP",
+			"threat_name": "People detected on deck",
+			"threat_description": "Detected people on the deck",
 			"steps": [
 				{
 					"no": 1,
@@ -104,10 +104,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "9",
-			"message type": "COP",
-			"threat name": "Detected people on the deck",
-			"threat description": "Detected people on the deck",
+			"id": "9",
+			"message_type": "COP",
+			"threat_name": "People left vessel coming ashore",
+			"threat_description": "Track people coming ashore from the vessel",
 			"steps": [
 				{
 					"no": 1,
@@ -116,22 +116,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "10",
-			"message type": "COP",
-			"threat name": "Track people coming ashore from the vessel",
-			"threat description": "Track people coming ashore from the vessel",
-			"steps": [
-				{
-					"no": 1,
-					"description": "Deploy a UAV/EURMARS asset"
-				}
-			]
-		},
-		{
-			"msg ID": "11",
-			"message type": "COP",
-			"threat name": "Detect change in navigational status",
-			"threat description": "Detect change in navigational status",
+			"id": "10",
+			"message_type": "COP",
+			"threat_name": "Navigational status changed",
+			"threat_description": "Detect change in navigational status",
 			"steps": [
 				{
 					"no": 1,
@@ -152,10 +140,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "12",
-			"message type": "COP",
-			"threat name": "Detect dark vessel in a predefined area",
-			"threat description": "Detect dark vessel in a predefined area",
+			"id": "11",
+			"message_type": "COP",
+			"threat_name": "Check if AIS required",
+			"threat_description": "Check if AIS required",
 			"steps": [
 				{
 					"no": 1,
@@ -172,10 +160,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "13",
-			"message type": "COP",
-			"threat name": "Check if AIS required",
-			"threat description": "Check if AIS required",
+			"id": "12",
+			"message_type": "COP",
+			"threat_name": "AIS spoofing detected",
+			"threat_description": "AIS spoofing detected",
 			"steps": [
 				{
 					"no": 1,
@@ -192,10 +180,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "14",
-			"message type": "COP",
-			"threat name": "AIS spoofing detected",
-			"threat description": "AIS spoofing detected",
+			"id": "13",
+			"message_type": "COP",
+			"threat_name": "Detect vessel entering/leaving area shutting down its AIS",
+			"threat_description": "Detect vessel entering/leaving area shutting down its AIS",
 			"steps": [
 				{
 					"no": 1,
@@ -212,30 +200,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "15",
-			"message type": "COP",
-			"threat name": "Detect vessel entering/leaving area shutting down its AIS",
-			"threat description": "Detect vessel entering/leaving area shutting down its AIS",
-			"steps": [
-				{
-					"no": 1,
-					"description": "Call the vessel"
-				},
-				{
-					"no": 2,
-					"description": "Deploy a UAV/EURMARS asset"
-				},
-				{
-					"no": 3,
-					"description": "Send naval responsible assets"
-				}
-			]
-		},
-		{
-			"msg ID": "16",
-			"message type": "COP",
-			"threat name": "Detect vessel in distress",
-			"threat description": "Detect vessel in distress",
+			"id": "14",
+			"message_type": "COP",
+			"threat_name": "Vessel in distress",
+			"threat_description": "Detected a vessel in distress",
 			"steps": [
 				{
 					"no": 1,
@@ -256,22 +224,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "17",
-			"message type": "COP",
-			"threat name": "Detected xx number of people on a vessel or by the shore, or…?",
-			"threat description": "Detected xx number of people on a vessel or by the shore, or…?",
-			"steps": [
-				{
-					"no": 1,
-					"description": "Deploy a UAV/EURMARS asset"
-				}
-			]
-		},
-		{
-			"msg ID": "18",
-			"message type": "COP",
-			"threat name": "Detect oil spill in predefined area",
-			"threat description": "Detect oil spill in predefined area",
+			"id": "15",
+			"message_type": "COP",
+			"threat_name": "Oil spill detected",
+			"threat_description": "Oil spill detected",
 			"steps": [
 				{
 					"no": 1,
@@ -288,10 +244,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "19",
-			"message type": "COP",
-			"threat name": "Detect if a vessel is on a collision course with another or with coast",
-			"threat description": "Detect if a vessel is on a collision course with another or with coast",
+			"id": "16",
+			"message_type": "COP",
+			"threat_name": "Vessel on collision course",
+			"threat_description": "Detect if a vessel is on a collision course with another or with coast",
 			"steps": [
 				{
 					"no": 1,
@@ -300,10 +256,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "20",
-			"message type": "COP",
-			"threat name": "Track Detected people coming ashore from the vessel",
-			"threat description": "Track Detected people coming ashore from the vessel",
+			"id": "17",
+			"message_type": "COP",
+			"threat_name": "People split into groups",
+			"threat_description": "Track if the group of people landed from the vessel is divided into two or more groups",
 			"steps": [
 				{
 					"no": 1,
@@ -312,22 +268,10 @@ def init_COPs():
 			]
 		},
 		{
-			"msg ID": "21",
-			"message type": "COP",
-			"threat name": "Track if the group of people landed from the vessel is divided into two or more groups",
-			"threat description": "Track if the group of people landed from the vessel is divided into two or more groups",
-			"steps": [
-				{
-					"no": 1,
-					"description": "Interception on land and sea"
-				}
-			]
-		},
-		{
-			"msg ID": "22",
-			"message type": "COP",
-			"threat name": "Detected people walking on foot picked up by a vehicle",
-			"threat description": "Detected people walking on foot picked up by a vehicle",
+			"id": "18",
+			"message_type": "COP",
+			"threat_name": "People boarded a vehicle",
+			"threat_description": "Detected people walking on foot picked up by a vehicle",
 			"steps": [
 				{
 					"no": 1,
@@ -342,10 +286,10 @@ def init_COPs():
 def init_alerts():
 	alerts = [
 		{
-			"msg ID": "1",
-			"message type": "alert",
-			"threat name": "Sudden change in SOG",
-			"threat description": "Sudden change in SOG",
+			"msg_id": "1",
+			"message_type": "alert",
+			"threat_name": "Sudden change in SoG",
+			"threat_description": "Sudden change in SOG",
 			"steps": [
 				{
 					"no": 1,
@@ -361,10 +305,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "2",
-			"message type": "alert",
-			"threat name": "Abrupt change in COG",
-			"threat description": "Abrupt change in COG",
+			"msg_id": "2",
+			"message_type": "alert",
+			"threat_name": "Abrupt change in CoG",
+			"threat_description": "Abrupt change in COG",
 			"steps": [
 				{
 					"no": 1,
@@ -380,10 +324,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "3",
-			"message type": "alert",
-			"threat name": "Suspicious anchoring",
-			"threat description": "Suspicious anchoring",
+			"msg_id": "3",
+			"message_type": "alert",
+			"threat_name": "Suspicious anchoring",
+			"threat_description": "Suspicious anchoring",
 			"steps": [
 				{
 					"no": 1,
@@ -399,10 +343,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "4",
-			"message type": "alert",
-			"threat name": "Dark vessel detected in a predefined area of interest",
-			"threat description": "Dark vessel detected in a predefined area of interest",
+			"msg_id": "4",
+			"message_type": "alert",
+			"threat_name": "Dark vessel detected",
+			"threat_description": "Dark vessel detected",
 			"steps": [
 				{
 					"no": 1,
@@ -418,10 +362,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "5",
-			"message type": "alert",
-			"threat name": "Detected a vessel that shut down its AIS transmission",
-			"threat description": "Detected a vessel that shut down its AIS transmission",
+			"msg_id": "5",
+			"message_type": "alert",
+			"threat_name": "Detect a rendezvous of two or more vessels",
+			"threat_description": "Detect a rendezvous of two or more vessels",
 			"steps": [
 				{
 					"no": 1,
@@ -437,10 +381,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "6",
-			"message type": "alert",
-			"threat name": "Detect a rendezvous of two or more vessels",
-			"threat description": "Detect a rendezvous of two or more vessels",
+			"msg_id": "6",
+			"message_type": "alert",
+			"threat_name": "Vessel approaching shoreline",
+			"threat_description": "Detected a vessel approaching the shoreline",
 			"steps": [
 				{
 					"no": 1,
@@ -456,10 +400,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "7",
-			"message type": "alert",
-			"threat name": "Identify suspicious anomalies in different weather, tidal and seasonal conditions",
-			"threat description": "Identify suspicious anomalies in different weather, tidal and seasonal conditions",
+			"msg_id": "7",
+			"message_type": "alert",
+			"threat_name": "Vessel at shore",
+			"threat_description": "Detected a vessel at shore",
 			"steps": [
 				{
 					"no": 1,
@@ -475,10 +419,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "8",
-			"message type": "alert",
-			"threat name": "Detected a vessel approaching the shoreline",
-			"threat description": "Detected a vessel approaching the shoreline",
+			"msg_id": "8",
+			"message_type": "alert",
+			"threat_name": "People detected on deck",
+			"threat_description": "Detected people on the deck",
 			"steps": [
 				{
 					"no": 1,
@@ -494,10 +438,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "9",
-			"message type": "alert",
-			"threat name": "Detected people on the deck",
-			"threat description": "Detected people on the deck",
+			"msg_id": "9",
+			"message_type": "alert",
+			"threat_name": "People left vessel coming ashore",
+			"threat_description": "Track people coming ashore from the vessel",
 			"steps": [
 				{
 					"no": 1,
@@ -513,29 +457,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "10",
-			"message type": "alert",
-			"threat name": "Track people coming ashore from the vessel",
-			"threat description": "Track people coming ashore from the vessel",
-			"steps": [
-				{
-					"no": 1,
-					"description": "Deploy a UAV/EURMARS asset",
-					"status": "Not initialized"
-				}
-			],
-			"rec_steps": [
-				{
-					"no": 1,
-					"description": "Deploy a UAV/EURMARS asset"
-				}
-			]
-		},
-		{
-			"msg ID": "11",
-			"message type": "alert",
-			"threat name": "Detect change in navigational status",
-			"threat description": "Detect change in navigational status",
+			"msg_id": "10",
+			"message_type": "alert",
+			"threat_name": "Navigational status changed",
+			"threat_description": "Detect change in navigational status",
 			"steps": [
 				{
 					"no": 1,
@@ -566,10 +491,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "12",
-			"message type": "alert",
-			"threat name": "Detect dark vessel in a predefined area",
-			"threat description": "Detect dark vessel in a predefined area",
+			"msg_id": "11",
+			"message_type": "alert",
+			"threat_name": "Check if AIS required",
+			"threat_description": "Check if AIS required",
 			"steps": [
 				{
 					"no": 1,
@@ -595,10 +520,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "13",
-			"message type": "alert",
-			"threat name": "Check if AIS required",
-			"threat description": "Check if AIS required",
+			"msg_id": "12",
+			"message_type": "alert",
+			"threat_name": "AIS spoofing detected",
+			"threat_description": "AIS spoofing detected",
 			"steps": [
 				{
 					"no": 1,
@@ -624,10 +549,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "14",
-			"message type": "alert",
-			"threat name": "AIS spoofing detected",
-			"threat description": "AIS spoofing detected",
+			"msg_id": "13",
+			"message_type": "alert",
+			"threat_name": "Detect vessel entering/leaving area shutting down its AIS",
+			"threat_description": "Detect vessel entering/leaving area shutting down its AIS",
 			"steps": [
 				{
 					"no": 1,
@@ -653,39 +578,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "15",
-			"message type": "alert",
-			"threat name": "Detect vessel entering/leaving area shutting down its AIS",
-			"threat description": "Detect vessel entering/leaving area shutting down its AIS",
-			"steps": [
-				{
-					"no": 1,
-					"description": "Call the vessel",
-					"status": "Not initialized"
-				},
-				{
-					"no": 2,
-					"description": "Deploy a UAV/EURMARS asset",
-					"status": "Not initialized"
-				},
-				{
-					"no": 3,
-					"description": "Send naval responsible assets",
-					"status": "Not initialized"
-				}
-			],
-			"rec_steps": [
-				{
-					"no": 1,
-					"description": "Call the vessel"
-				}
-			]
-		},
-		{
-			"msg ID": "16",
-			"message type": "alert",
-			"threat name": "Detect vessel in distress",
-			"threat description": "Detect vessel in distress",
+			"msg_id": "14",
+			"message_type": "alert",
+			"threat_name": "Vessel in distress",
+			"threat_description": "Detect vessel in distress",
 			"steps": [
 				{
 					"no": 1,
@@ -716,29 +612,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "17",
-			"message type": "alert",
-			"threat name": "Detected xx number of people on a vessel or by the shore, or…?",
-			"threat description": "Detected xx number of people on a vessel or by the shore, or…?",
-			"steps": [
-				{
-					"no": 1,
-					"description": "Deploy a UAV/EURMARS asset",
-					"status": "Not initialized"
-				}
-			],
-			"rec_steps": [
-				{
-					"no": 1,
-					"description": "Deploy a UAV/EURMARS asset"
-				}
-			]
-		},
-		{
-			"msg ID": "18",
-			"message type": "alert",
-			"threat name": "Detect oil spill in predefined area",
-			"threat description": "Detect oil spill in predefined area",
+			"msg_id": "15",
+			"message_type": "alert",
+			"threat_name": "Oil spill detected",
+			"threat_description": "Oil spill detected",
 			"steps": [
 				{
 					"no": 1,
@@ -764,10 +641,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "19",
-			"message type": "alert",
-			"threat name": "Detect if a vessel is on a collision course with another or with coast",
-			"threat description": "Detect if a vessel is on a collision course with another or with coast",
+			"msg_id": "16",
+			"message_type": "alert",
+			"threat_name": "Vessel on collision course",
+			"threat_description": "Detect if a vessel is on a collision course with another or with coast",
 			"steps": [
 				{
 					"no": 1,
@@ -783,10 +660,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "20",
-			"message type": "alert",
-			"threat name": "Track Detected people coming ashore from the vessel",
-			"threat description": "Track Detected people coming ashore from the vessel",
+			"msg_id": "17",
+			"message_type": "alert",
+			"threat_name": "People split into groups",
+			"threat_description": "Track if the group of people landed from the vessel is divided into two or more groups",
 			"steps": [
 				{
 					"no": 1,
@@ -802,29 +679,10 @@ def init_alerts():
 			]
 		},
 		{
-			"msg ID": "21",
-			"message type": "alert",
-			"threat name": "Track if the group of people landed from the vessel is divided into two or more groups",
-			"threat description": "Track if the group of people landed from the vessel is divided into two or more groups",
-			"steps": [
-				{
-					"no": 1,
-					"description": "Interception on land and sea",
-					"status": "Not initialized"
-				}
-			],
-			"rec_steps": [
-				{
-					"no": 1,
-					"description": "Interception on land and sea"
-				}
-			]
-		},
-		{
-			"msg ID": "22",
-			"message type": "alert",
-			"threat name": "Detected people walking on foot picked up by a vehicle",
-			"threat description": "Detected people walking on foot picked up by a vehicle",
+			"msg_id": "18",
+			"message_type": "alert",
+			"threat_name": "People boarded a vehicle",
+			"threat_description": "Detected people walking on foot picked up by a vehicle",
 			"steps": [
 				{
 					"no": 1,
