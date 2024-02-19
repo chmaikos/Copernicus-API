@@ -178,8 +178,8 @@ def search_data(
                 data_list.append(document)
             for data in data_list:
                 data.pop("_id", None)
-                tmp = data['time']
-                logging.info(f'datalist : {tmp}')
+                data['time'] = data['time'].strftime("%d/%m/%Y %H:%M:%S")
+                logging.info(f'datalist : {data}')
             if database == mycol_weather:
                 logging.info(f'times: 1 ---------------------------------------------- : {data_list}')
             return {database.name: data_list}
