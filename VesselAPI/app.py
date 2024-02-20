@@ -5,17 +5,11 @@ from pymongo import MongoClient
 from pymongo import ReturnDocument
 from bson.json_util import dumps
 import json
-# from dotenv import load_dotenv
-
-# load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
-# mongo_db_url = os.environ.get("MONGO_DB_CONN_STRING")
-# print(mongo_db_url)
 
 client = MongoClient("mongodb://mongodb:27017")
-
 
 db = client["dock-mongo_mongodb_1"]
 
@@ -73,7 +67,7 @@ def get_rops():
     return response
 
 # updates status and recommended steps
-@app.route("/api/update-cops-steps/", methods=['PUT'])
+@app.route("/api/update-status-and-rops/", methods=['PUT'])
 def update_rops():
     msg_id = request.args.get('msg_id')
     json_request = request.get_json()
@@ -84,6 +78,6 @@ def update_rops():
     db["alerts"].find_one_and_update(filter,update,upsert=False)
     resp = jsonify(success=True)
     return resp
-
+    
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
