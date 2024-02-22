@@ -23,9 +23,9 @@ def get_cops():
 
 @app.route("/api/threat-cops/", methods=['GET'])
 def get_cops_for_threat():
-    msg_id = request.args.get('id')
-    filter = { "id": msg_id }
-    cops = db["COPs"].find(filter)
+    id = request.args.get('id')
+    filter = { "id": id }
+    cops = list(db["COPs"].find(filter))[0]
     response = Response(response=dumps(cops), status=200,  mimetype="application/json")
     return response
 
@@ -63,7 +63,7 @@ def get_rops():
         rec_steps_set.add(desc)
     diff = list(steps_set.difference(rec_steps_set))
     data[0]["other_steps"] = diff
-    response = Response(response=dumps(data), status=200,  mimetype="application/json")
+    response = Response(response=dumps(list(data)[0]), status=200,  mimetype="application/json")
     return response
 
 # updates status and recommended steps
