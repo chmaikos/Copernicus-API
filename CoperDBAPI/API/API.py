@@ -228,6 +228,27 @@ def get_status():
 
     return jsonify(response)
 
+@app.route("/ais_cyprus_dynamic_all", methods=["GET"])
+def get_ais_cyprus_dynamic_all():
+    try:
+        results = mycol_dynamic.find()
+        data_list = list(results)
+        json_data = json.loads(json_util.dumps(data_list))
+        return jsonify(json_data)
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
+
+@app.route("/ais_cyprus_static_all", methods=["GET"])
+def get_ais_cyprus_static_all():
+    try:
+        results = mycol_static.find()
+        data_list = list(results)
+        json_data = json.loads(json_util.dumps(data_list))
+        return jsonify(json_data)
+    except Exception as e:
+        return jsonify({'error': str(e)})
+        
 @app.route("/ais_cyprus_dynamic", methods=["GET"])
 def get_ais_cyprus_dynamic():
     try:
