@@ -10,6 +10,7 @@ WORKDIR /main
 # Install any dependencies
 RUN pip install --upgrade pip
 RUN pip install Flask==2.2.2 Flask-PyMongo==2.3.0
+RUN sudo apt-get install -y build-essential python3-dev python3-numpy
 RUN pip install pandas
 
 # Specify the Flask environment port
