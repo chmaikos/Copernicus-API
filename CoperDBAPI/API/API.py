@@ -234,7 +234,12 @@ def get_ais_cyprus_dynamic_all():
         results = mycol_dynamic.find()
         data_list = list(results)
         json_data = json.loads(json_util.dumps(data_list))
-        return jsonify(json_data)
+
+        df = pd.DataFrame(json_data)
+
+        df.to_csv('weather_data.csv', index=False)
+
+        return 'CSV file successfully created!'
     except Exception as e:
         return jsonify({'error': str(e)})
 
@@ -245,7 +250,12 @@ def get_ais_cyprus_static_all():
         results = mycol_static.find()
         data_list = list(results)
         json_data = json.loads(json_util.dumps(data_list))
-        return jsonify(json_data)
+
+        df = pd.DataFrame(json_data)
+
+        df.to_csv('weather_data.csv', index=False)
+
+        return 'CSV file successfully created!'
     except Exception as e:
         return jsonify({'error': str(e)})
         
