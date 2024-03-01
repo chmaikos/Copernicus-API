@@ -238,12 +238,7 @@ def get_ais_cyprus_dynamic_all():
         results = mycol_dynamic.find().skip(numData_tmp).limit(numData)
         data_list = list(results)
         json_data = json.loads(json_util.dumps(data_list))
-
-        df = pd.DataFrame(json_data)
-
-        df.to_csv('weather_data.csv', index=False)
-
-        return 'CSV file successfully created!'
+        return jsonify(json_data)
     except Exception as e:
         return jsonify({'error': str(e)})
 
