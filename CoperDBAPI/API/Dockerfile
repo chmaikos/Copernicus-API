@@ -1,5 +1,5 @@
 # Set base image (host OS)
-FROM python:alpine3.8
+FROM python:3.10.12
 
 # Copy the content of the project directory to the working directory
 COPY . /main
@@ -10,7 +10,6 @@ WORKDIR /main
 # Install any dependencies
 RUN pip install --upgrade pip
 RUN pip install Flask==2.2.2 Flask-PyMongo==2.3.0
-RUN apt-get update && apt-get install -y build-essential python3-dev python3-numpy
 RUN pip install pandas
 
 # Specify the Flask environment port
