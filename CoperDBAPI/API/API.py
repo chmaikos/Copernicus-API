@@ -8,6 +8,7 @@ from pymongo import DESCENDING
 import json
 from bson import json_util
 import re
+import pandas as pd
 
 # Configure logging
 logging.basicConfig(
