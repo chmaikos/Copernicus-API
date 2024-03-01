@@ -233,6 +233,7 @@ def get_status():
 def get_ais_cyprus_dynamic_all():
     try:
         numData = request.args.get("numData")
+        numData = int(numData)
         numData_tmp = numData - 100
         results = collection.find().skip(numData_tmp).limit(numData)
         data_list = list(results)
