@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from math import cos, radians
 import math
 import pymongo
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, current_app
 from pymongo import DESCENDING
 import json
 from bson import json_util
@@ -232,23 +232,20 @@ def get_status():
 @app.route("/ais_cyprus_dynamic_all", methods=["GET"])
 def get_ais_cyprus_dynamic_all():
     try:
-        # Ορίζουμε το μέγιστο πλήθος των εγγραφών που θα επιστραφούν ανά ερώτημα
-        max_records_per_query = 100
-        offset = 0
+        with current_app.app_context():
+            max_records_per_query = 100
+            offset = 0
+            all_data = []
 
-        all_data = []
+            while True:
+                results = mycol_dynamic.find().skip(offset).limit(max_records_per_query)
+                data_list = list(results)
+                if not data_list:
+                    break
+                all_data.extend(data_list)
+                offset += max_records_per_query
 
-        # Επαναλαμβάνουμε το ερώτημα στη βάση δεδομένων μέχρι να εξαντληθούν όλες οι εγγραφές
-        while True:
-            results = mycol_dynamic.find().skip(offset).limit(max_records_per_query)
-            data_list = list(results)
-            if not data_list:
-                break  # Έξοδος από την επανάληψη αν δεν υπάρχουν άλλα δεδομένα
-            all_data.extend(data_list)
-            offset += max_records_per_query
-
-            # Επιστρέφουμε τα δεδομένα σε JSON μορφή
-            yield jsonify(data_list)
+                yield jsonify(data_list)
 
     except Exception as e:
         return jsonify({'error': str(e)})
