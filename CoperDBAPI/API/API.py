@@ -232,21 +232,17 @@ def get_status():
 @app.route("/ais_cyprus_dynamic_all", methods=["GET"])
 def get_ais_cyprus_dynamic_all():
     try:
-        with current_app.app_context():
-            max_records_per_query = 100
-            offset = 0
-            all_data = []
+        numData = request.args.get("numData")
+        numData_tmp = numData - 100
+        results = collection.find().skip(numData_tmp).limit(numData)
+        data_list = list(results)
+        json_data = json.loads(json_util.dumps(data_list))
 
-            while True:
-                results = mycol_dynamic.find().skip(offset).limit(max_records_per_query)
-                data_list = list(results)
-                if not data_list:
-                    break
-                all_data.extend(data_list)
-                offset += max_records_per_query
+        df = pd.DataFrame(json_data)
 
-                yield jsonify(data_list)
+        df.to_csv('weather_data.csv', index=False)
 
+        return 'CSV file successfully created!'
     except Exception as e:
         return jsonify({'error': str(e)})
 
