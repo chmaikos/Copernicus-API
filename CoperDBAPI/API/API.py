@@ -232,33 +232,42 @@ def get_status():
 @app.route("/ais_cyprus_dynamic_all", methods=["GET"])
 def get_ais_cyprus_dynamic_all():
     try:
-        results = mycol_dynamic.find()
-        data_list = list(results)
-        json_data = json.loads(json_util.dumps(data_list))
+        # Ορίζουμε το μέγιστο πλήθος των εγγραφών που θα επιστραφούν ανά ερώτημα
+        max_records_per_query = 100
+        offset = 0
 
-        df = pd.DataFrame(json_data)
+        all_data = []
 
-        df.to_csv('weather_data.csv', index=False)
+        # Επαναλαμβάνουμε το ερώτημα στη βάση δεδομένων μέχρι να εξαντληθούν όλες οι εγγραφές
+        while True:
+            results = mycol_dynamic.find().skip(offset).limit(max_records_per_query)
+            data_list = list(results)
+            if not data_list:
+                break  # Έξοδος από την επανάληψη αν δεν υπάρχουν άλλα δεδομένα
+            all_data.extend(data_list)
+            offset += max_records_per_query
 
-        return 'CSV file successfully created!'
+            # Επιστρέφουμε τα δεδομένα σε JSON μορφή
+            yield jsonify(data_list)
+
     except Exception as e:
         return jsonify({'error': str(e)})
 
 
-@app.route("/ais_cyprus_static_all", methods=["GET"])
-def get_ais_cyprus_static_all():
-    try:
-        results = mycol_static.find()
-        data_list = list(results)
-        json_data = json.loads(json_util.dumps(data_list))
+# @app.route("/ais_cyprus_static_all", methods=["GET"])
+# def get_ais_cyprus_static_all():
+#     try:
+#         results = mycol_static.find()
+#         data_list = list(results)
+#         json_data = json.loads(json_util.dumps(data_list))
 
-        df = pd.DataFrame(json_data)
+#         df = pd.DataFrame(json_data)
 
-        df.to_csv('weather_data.csv', index=False)
+#         df.to_csv('weather_data.csv', index=False)
 
-        return 'CSV file successfully created!'
-    except Exception as e:
-        return jsonify({'error': str(e)})
+#         return 'CSV file successfully created!'
+#     except Exception as e:
+#         return jsonify({'error': str(e)})
         
 @app.route("/ais_cyprus_dynamic", methods=["GET"])
 def get_ais_cyprus_dynamic():
