@@ -1,4 +1,0 @@
-pyais==1.2.0
-sockets==1.0.0
-Flask-PyMongo==2.3.0
-pykafka==2.8.0

@@ -48,45 +48,20 @@ services:
     ports:
       - 27017:27017
 
-
-  producerwave:
-      build:
-          context: ./CoperDBAPI/ProducerWave
-      depends_on:
-        - kafka1
-        - mongodb
-
-  producerwind:
-    build:
-      context: ./CoperDBAPI/ProducerWind
-    depends_on:
-      - kafka1
-      - mongodb
-    volumes:
-      - ./CoperDBAPI/.cdsapirc:/root/.cdsapirc
-
   api:
       build:
         context: ./CoperDBAPI/API
       ports:
         - 5000:5000
       depends_on:
-        - producerwave
-        - producerwind
+        - mongodb
+        - kafka1
 
   api_vessel:
     build:
       context: ./VesselAPI
     ports:
       - 5001:5000
-    depends_on:
-      - mongodb
-
-  ais_decoder:
-    build:
-      context: ./CoperDBAPI/aisDecoder
-    ports:
-      - "9094:9094/udp"
     depends_on:
       - mongodb
 

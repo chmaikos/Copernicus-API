@@ -1,27 +1,19 @@
-# Set base image (host OS)
-FROM python:alpine3.8
+FROM python:3.8-slim
 
-# Copy the content of the project directory to the working directory
-COPY . /main
-
-# Set the working directory in the container
-WORKDIR /main
-
-# Install any dependencies
-RUN pip install --upgrade pip
-RUN pip install Flask==2.2.2 Flask-PyMongo==2.3.0
-# RUN apk update && \
-#     apk add --no-cache build-base python3-dev py3-numpy && \
-#     pip install --no-cache-dir pandas
-
-# Specify the Flask environment port
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 ENV PORT 5000
 
-# By default, listen on port 5000
+COPY . /app
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends libhdf5-dev libnetcdf-dev libudunits2-dev gcc libpq-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
 EXPOSE 5000
 
-# Set the directive to specify the executable that will run when the container is initiated
-ENTRYPOINT [ "python" ]
-
-# Specify the command to run on container start
-CMD [ "API.py" ]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]

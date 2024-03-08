@@ -1,31 +1,16 @@
-import configparser
 import json
-import logging
 import math
 import os
 import time
 from datetime import datetime, timedelta
-from math import cos, radians
 
 import motuclient
 import numpy as np
 import pandas as pd
-import pymongo
+from config import settings
 from confluent_kafka import Producer
+from database import db
 from netCDF4 import Dataset, num2date
-
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    filename="app.log",
-    filemode="w",
-    format="%(name)s-%(levelname)s-%(message)s",
-)
-console = logging.StreamHandler()
-console.setLevel(logging.INFO)
-formatter = logging.Formatter("%(name)s-%(levelname)s-%(message)s")
-console.setFormatter(formatter)
-logging.getLogger("").addHandler(console)
 
 
 def create_square(lat1, lon1, distance_km):
@@ -103,7 +88,7 @@ class MotuOptions:
             return None
 
 
-def motu_option_parser(script_template, usr, pwd, output_filename):
+def motu_option_parser(script_template, usr, pwd, PROD_WAVE_OUTPUT_FILENAME):
     dictionary = dict(
         [e.strip().partition(" ")[::2] for e in script_template.split("--")]
     )
@@ -117,8 +102,8 @@ def motu_option_parser(script_template, usr, pwd, output_filename):
     for k, v in list(dictionary.items()):
         if v == "<OUTPUT_DIRECTORY>":
             dictionary[k] = "."
-        if v == "<OUTPUT_FILENAME>":
-            dictionary[k] = output_filename
+        if v == "<PROD_WAVE_OUTPUT_FILENAME>":
+            dictionary[k] = PROD_WAVE_OUTPUT_FILENAME
         if v == "<USERNAME>":
             dictionary[k] = usr
         if v == "<PASSWORD>":
@@ -140,47 +125,25 @@ def motu_option_parser(script_template, usr, pwd, output_filename):
     return dictionary
 
 
-# Create the Kafka producer
-producer = Producer({"bootstrap.servers": "kafka1:29092"})
-topic_metadata = producer.list_topics()
-topic_list = topic_metadata.topics
-
-topic = "wave_topic"
+producer = Producer(settings.KAFKA_PRODUCER_CONFIG)
+topic = settings.WAVE_TOPIC
 
 
-def delivery_report(err, msg):
-    if err is not None:
-        logging.info(f"Failed to deliver message: {err}")
-    else:
-        logging.info(f"Message delivered to topic: {msg.topic()}")
-
-
-while True:
-
-    myclient = pymongo.MongoClient("mongodb://mongodb:27017")
-    db = myclient["kafka_db"]
+def process_and_publish_wave_data():
     mycol = db["waveData"]
-
-    config = configparser.ConfigParser()
-    config.read("config.conf")
-
-    lon = float(config.get("Default", "longitude"))
-    lat = float(config.get("Default", "latitude"))
-    rad = float(config.get("Default", "radius"))
+    lon = settings.DEFAULT_LONGITUDE
+    lat = settings.DEFAULT_LATITUDE
+    rad = settings.DEFAULT_RADIUS
 
     lat_min, lon_min, lat_max, lon_max = create_square(lat, lon, rad)
 
-    # Get the current time
-    curr_time = datetime.now()
     curr_time = datetime.now() - timedelta(days=2)
-    delta_3h = curr_time - timedelta(hours=3)
-    delta_3h = delta_3h + timedelta(seconds=1)
+    delta_3h = curr_time - timedelta(hours=3) + timedelta(seconds=1)
 
-    USERNAME = "mmini1"
-    PASSWORD = "Artemis2000"
-    OUTPUT_FILENAME = "data/CMEMS_Wave3H.nc"
+    USERNAME = settings.USERNAME
+    PASSWORD = settings.PASSWORD
+    PROD_WAVE_OUTPUT_FILENAME = settings.PROD_WAVE_OUTPUT_FILENAME
 
-    # Change the variables according to the desired dataset
     script_template = (
         f'python -m motuclient \
         --motu https://nrt.cmems-du.eu/motu-web/Motu \
@@ -194,23 +157,20 @@ while True:
         + str(curr_time)
         + '" \
         --variable VHM0 --variable VMDR --variable VTM10 \
-        --out-dir <OUTPUT_DIRECTORY> --out-name <OUTPUT_FILENAME> \
+        --out-dir <OUTPUT_DIRECTORY> --out-name <PROD_WAVE_OUTPUT_FILENAME> \
         --user <USERNAME> --pwd <PASSWORD>'
     )
 
-    logging.info(script_template)
-
     data_request_options_dict_automated = motu_option_parser(
-        script_template, USERNAME, PASSWORD, OUTPUT_FILENAME
+        script_template, USERNAME, PASSWORD, PROD_WAVE_OUTPUT_FILENAME
     )
 
-    # Motu API executes the downloads
+    # Assuming motuclient setup remains as is
     motuclient.motu_api.execute_request(
         MotuOptions(data_request_options_dict_automated)
     )
 
-    waveData = Dataset("data/CMEMS_Wave3H.nc", "r+")
-
+    waveData = Dataset(PROD_WAVE_OUTPUT_FILENAME, "r+")
     waveData.set_auto_mask(True)
 
     # Extract variables for wave dataset
@@ -242,42 +202,26 @@ while True:
 
     df["time"] = pd.to_datetime(df["time"], format="%Y-%m-%d %H:%M:%S")
 
-    logging.info(df)
-
-    # Find null values in 'Feature1'
-    null_values = df["vhm0"].isnull()
-
-    # Filter the DataFrame to show only rows with null values in 'Feature1'
-    rows_with_null = df[null_values]
-
-    # logging.info the rows with null values
-    logging.info(rows_with_null)
-
     # Drop rows with null values in 'vhm0'
     df = df.dropna(subset=["vhm0"])
-
-    logging.info(df)
 
     # Convert DataFrame to a list of dictionaries (JSON-like documents)
     data = df.to_dict(orient="records")
 
     mycol.insert_many(data)
-    myclient.close()
+    db.close()
 
     # Convert it back to string format
     df["time"] = df["time"].dt.strftime("%Y-%m-%d %H:%M:%S")
 
-    for index, row in df.iterrows():
+    for _, row in df.iterrows():
         data_topic = row.to_dict()
         value = json.dumps(data_topic).encode("utf-8")
-        producer.produce(topic=topic, value=value, callback=delivery_report)
+        producer.produce(topic=topic, value=value)
         producer.flush()
-    file_path = "data/CMEMS_Wave3H.nc"
+    file_path = PROD_WAVE_OUTPUT_FILENAME
     try:
         os.remove(file_path)
-        logging.info("File deleted successfully.")
-    except FileNotFoundError:
-        logging.info("File not found.")
     except Exception as e:
-        logging.info(f"Error: {e}")
+        print(e)
     time.sleep(3 * 3600)
