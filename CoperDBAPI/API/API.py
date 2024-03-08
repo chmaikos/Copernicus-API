@@ -317,6 +317,31 @@ def get_weather_data():
     except Exception as e:
         return jsonify({'error': str(e)})
 
+@app.route("/data", methods=["GET"])
+def data():
+    try:
+        result_dynamic = mycol_dynamic.delete_many({"shipId": {"$exists": True}})
+        result_d = result_dynamic.deleted_count
+        logging.info(f'dynamic: {result_d}')
 
+        unique_mmsi_dynamic = mycol_dynamic.distinct("mmsi")
+        logging.info(f'unique_mmsi: {unique_mmsi_dynamic}')
+
+        result_static = mycol_static.delete_many({"shipId": {"$exists": True}})
+        result_s = result_static.deleted_count
+        logging.info(f'dynamic: {result_s}')
+
+        unique_mmsi_static = mycol_static.distinct("mmsi")
+        logging.info(f'unique_mmsi: {unique_mmsi_static}')
+
+        unique_mmsi_ship_types = {}
+        for mmsi in unique_mmsi_static:
+            ship_type = mycol_static.find_one({"mmsi": mmsi}, {"ship_type": 1})
+            unique_mmsi_ship_types[mmsi] = ship_type["ship_type"] if ship_type else None
+
+        logging.info(f'Unique MMSI values with ship types:: {unique_mmsi_ship_types}')
+    except Exception as e:
+        return jsonify({'error': str(e)})
+        
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
