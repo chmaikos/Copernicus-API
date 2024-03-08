@@ -317,8 +317,8 @@ def get_weather_data():
     except Exception as e:
         return jsonify({'error': str(e)})
 
-@app.route("/data", methods=["GET"])
-def data():
+@app.route("/data_info", methods=["GET"])
+def data_info():
     try:
         result_dynamic = mycol_dynamic.delete_many({"shipId": {"$exists": True}})
         result_d = result_dynamic.deleted_count
