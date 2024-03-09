@@ -4,6 +4,7 @@ import time
 from ais_decode import start_udp_listener
 from fastapi import FastAPI
 from producers.wave import process_and_publish_wave_data
+from producers.wind import process_and_publish_wind_data
 from routers import (
     ais_cyprus_dynamic_router,
     ais_cyprus_static_router,
@@ -37,3 +38,8 @@ def run_background_tasks():
         target=process_and_publish_wave_data, daemon=True
     )
     wave_processor_thread.start()
+    # Starting the wind data processor in its own thread
+    wind_processor_thread = threading.Thread(
+        target=process_and_publish_wind_data, daemon=True
+    )
+    wind_processor_thread.start()

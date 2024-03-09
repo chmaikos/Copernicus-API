@@ -9,6 +9,9 @@ class Settings(BaseSettings):
     USERNAME: str = "mmini1"
     PASSWORD: str = "Artemis2000"
     PROD_WAVE_OUTPUT_FILENAME: str = "data/CMEMS_Wave3H.nc"
+    PROD_WIND_OUTPUT_FILENAME: str = "data/ERA5_Weather3H.nc"
+    WIND_TOPIC: str = "wind_topic"
+    WEATHER_TOPIC: str = "weather_topic"
     WAVE_TOPIC: str = "wave_topic"
     KAFKA_PRODUCER_CONFIG: dict = {"bootstrap.servers": "kafka1:29092"}
     DEFAULT_LONGITUDE: float = 27.917171

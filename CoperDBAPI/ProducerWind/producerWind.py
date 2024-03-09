@@ -16,26 +16,6 @@ from confluent_kafka import Producer
 from metpy.units import units
 from netCDF4 import Dataset, num2date
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    filename="app.log",
-    filemode="w",
-    format="%(name)s-%(levelname)s-%(message)s",
-)
-console = logging.StreamHandler()
-console.setLevel(logging.INFO)
-formatter = logging.Formatter("%(name)s-%(levelname)s-%(message)s")
-console.setFormatter(formatter)
-logging.getLogger("").addHandler(console)
-
-
-def delivery_report(err, msg):
-    if err is not None:
-        logging.error("Failed to deliver message: %s", err)
-    else:
-        logging.info("Message delivered to topic: %s", msg.topic())
-
 
 def create_square(lat1, lon1, distance_km):
     R = 6371.0  # Radius of the Earth in kilometers
@@ -99,10 +79,6 @@ def create_square(lat1, lon1, distance_km):
 
 
 producer = Producer({"bootstrap.servers": "kafka1:29092"})
-topic_metadata = producer.list_topics()
-topic_list = topic_metadata.topics
-for topic in topic_list:
-    logging.info("----------------------------------------------- %s", topic)
 topic = "wind_topic"
 topic_weather = "weather_topic"
 myclient = pymongo.MongoClient("mongodb://mongodb:27017")
@@ -162,16 +138,6 @@ while True:
         with Dataset("data/ERA5_Weather3H.nc", "r+") as windData_BL:
             for var_name in windData_BL.variables.keys():
                 variable = windData_BL.variables[var_name]
-                logging.info(f"Variable Name: {var_name}")
-                logging.info(f"Dimensions: {variable.dimensions}")
-                logging.info(f"Shape: {variable.shape}")
-                logging.info(
-                    f'Units: {variable.units if "units" in variable.ncattrs() else "N/A"}'
-                )
-                logging.info(
-                    f'Description: {variable.long_name if "long_name" in variable.ncattrs() else "N/A"}'
-                )
-                logging.info("\n")
             (
                 u10,
                 v10,
@@ -186,16 +152,6 @@ while True:
                 windData_BL.variables.get,
                 ["u10", "v10", "t2m", "d2m", "sst", "tcc", "tcrw", "tcsw", "sp"],
             )
-
-            logging.info(f"u10: {u10}")
-            logging.info(f"v10: {v10}")
-            logging.info(f"tem: {tem}")
-            logging.info(f"dewpoint_temp: {dewpoint_temp}")
-            logging.info(f"sea_temp: {sea_temp}")
-            logging.info(f"total_cloud_cover: {total_cloud_cover}")
-            logging.info(f"pressure: {pressure}")
-            logging.info(f"total_rain_water: {total_rain_water}")
-            logging.info(f"total_snow_water: {total_snow_water}")
 
             wind_speed = np.sqrt(u10[:] ** 2 + v10[:] ** 2)
             wind_dir = (270 - np.arctan2(v10[:], u10[:]) * 180 / pi) % 360
