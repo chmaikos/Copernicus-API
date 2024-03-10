@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from bson.json_util import dumps
+from bson import json_util
 from database import db
 from fastapi import APIRouter, HTTPException, Query
 
@@ -21,8 +21,6 @@ async def get_living_lab_data(date_min: str = Query(...), date_max: str = Query(
         }
 
         results = await db["living_lab"].find(query).to_list(None)
-        json_data = dumps(results)
-
-        return json.loads(json_data)
+        return json_util.dumps(results)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

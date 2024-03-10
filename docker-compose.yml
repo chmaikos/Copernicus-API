@@ -50,12 +50,14 @@ services:
 
   api:
       build:
-        context: ./CoperDBAPI/API
+        context: ./CopernicusAPI
       ports:
         - 5000:5000
       depends_on:
         - mongodb
         - kafka1
+      volumes:
+        - ./CopernicusAPI/.cdsapirc:/root/.cdsapirc
 
   api_vessel:
     build:

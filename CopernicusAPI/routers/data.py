@@ -1,6 +1,7 @@
 import math
 from datetime import datetime
 
+from bson import json_util
 from database import db
 from fastapi import APIRouter, HTTPException, Query
 
@@ -76,6 +77,6 @@ async def get_data(
             data = await collection.find(query).to_list(None)
             results.append({collection_name: data})
 
-        return results
+        return json_util.dumps(results)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

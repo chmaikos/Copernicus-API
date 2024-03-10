@@ -1,3 +1,4 @@
+from bson import json_util
 from database import db
 from fastapi import APIRouter, HTTPException
 
@@ -9,6 +10,6 @@ async def get_weather_data():
     try:
         collection = db["weatherData"]
         results = await collection.find().to_list(None)
-        return results
+        return json_util.dumps(results)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

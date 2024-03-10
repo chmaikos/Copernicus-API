@@ -1,9 +1,9 @@
 import threading
-import time
 
 from ais_decode import start_udp_listener
 from fastapi import FastAPI
-from producers.wave import process_and_publish_wave_data
+
+# from producers.wave import process_and_publish_wave_data
 from producers.wind import process_and_publish_wind_data
 from routers import (
     ais_cyprus_dynamic_router,
@@ -28,16 +28,17 @@ app.include_router(weather_router, prefix="/api", tags=["weather"])
 
 @app.on_event("startup")
 def run_background_tasks():
-    time.sleep(3600)
     # Starting the UDP listener in its own thread
     udp_listener_thread = threading.Thread(target=start_udp_listener, daemon=True)
     udp_listener_thread.start()
 
     # Starting the wave data processor in its own thread
-    wave_processor_thread = threading.Thread(
-        target=process_and_publish_wave_data, daemon=True
-    )
-    wave_processor_thread.start()
+    # wave_processor_thread = threading.Thread(
+    #     target=process_and_publish_wave_data, daemon=True
+    # )
+    # wave_processor_thread.start()
+    # This remains commented until the 403 issue is resolved
+
     # Starting the wind data processor in its own thread
     wind_processor_thread = threading.Thread(
         target=process_and_publish_wind_data, daemon=True

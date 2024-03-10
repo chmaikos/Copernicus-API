@@ -1,3 +1,10 @@
+fastapi==0.65.2
+motor
+uvicorn==0.13.4
+pydantic==1.8.2
+pyais==1.2.0
+sockets==1.0.0
+pykafka==2.8.0
 cdo==1.5.6
 cdsapi==0.5.1
 motuclient==1.8.4
@@ -6,7 +13,7 @@ numpy==1.22.2
 pandas==1.5.0
 psycopg2==2.9.5
 python-dotenv==0.21.1
-xarray==0.20.1
+xarray==0.21.0
 kafka-python==2.0.2
-pymongo==4.4.0
 confluent-kafka==2.2.0
+MetPy==1.6.1

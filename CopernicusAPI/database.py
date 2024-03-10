@@ -1,11 +1,11 @@
+import motor.motor_asyncio
 from config import Settings
 from pykafka import KafkaClient
-from pymongo import MongoClient
 
 settings = Settings()
 
-# MongoDB Connection
-mongo_client = MongoClient(settings.MONGODB_URL)
+# MongoDB Connection using Motor for async operations
+mongo_client = motor.motor_asyncio.AsyncIOMotorClient(settings.MONGODB_URL)
 db = mongo_client["kafka_db"]
 ais_cyprus_dynamic_col = db["ais_cyprus_dynamic"]
 ais_cyprus_static_col = db["ais_cyprus_static"]
