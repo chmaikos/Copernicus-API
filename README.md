@@ -1,5 +1,9 @@
 <p align="center">
-![GitHub](https://img.shields.io/github/license/chmaikos/Copernicus-API) ![GitHub stars](https://img.shields.io/github/stars/chmaikos/Copernicus-API?style=social) ![Docker Automated build](https://img.shields.io/docker/automated/chmaikos/copernicus-api)
+  <a href="https://github.com/chmaikos/Copernicus-API">
+    <img src="https://img.shields.io/github/license/chmaikos/Copernicus-API" alt="GitHub License"/>
+    <img src="https://img.shields.io/github/stars/chmaikos/Copernicus-API?style=social" alt="GitHub stars"/>
+    <img src="https://img.shields.io/docker/automated/chmaikos/copernicus-api" alt="Docker Automated build"/>
+  </a>
 </p>
 
 # Copernicus-API
