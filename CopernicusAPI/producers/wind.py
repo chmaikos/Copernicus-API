@@ -86,6 +86,7 @@ def process_and_publish_wind_data():
     try:
         mycol = db["windData"]
         mycolweather = db["weatherData"]
+        mycolweather.drop()
 
         windData = settings.PROD_WIND_OUTPUT_FILENAME
 
@@ -153,8 +154,6 @@ def process_and_publish_wind_data():
                 for x in np.meshgrid(times, latitudes, longitudes, indexing="ij")
             ]
             if tem[:].flatten() is not None and dewpoint_temp[:].flatten() is not None:
-                temp = tem[:].flatten()[0]
-                dew = dewpoint_temp[:].flatten()[0]
                 relative_humidity = mpcalc.relative_humidity_from_dewpoint(
                     tem[:].flatten()[0] * units.degC,
                     dewpoint_temp[:].flatten()[0] * units.degC,
