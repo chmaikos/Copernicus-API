@@ -51,7 +51,7 @@ services:
 
   copernicus-api:
     build:
-      context: .
+      context: ./app
     container_name: copernicus-api   
     ports:
       - 5000:5000
@@ -60,7 +60,7 @@ services:
       - mongodb
       - kafka
     volumes:
-      - ./data/.cdsapirc:/root/.cdsapirc
+      - .app/data/.cdsapirc:/root/.cdsapirc
 
 volumes:
   data_volumes:
