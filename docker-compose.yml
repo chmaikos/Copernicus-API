@@ -59,14 +59,6 @@ services:
       volumes:
         - ./CopernicusAPI/.cdsapirc:/root/.cdsapirc
 
-  api_vessel:
-    build:
-      context: ./VesselAPI
-    ports:
-      - 5001:5000
-    depends_on:
-      - mongodb
-
 volumes:
   data_volumes:
     driver: local

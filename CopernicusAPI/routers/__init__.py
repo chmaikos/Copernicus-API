@@ -4,3 +4,4 @@ from .data import router as data_router
 from .lab import router as lab_router
 from .living_lab import router as living_lab_router
 from .weather import router as weather_router
+from .vessel import router as vessel_router

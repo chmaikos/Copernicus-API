@@ -7,6 +7,7 @@ settings = Settings()
 # MongoDB Connection using Motor for async operations
 mongo_client = motor.motor_asyncio.AsyncIOMotorClient(settings.MONGODB_URL)
 db = mongo_client["kafka_db"]
+db_vessel = mongo_client["VesselAPI"]
 ais_cyprus_dynamic_col = db["ais_cyprus_dynamic"]
 ais_cyprus_static_col = db["ais_cyprus_static"]
 
