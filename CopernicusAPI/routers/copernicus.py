@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 from models.wave import WaveDataItem
 from models.wind import WindDataItem
-from models.weather import WeatherDataItem
+from models.weather import WeatherDataItem, WeatherDataResponse
 from database import db
 
 class CombinedDataResponse(BaseModel):
@@ -84,5 +84,24 @@ async def get_data(
             setattr(combined_response, attr, processed_data)
 
         return combined_response
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/weather", response_model=WeatherDataResponse)
+async def get_weather_data():
+    try:
+        collection = db["weatherData"]
+        results = await collection.find().to_list(None)
+
+        # Process results to match the desired output format
+        processed_results = []
+        for item in results:
+            if isinstance(item["time"], str):
+                item["time"] = datetime.strptime(item["time"], "%d/%m/%Y %H:%M:%S")
+            processed_results.append(WeatherDataItem(**item))
+            del item["_id"]
+            processed_results.append(item)
+
+        return {"weatherData": processed_results}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

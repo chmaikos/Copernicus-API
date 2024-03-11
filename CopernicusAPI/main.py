@@ -8,26 +8,18 @@ from database import db_vessel
 # from producers.wave import process_and_publish_wave_data
 from producers.wind import process_and_publish_wind_data
 from routers import (
-    ais_cyprus_dynamic_router,
-    ais_cyprus_static_router,
+    ais_router,
     data_router,
     lab_router,
-    living_lab_router,
-    weather_router,
     vessel_router
 )
 
 app = FastAPI(title="Copernicus API", version="0.0.1beta")
 
-app.include_router(lab_router, prefix="/api", tags=["lab"])
-app.include_router(living_lab_router, prefix="/api", tags=["living_lab"])
-app.include_router(data_router, prefix="/api", tags=["data"])
-app.include_router(
-    ais_cyprus_dynamic_router, prefix="/api", tags=["ais_cyprus_dynamic"]
-)
-app.include_router(ais_cyprus_static_router, prefix="/api", tags=["ais_cyprus_static"])
-app.include_router(weather_router, prefix="/api", tags=["weather"])
-app.include_router(vessel_router, prefix="/api", tags=["vessel"])
+app.include_router(lab_router, prefix="/api", tags=["Lab API"])
+app.include_router(data_router, prefix="/api", tags=["Copernicus API"])
+app.include_router(ais_router, prefix="/api", tags=["AIS API"])
+app.include_router(vessel_router, prefix="/api", tags=["Vessel API"])
 
 
 @app.on_event("startup")

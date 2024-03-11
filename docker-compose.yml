@@ -53,6 +53,7 @@ services:
         context: ./CopernicusAPI
       ports:
         - 5000:5000
+        - "9094:9094/udp"
       depends_on:
         - mongodb
         - kafka1
