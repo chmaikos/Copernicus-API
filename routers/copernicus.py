@@ -49,8 +49,8 @@ async def get_data(
 ):
     try:
         coords = create_square(latitude, longitude, radius)
-        date_min_format = datetime.strptime(dateMin, "%Y-%m-%dT%H:%M:%S.%fZ")
-        date_max_format = datetime.strptime(dateMax, "%Y-%m-%dT%H:%M:%S.%fZ")
+        date_min_format = datetime.strptime(dateMin, "%Y-%m-%dT%H:%M:%S")
+        date_max_format = datetime.strptime(dateMax, "%Y-%m-%dT%H:%M:%S")
 
         polygon_coordinates = [
             [coords["west"][1], coords["south"][0]],

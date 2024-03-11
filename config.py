@@ -2,17 +2,17 @@ from pydantic import BaseSettings
 
 class Settings(BaseSettings):
     MONGODB_URL: str = "mongodb://mongodb:27017"
-    KAFKA_HOSTS: str = "kafka1:29092"
+    KAFKA_HOSTS: str = "kafka:29092"
     UDP_LISTEN_HOST: str = "0.0.0.0"
     UDP_LISTEN_PORT: int = 9094
-    USERNAME: str = "mmini1"
-    PASSWORD: str = "Artemis2000"
+    USERNAME: str = "cmaikos"
+    PASSWORD: str = "fn#tN6QxvPPP&v"
     PROD_WAVE_OUTPUT_FILENAME: str = "data/CMEMS_Wave3H.nc"
     PROD_WIND_OUTPUT_FILENAME: str = "data/ERA5_Weather3H.nc"
     WIND_TOPIC: str = "wind_topic"
     WEATHER_TOPIC: str = "weather_topic"
     WAVE_TOPIC: str = "wave_topic"
-    KAFKA_PRODUCER_CONFIG: dict = {"bootstrap.servers": "kafka1:29092"}
+    KAFKA_PRODUCER_CONFIG: dict = {"bootstrap.servers": "kafka:29092"}
     DEFAULT_LONGITUDE: float = 27.917171
     DEFAULT_LATITUDE: float = 43.173814
     DEFAULT_RADIUS: int = 20
@@ -24,7 +24,7 @@ class Settings(BaseSettings):
 settings = Settings()
 
 def init_COPs(db):
-    COPS = [
+    cops = [
         {
             "id": "1",
             "message_type": "COP",
@@ -179,10 +179,9 @@ def init_COPs(db):
         },
     ]
     
-    db_vessel = db
-    collection = db_vessel["COPs"]
+    collection = db["COPs"]
     collection.drop()
-    collection.insert_many(COPS)
+    collection.insert_many(cops)
 
 
 def init_alerts(db):
@@ -513,8 +512,7 @@ def init_alerts(db):
         },
     ]
     
-    db_vessel = db
-    collection = db_vessel["alerts"]
+    collection = db["alerts"]
     collection.drop()
     collection.insert_many(alerts)
 

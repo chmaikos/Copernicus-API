@@ -209,7 +209,6 @@ def process_and_publish_wave_data():
     data = df.to_dict(orient="records")
 
     mycol.insert_many(data)
-    db.close()
 
     # Convert it back to string format
     df["time"] = df["time"].dt.strftime("%Y-%m-%d %H:%M:%S")

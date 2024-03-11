@@ -1,6 +1,6 @@
 #!/bin/bash
 
-KAFKA_HOST=kafka1
+KAFKA_HOST=kafka
 KAFKA_PORT=29092
 
 echo "Waiting for Kafka to be ready..."

@@ -5,7 +5,7 @@ from fastapi import FastAPI
 import config
 from database import db_vessel
 
-# from producers.wave import process_and_publish_wave_data
+from producers.wave import process_and_publish_wave_data
 from producers.wind import process_and_publish_wind_data
 from routers import (
     ais_router,
@@ -31,10 +31,10 @@ def run_background_tasks():
     udp_listener_thread.start()
 
     # Starting the wave data processor in its own thread
-    # wave_processor_thread = threading.Thread(
-    #     target=process_and_publish_wave_data, daemon=True
-    # )
-    # wave_processor_thread.start()
+    wave_processor_thread = threading.Thread(
+        target=process_and_publish_wave_data, daemon=True
+    )
+    wave_processor_thread.start()
     # This remains commented until the 403 issue is resolved
 
     # Starting the wind data processor in its own thread
