@@ -1,6 +1,8 @@
-# Copernicus-API
-
+<p align="center">
 ![GitHub](https://img.shields.io/github/license/chmaikos/Copernicus-API) ![GitHub stars](https://img.shields.io/github/stars/chmaikos/Copernicus-API?style=social) ![Docker Automated build](https://img.shields.io/docker/automated/chmaikos/copernicus-api)
+</p>
+
+# Copernicus-API
 
 - [Copernicus-API](#copernicus-api)
   - [Introduction](#introduction)
