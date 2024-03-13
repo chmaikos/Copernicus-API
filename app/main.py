@@ -1,21 +1,14 @@
 import threading
 
-from ais_decode import start_udp_listener
-from fastapi import FastAPI
 import config
+from ais_decode import start_udp_listener
 from database import db_vessel
-
+from fastapi import FastAPI
 from producers.wave import process_and_publish_wave_data
 from producers.wind import process_and_publish_wind_data
-from routers import (
-    ais_router,
-    data_router,
-    lab_router,
-    vessel_router
-)
+from routers import ais_router, data_router, lab_router, vessel_router
 
 app = FastAPI(title="Copernicus API", version="0.0.1beta")
-
 app.include_router(lab_router, prefix="/api", tags=["Lab API"])
 app.include_router(data_router, prefix="/api", tags=["Copernicus API"])
 app.include_router(ais_router, prefix="/api", tags=["AIS API"])
@@ -35,7 +28,6 @@ def run_background_tasks():
         target=process_and_publish_wave_data, daemon=True
     )
     wave_processor_thread.start()
-    # This remains commented until the 403 issue is resolved
 
     # Starting the wind data processor in its own thread
     wind_processor_thread = threading.Thread(

@@ -22,7 +22,8 @@ async def get_ais_cyprus_dynamic(date_min: str, date_max: str):
         return json_util.dumps(results)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
+
+
 @router.get("/ais_cyprus_static")
 async def get_ais_cyprus_static(date_min: str, date_max: str):
     try:
@@ -38,4 +39,3 @@ async def get_ais_cyprus_static(date_min: str, date_max: str):
         return json_util.dumps(results)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-

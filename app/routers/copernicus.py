@@ -1,21 +1,24 @@
 import math
 from datetime import datetime
 from typing import List
-from fastapi import APIRouter, HTTPException, Query
 
+from database import db
+from fastapi import APIRouter, HTTPException, Query
+from fastapi.encoders import jsonable_encoder
+from models.wave import WaveDataItem
+from models.weather import WeatherDataItem, WeatherDataResponse
+from models.wind import WindDataItem
 from pydantic import BaseModel
 
-from models.wave import WaveDataItem
-from models.wind import WindDataItem
-from models.weather import WeatherDataItem, WeatherDataResponse
-from database import db
 
 class CombinedDataResponse(BaseModel):
     weatherData: List[WeatherDataItem] = []
     waveData: List[WaveDataItem] = []
     windData: List[WindDataItem] = []
 
+
 router = APIRouter()
+
 
 def create_square(lat1, lon1, distance_km):
     R = 6371  # Radius of the Earth in kilometers
@@ -38,6 +41,7 @@ def create_square(lat1, lon1, distance_km):
         new_coords[key] = (math.degrees(new_lat), math.degrees(new_lon))
 
     return new_coords
+
 
 @router.get("/data", response_model=CombinedDataResponse)
 async def get_data(
@@ -62,10 +66,19 @@ async def get_data(
 
         query = {
             "time": {"$gte": date_min_format, "$lte": date_max_format},
-            "coordinates": {"$geoWithin": {"$geometry": {"type": "Polygon", "coordinates": [polygon_coordinates]}}}
+            "location": {
+                "$geoWithin": {
+                    "$geometry": {
+                        "type": "Polygon",
+                        "coordinates": [polygon_coordinates],
+                    }
+                }
+            },
         }
 
-        combined_response = CombinedDataResponse(waveData=[], windData=[], weatherData=[])
+        combined_response = CombinedDataResponse(
+            waveData=[], windData=[], weatherData=[]
+        )
         collections = {
             "waveData": (WaveDataItem, "waveData"),
             "windData": (WindDataItem, "windData"),
@@ -80,12 +93,13 @@ async def get_data(
                     item["time"] = datetime.strptime(item["time"], "%d/%m/%Y %H:%M:%S")
                 if "_id" in item:
                     del item["_id"]
-                processed_data.append(model(**item))  
+                processed_data.append(model(**item))
             setattr(combined_response, attr, processed_data)
 
         return combined_response
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @router.get("/weather", response_model=WeatherDataResponse)
 async def get_weather_data():

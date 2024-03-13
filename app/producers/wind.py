@@ -12,6 +12,7 @@ import pandas as pd
 from config import settings
 from confluent_kafka import Producer
 from database import db
+from metpy.calc import relative_humidity_from_dewpoint
 from metpy.units import units
 from netCDF4 import Dataset, num2date
 
@@ -87,6 +88,7 @@ def process_and_publish_wind_data():
         mycol = db["windData"]
         mycolweather = db["weatherData"]
         mycolweather.drop()
+        mycol.drop()
 
         windData = settings.PROD_WIND_OUTPUT_FILENAME
 
@@ -125,9 +127,8 @@ def process_and_publish_wind_data():
                 },
                 item["fileLocation"],
             )
+
         with Dataset(windData, "r+") as windData_BL:
-            for var_name in windData_BL.variables.keys():
-                _ = windData_BL.variables[var_name]
             (
                 u10,
                 v10,
@@ -143,28 +144,21 @@ def process_and_publish_wind_data():
                 ["u10", "v10", "t2m", "d2m", "sst", "tcc", "tcrw", "tcsw", "sp"],
             )
             wind_speed = np.sqrt(u10[:] ** 2 + v10[:] ** 2)
-            wind_dir = (270 - np.arctan2(v10[:], u10[:]) * 180 / pi) % 360
-            time_dim, lat_dim, lon_dim = u10.get_dims()
-            time_var = windData_BL.variables[time_dim.name]
-            times = num2date(time_var[:], time_var.units)
-            latitudes = windData_BL.variables[lat_dim.name][:]
-            longitudes = windData_BL.variables[lon_dim.name][:]
-            times_grid, latitudes_grid, longitudes_grid = [
-                x.flatten()
-                for x in np.meshgrid(times, latitudes, longitudes, indexing="ij")
-            ]
-            if tem[:].flatten() is not None and dewpoint_temp[:].flatten() is not None:
-                relative_humidity = mpcalc.relative_humidity_from_dewpoint(
-                    tem[:].flatten()[0] * units.degC,
-                    dewpoint_temp[:].flatten()[0] * units.degC,
-                )
-            else:
-                relative_humidity = 0
+            wind_dir = (270 - np.arctan2(v10[:], u10[:]) * 180 / np.pi) % 360
+            time_dim, lat_dim, lon_dim = u10.dimensions
+            time_var = windData_BL.variables[time_dim]
+            times = num2date(time_var[:], units=time_var.units)
+            latitudes = windData_BL.variables[lat_dim][:]
+            longitudes = windData_BL.variables[lon_dim][:]
+            times_grid, latitudes_grid, longitudes_grid = np.meshgrid(
+                times, latitudes, longitudes, indexing="ij"
+            )
+
             df = pd.DataFrame(
                 {
-                    "time": [t.isoformat(sep=" ") for t in times_grid],
-                    "latitude": latitudes_grid,
-                    "longitude": longitudes_grid,
+                    "time": [t.isoformat() for t in times_grid.flatten()],
+                    "latitude": latitudes_grid.flatten(),
+                    "longitude": longitudes_grid.flatten(),
                     "u10": u10[:].flatten(),
                     "v10": v10[:].flatten(),
                     "speed": wind_speed.flatten(),
@@ -172,13 +166,33 @@ def process_and_publish_wind_data():
                 }
             )
 
+            temperature_quantity = units.Quantity(tem[:].flatten(), units.kelvin).to(
+                units.degC
+            )
+            dewpoint_temperature_quantity = units.Quantity(
+                dewpoint_temp[:].flatten(), units.kelvin
+            ).to(units.degC)
+
+            relative_humidity = (
+                relative_humidity_from_dewpoint(
+                    temperature_quantity, dewpoint_temperature_quantity
+                )
+                * 100
+            )  # Convert to percent
+
+            humidity_values = np.ma.array(
+                relative_humidity.magnitude, dtype=float
+            ).filled(
+                np.nan
+            )  # Fill masked values with NaN for DataFrame
+
             df_weather = pd.DataFrame(
                 {
-                    "time": [t.isoformat(sep=" ") for t in times_grid],
-                    "latitude": latitudes_grid,
-                    "longitude": longitudes_grid,
+                    "time": [t.isoformat() for t in times_grid.flatten()],
+                    "latitude": latitudes_grid.flatten(),
+                    "longitude": longitudes_grid.flatten(),
                     "temperature": tem[:].flatten(),
-                    "humidity": relative_humidity.magnitude * 100,
+                    "humidity": humidity_values,
                     "sea_temp": sea_temp[:].flatten(),
                     "total_cloud_cover": total_cloud_cover[:].flatten() * 100,
                     "pressure": pressure[:].flatten(),
@@ -187,31 +201,40 @@ def process_and_publish_wind_data():
                 }
             )
 
-            df["time"] = pd.to_datetime(df["time"], format="%Y-%m-%d %H:%M:%S")
-            df_weather["time"] = pd.to_datetime(
-                df_weather["time"], format="%Y-%m-%d %H:%M:%S"
-            )
             df.dropna(subset=["u10"], inplace=True)
             df_weather.dropna(subset=["sea_temp"], inplace=True)
-            data = df.to_dict(orient="records")
-            mycol.insert_many(data)
-            data_weather = df_weather.to_dict(orient="records")
-            mycolweather.insert_many(data_weather)
 
-        # Convert it back to string format
-        df["time"] = df["time"].dt.strftime("%Y-%m-%d %H:%M:%S")
-        for _, row in df.iterrows():
-            value = json.dumps(row.to_dict()).encode("utf-8")
-            producer.produce(topic=topic, value=value)
-            producer.flush()
+            # Convert to GeoJSON format
+            df["time"] = pd.to_datetime(df["time"])
+            df_weather["time"] = pd.to_datetime(df_weather["time"])
+            df["location"] = df.apply(
+                lambda row: {
+                    "type": "Point",
+                    "coordinates": [row["longitude"], row["latitude"]],
+                },
+                axis=1,
+            )
+            df_weather["location"] = df_weather.apply(
+                lambda row: {
+                    "type": "Point",
+                    "coordinates": [row["longitude"], row["latitude"]],
+                },
+                axis=1,
+            )
 
-        df_weather["time"] = df_weather["time"].dt.strftime("%Y-%m-%d %H:%M:%S")
-        for _, row in df_weather.iterrows():
-            value = json.dumps(row.to_dict()).encode("utf-8")
-            producer.produce(topic=topic_weather, value=value)
-            producer.flush()
+            df.drop(columns=["latitude", "longitude"], inplace=True)
+            df_weather.drop(columns=["latitude", "longitude"], inplace=True)
+
+            # Insert data into MongoDB
+            wind_data = df.to_dict("records")
+            weather_data = df_weather.to_dict("records")
+
+            mycol.insert_many(wind_data)
+            mycolweather.insert_many(weather_data)
 
         os.remove(windData)
     except Exception as e:
-        print(e)
-    time.sleep(24 * 60 * 60)
+        print(f"An error occurred: {e}")
+    finally:
+        # Ensure the script pauses for a day
+        time.sleep(24 * 60 * 60)

@@ -60,7 +60,7 @@ services:
       - mongodb
       - kafka
     volumes:
-      - .app/data/.cdsapirc:/root/.cdsapirc
+      - ./app/data/.cdsapirc:/root/.cdsapirc
 
 volumes:
   data_volumes:

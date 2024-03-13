@@ -139,6 +139,7 @@ def process_and_publish_wave_data():
 
     curr_time = datetime.now() - timedelta(days=2)
     delta_3h = curr_time - timedelta(hours=3) + timedelta(seconds=1)
+    mycol.drop()
 
     USERNAME = settings.USERNAME
     PASSWORD = settings.PASSWORD
@@ -201,6 +202,15 @@ def process_and_publish_wave_data():
     )
 
     df["time"] = pd.to_datetime(df["time"], format="%Y-%m-%d %H:%M:%S")
+    df["location"] = df.apply(
+        lambda row: {
+            "type": "Point",
+            "coordinates": [row["longitude"], row["latitude"]],
+        },
+        axis=1,
+    )
+
+    df.drop(columns=["latitude", "longitude"], inplace=True)
 
     # Drop rows with null values in 'vhm0'
     df = df.dropna(subset=["vhm0"])
